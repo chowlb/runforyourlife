@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">RunForYourLife</string>
+    <string name="action_settings">Settings</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="loginUsername">Enter Username</string>
+    <string name="loginPassword">Enter Password</string>
+    <string name="login">Login</string>
+    <string name="webaddress">www.chowlb.com</string>
+    
+    
+    <string name="newemail">Email</string>
+    <string name="newusername">Username</string>
+    <string name="newpassword">Password</string>
+    <string name="verifypassword">Verify Password</string>
+    <string name="verifyemail">Verify Email</string>
+    
+
+</resources>

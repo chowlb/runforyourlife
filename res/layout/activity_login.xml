@@ -1,0 +1,65 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/RelativeLayout1"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/DarkGray" >
+
+    <TextView
+        android:id="@+id/logoTV"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:text="@string/app_name"
+        android:gravity="center"
+        android:layout_marginTop="100dp"
+        android:textColor="#FFFFFF"
+        android:textSize="48sp" />
+
+    <EditText
+        android:id="@+id/usernameET"
+        android:layout_width="275dp"
+        android:layout_height="30dp"
+        android:layout_below="@+id/logoTV"
+        android:layout_centerHorizontal="true"
+        android:background="@color/lightGray"
+        android:ems="15"
+        android:hint="@string/loginUsername"
+        android:paddingLeft="10dp"
+        android:layout_marginTop="15dp"
+        android:layout_marginBottom="15dp"
+        android:textSize="18sp"
+        android:typeface="sans" >
+
+        <requestFocus />
+    </EditText>
+
+    <EditText
+        android:id="@+id/passwordET"
+        android:layout_width="275dp"
+        android:layout_height="30dp"
+        android:layout_alignLeft="@+id/usernameET"
+        android:layout_below="@+id/usernameET"
+        android:background="@color/lightGray"
+        android:ems="15"
+        android:hint="@string/loginPassword"
+        android:inputType="textPassword"
+        android:paddingLeft="10dp"
+        android:textSize="18sp"
+        android:typeface="sans"
+        android:layout_marginBottom="15dp" />
+
+    <Button
+        android:id="@+id/loginButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/passwordET"
+        android:layout_alignRight="@+id/passwordET"
+        android:layout_below="@+id/passwordET"
+        android:text="@string/login"
+        android:textSize="28sp"
+        android:background="#848484"
+        android:textColor="#FFFFFF" />
+
+</RelativeLayout>
