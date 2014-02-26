@@ -18,5 +18,6 @@
     </style>
     <color name="lightGray">#EEEEEE</color>
     <color name="DarkGray">#424242</color>
+    <color name="Red">#E31E19</color>
 
 </resources>

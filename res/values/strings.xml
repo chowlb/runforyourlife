@@ -8,13 +8,21 @@
     <string name="loginPassword">Enter Password</string>
     <string name="login">Login</string>
     <string name="webaddress">www.chowlb.com</string>
-    
-    
     <string name="newemail">Email</string>
     <string name="newusername">Username</string>
     <string name="newpassword">Password</string>
     <string name="verifypassword">Verify Password</string>
     <string name="verifyemail">Verify Email</string>
-    
+    <string name="register">Register</string>
+    <string name="logo">chowlb.com</string>
+    <string name="title_activity_map">MapActivity</string>
+    <string name="title_activity_register">RegisterActivity</string>
+    <string name="registerEmail">Enter Email</string>
+    <string name="usernameTaken">username is already taken</string>
+    <string name="registerEmailVerify">Verify Email</string>
+    <string name="loginPasswordVerify">Verify Password</string>
+    <string name="verifyemail">Entered Email Does Not Match</string>
+    <string name="verifypassword">Passwords Do Not Match</string>
+    <string name="loginfailed">Username Or Password Incorrect</string>
 
 </resources>

@@ -53,11 +53,26 @@
     <Button
         android:id="@+id/loginButton"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="48dp"
         android:layout_alignLeft="@+id/passwordET"
         android:layout_alignRight="@+id/passwordET"
         android:layout_below="@+id/passwordET"
+        android:layout_marginBottom="15dp"
+        android:background="#848484"
+        android:onClick="login"
         android:text="@string/login"
+        android:textColor="#FFFFFF"
+        android:textSize="28sp" />
+
+    <Button
+        android:id="@+id/registerButton"
+        android:layout_width="wrap_content"
+        android:layout_height="48dp"
+        android:layout_alignLeft="@+id/loginButton"
+        android:layout_alignRight="@+id/loginButton"
+        android:layout_below="@+id/loginButton"
+        android:text="@string/register"
+        android:onClick="register"
         android:textSize="28sp"
         android:background="#848484"
         android:textColor="#FFFFFF" />
