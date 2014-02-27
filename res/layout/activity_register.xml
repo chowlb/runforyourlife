@@ -1,0 +1,159 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".RegisterActivity"
+    android:background="@color/DarkGray" >
+
+    <TextView
+        android:id="@+id/registerTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:text="@string/register"
+        android:textSize="32sp"
+        android:layout_marginTop="100dp"
+        android:textColor="#FFFFFF"
+        android:layout_marginBottom="16dp" />
+
+   <EditText
+       android:id="@+id/usernameRegisterET"
+       android:layout_width="275dp"
+       android:layout_height="30dp"
+       android:layout_below="@+id/registerTitle"
+       android:layout_centerHorizontal="true"
+       android:layout_marginBottom="16dp"
+       android:background="@color/lightGray"
+       android:ems="15"
+       android:hint="@string/loginUsername"
+       android:paddingLeft="10dp"
+       android:textSize="18sp"
+       android:typeface="sans" >
+
+   </EditText>
+   <EditText
+       android:id="@+id/emailRegisterET"
+       android:layout_width="275dp"
+       android:layout_height="30dp"
+       android:layout_below="@+id/usernameRegisterET"
+       android:layout_centerHorizontal="true"
+       android:layout_marginBottom="16dp"
+       android:background="@color/lightGray"
+       android:ems="15"
+       android:hint="@string/registerEmail"
+       android:paddingLeft="10dp"
+       android:textSize="18sp"
+       android:typeface="sans"
+       android:inputType="textEmailAddress" >
+
+   </EditText>
+   
+   <EditText
+       android:id="@+id/emailRegisterVerifyET"
+       android:layout_width="275dp"
+       android:layout_height="30dp"
+       android:layout_below="@+id/emailRegisterET"
+       android:layout_centerHorizontal="true"
+       android:layout_marginBottom="16dp"
+       android:background="@color/lightGray"
+       android:ems="15"
+       android:hint="@string/registerEmailVerify"
+       android:paddingLeft="10dp"
+       android:textSize="18sp"
+       android:typeface="sans" 
+       android:inputType="textEmailAddress">
+
+   </EditText>
+   
+      <TextView
+       android:id="@+id/emailVerifyFailTV"
+       android:layout_width="wrap_content"
+       android:layout_height="wrap_content"
+       android:layout_centerHorizontal="true"
+       android:layout_below="@+id/emailRegisterVerifyET"
+       android:text="@string/verifyemail"
+       android:textSize="15sp"
+       android:textColor="@color/Red"
+       android:visibility="gone"
+       android:layout_marginBottom="16dp"
+ />
+   
+   
+   <EditText
+       android:id="@+id/passwordRegisterET"
+       android:layout_width="275dp"
+       android:layout_height="30dp"
+       android:layout_below="@+id/emailVerifyFailTV"
+       android:layout_centerHorizontal="true"
+       android:layout_marginBottom="16dp"
+       android:background="@color/lightGray"
+       android:ems="15"
+       android:hint="@string/loginPassword"
+       android:paddingLeft="10dp"
+       android:textSize="18sp"
+       android:typeface="sans"
+       android:inputType="textPassword" >
+
+   </EditText>
+   <EditText
+       android:id="@+id/passwordRegisterVerifyET"
+       android:layout_width="275dp"
+       android:layout_height="30dp"
+       android:layout_below="@+id/passwordRegisterET"
+       android:layout_centerHorizontal="true"
+       android:background="@color/lightGray"
+       android:ems="15"
+       android:hint="@string/loginPasswordVerify"
+       android:paddingLeft="10dp"
+       android:textSize="18sp"
+       android:typeface="sans"
+       android:inputType="textPassword" 
+       android:layout_marginBottom="16dp">
+
+   </EditText>
+   
+     <TextView
+       android:id="@+id/passwordVerifyFailTV"
+       android:layout_width="wrap_content"
+       android:layout_height="wrap_content"
+       android:layout_centerHorizontal="true"
+       android:layout_below="@+id/passwordRegisterVerifyET"
+       android:text="@string/verifypassword"
+       android:textSize="15sp"
+       android:textColor="@color/Red"
+       android:visibility="gone"
+       android:layout_marginBottom="16dp"
+ />
+   
+      <TextView
+       android:id="@+id/passwordStrength"
+       android:layout_width="wrap_content"
+       android:layout_height="wrap_content"
+       android:layout_centerHorizontal="true"
+       android:layout_below="@+id/passwordVerifyFailTV"
+       android:text="@string/passwordStrengthFailed"
+       android:textSize="15sp"
+       android:textColor="@color/Red"
+       android:visibility="gone"
+       android:layout_marginBottom="16dp"
+ />
+     
+   <Button
+        android:id="@+id/registerButtonRegister"
+        android:layout_width="wrap_content"
+        android:layout_height="48dp"
+        android:layout_alignLeft="@+id/passwordRegisterVerifyET"
+        android:layout_alignRight="@+id/passwordRegisterVerifyET"
+        android:layout_below="@+id/passwordStrength"
+        android:text="@string/register"
+        android:onClick="register"
+        android:textSize="28sp"
+        android:background="#848484"
+        android:textColor="#FFFFFF" />
+
+
+   
+    
+   
+</RelativeLayout>

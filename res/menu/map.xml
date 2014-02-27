@@ -1,0 +1,14 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/menu_showInventory"
+        android:showAsAction="ifRoom"
+        android:title="@string/inventory"
+        />
+    <!-- <item
+        android:id="@+id/menu_suicide"
+        android:title="@string/suicide"
+        android:showAsAction="ifRoom"
+        />-->
+
+</menu>
