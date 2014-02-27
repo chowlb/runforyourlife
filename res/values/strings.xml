@@ -24,5 +24,8 @@
     <string name="verifyemail">Entered Email Does Not Match</string>
     <string name="verifypassword">Passwords Do Not Match</string>
     <string name="loginfailed">Username Or Password Incorrect</string>
+    <string name="passwordStrengthFailed">Password must be 8 characters or longer and contain at least 1 digit, 1 uppercase, 1 lowercase, and 1 special character</string>
+    <string name="inventory">Inventory</string>
+    <string name="suicide">Suicide</string>
 
 </resources>

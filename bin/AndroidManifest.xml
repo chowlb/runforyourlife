@@ -38,8 +38,7 @@
         <activity
             android:name="com.chowlb.runforyourlife.MapActivity"
             android:label="@string/title_activity_map"
-            android:screenOrientation="portrait" 
-            android:theme="@android:style/Theme.NoTitleBar.Fullscreen">
+            android:screenOrientation="portrait" >
         </activity>
         <activity
             android:name="com.chowlb.runforyourlife.RegisterActivity"

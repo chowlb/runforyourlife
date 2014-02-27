@@ -49,6 +49,19 @@
         android:textSize="18sp"
         android:typeface="sans"
         android:layout_marginBottom="15dp" />
+    
+    <TextView
+       android:id="@+id/loginFailed"
+       android:layout_width="wrap_content"
+       android:layout_height="wrap_content"
+       android:layout_centerHorizontal="true"
+       android:layout_below="@+id/passwordET"
+       android:textSize="15sp"
+       android:textColor="@color/Red"
+       android:visibility="gone"
+       android:text="@string/loginfailed"
+       android:layout_marginBottom="15dp"
+ 	/>
 
     <Button
         android:id="@+id/loginButton"
@@ -56,7 +69,7 @@
         android:layout_height="48dp"
         android:layout_alignLeft="@+id/passwordET"
         android:layout_alignRight="@+id/passwordET"
-        android:layout_below="@+id/passwordET"
+        android:layout_below="@+id/loginFailed"
         android:layout_marginBottom="15dp"
         android:background="#848484"
         android:onClick="login"
