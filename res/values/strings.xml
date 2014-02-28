@@ -27,5 +27,8 @@
     <string name="passwordStrengthFailed">Password must be 8 characters or longer and contain at least 1 digit, 1 uppercase, 1 lowercase, and 1 special character</string>
     <string name="inventory">Inventory</string>
     <string name="suicide">Suicide</string>
+    <string name="title_activity_show_inventory">ShowInventoryActivity</string>
+    <string name="item">ITEM</string>
+    <string name="status">STATUS</string>
 
 </resources>

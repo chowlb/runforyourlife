@@ -16,8 +16,6 @@ import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.message.BasicNameValuePair;
 
 import android.content.Context;
-import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.util.Log;
 
@@ -40,23 +38,33 @@ public class SigninActivity extends AsyncTask<String, Void, String>{
     	
     }
 	
-	
+	//SIGN IN EXECUTE, FIRST ARGUMENT IS TYPE OF LOGIN
+    //0 is new
+    //1 is regular login
+    //2 is cached login
 	@Override
 	protected String doInBackground(String... arg0) {
 		
-		String username = (String) arg0[0];
-		String password = (String) arg0[1];
+		int loginType = Integer.parseInt(arg0[0]);
+		String username = (String) arg0[1];
+		String link="";
+		List<NameValuePair> parameters = new ArrayList<NameValuePair>();
+		
+		if(loginType==1) {
+		String password = (String) arg0[2];
 		
 
 		
-		String link="http://www.chowlb.com/runforyourlife/login_app.php";
 		
-		Log.e("chowlb", "Background username: " + username);
+		link = "http://www.chowlb.com/runforyourlife/login_app.php";		
 		
-		List<NameValuePair> parameters = new ArrayList<NameValuePair>();
 	    parameters.add(new BasicNameValuePair("username", username));
 	    parameters.add(new BasicNameValuePair("password", Utils.encryptPassword(password)));
-		
+		}
+		else {
+			link = "http://www.chowlb.com/runforyourlife/updatelogin_app.php";
+		    parameters.add(new BasicNameValuePair("user_id", username));
+		}
 		HttpClient httpClient = new DefaultHttpClient();
 		HttpPost httpPost = new HttpPost(link);
 		

@@ -73,9 +73,10 @@
        android:layout_centerHorizontal="true"
        android:layout_below="@+id/emailRegisterVerifyET"
        android:text="@string/verifyemail"
-       android:textSize="15sp"
+       android:textSize="18sp"
        android:textColor="@color/Red"
        android:visibility="gone"
+       android:gravity="center"
        android:layout_marginBottom="16dp"
  />
    
@@ -120,9 +121,10 @@
        android:layout_centerHorizontal="true"
        android:layout_below="@+id/passwordRegisterVerifyET"
        android:text="@string/verifypassword"
-       android:textSize="15sp"
+       android:textSize="18sp"
        android:textColor="@color/Red"
-       android:visibility="gone"
+       android:visibility="gone"       
+       android:gravity="center"
        android:layout_marginBottom="16dp"
  />
    
@@ -133,9 +135,10 @@
        android:layout_centerHorizontal="true"
        android:layout_below="@+id/passwordVerifyFailTV"
        android:text="@string/passwordStrengthFailed"
-       android:textSize="15sp"
+       android:textSize="18sp"
        android:textColor="@color/Red"
        android:visibility="gone"
+       android:gravity="center"
        android:layout_marginBottom="16dp"
  />
      

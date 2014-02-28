@@ -16,10 +16,7 @@ import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.message.BasicNameValuePair;
 
 import android.content.Context;
-import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.AsyncTask;
-import android.util.Log;
 
 public class AddUserActivity extends AsyncTask<String, Void, String>{
    private Context context;

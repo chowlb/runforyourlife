@@ -21,24 +21,12 @@ public class LoginActivity extends Activity{
 	private EditText username;
 	private EditText password;
 	private TextView loginFailed;
+	private TextView logo;
 	int userID;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_login);
-		
-		TextView logo = (TextView) findViewById(R.id.logoTV);
-		username = (EditText) findViewById(R.id.usernameET);
-		password = (EditText) findViewById(R.id.passwordET);
-		loginFailed = (TextView) findViewById(R.id.loginFailed);
-		Typeface typeFace = Typeface.createFromAsset(getAssets(), "fonts/28daysfont.ttf");
-		logo.setTypeface(typeFace);
-		loginFailed.setTypeface(typeFace);
-		Button loginButton = (Button) findViewById(R.id.loginButton);
-		loginButton.setTypeface(typeFace);
-		Button registerButton = (Button) findViewById(R.id.registerButton);
-		registerButton.setTypeface(typeFace);
 		
 		final ConnectivityManager conMgr =  (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
 		final NetworkInfo activeNetwork = conMgr.getActiveNetworkInfo();
@@ -48,18 +36,34 @@ public class LoginActivity extends Activity{
 			startActivity(new Intent(Settings.ACTION_WIFI_SETTINGS));
 		} 
 		
-		SharedPreferences prefs = this.getSharedPreferences(
-			      "com.chowlb.runforyourlife", Context.MODE_PRIVATE);
+		
+		SharedPreferences prefs = this.getSharedPreferences("com.chowlb.runforyourlife", Context.MODE_PRIVATE);
 		userID = prefs.getInt("USER_ID", -1);
 		Log.e("chowlb", "Checking preferences got id: " + userID);
 		if(userID >= 0) {
-			//Intent intent = new Intent(this, MapActivity.class);
-			//String message = String.valueOf(userID);
-			//intent.putExtra("USER_ID", message);
-			//startActivity(intent);
+			SigninActivity sa = new SigninActivity(this, this);
+	    	sa.execute("2", String.valueOf(userID));
+	    	
+		}else {
+		
+			setContentView(R.layout.activity_login);
+			logo = (TextView) findViewById(R.id.logoTV);
+			username = (EditText) findViewById(R.id.usernameET);
+			password = (EditText) findViewById(R.id.passwordET);
+			loginFailed = (TextView) findViewById(R.id.loginFailed);
+			Button loginButton = (Button) findViewById(R.id.loginButton);
+			Button registerButton = (Button) findViewById(R.id.registerButton);
+			
+			Typeface typeFace = Typeface.createFromAsset(getAssets(), "fonts/28daysfont.ttf");
+			
+			logo.setTypeface(typeFace);
+			loginFailed.setTypeface(typeFace);
+			loginButton.setTypeface(typeFace);
+			registerButton.setTypeface(typeFace);
+			
+			loginFailed.setVisibility(View.GONE);
 		}
-		
-		
+
 	}
 	
 	public void login(View v) {
@@ -69,7 +73,7 @@ public class LoginActivity extends Activity{
 	    
 	    if(!Utils.isEmpty(user) && !Utils.isEmpty(pass)) {
 	    	SigninActivity sa = new SigninActivity(this, this);
-	    	sa.execute(user, pass);
+	    	sa.execute("1", user, pass);
 	    }
 	    else {
 	    	Toast.makeText(this,"Username and Password cannot be blank.", Toast.LENGTH_LONG).show();
@@ -78,15 +82,23 @@ public class LoginActivity extends Activity{
 	
 	
 	public void processLogin(String endResult) {
-		Log.e("chowlb", "EndResult: " + endResult);
-	    if(endResult != null && Integer.parseInt(endResult) >= 0) {
-    		Log.e("chowlb", "End result is good! lets login!");
-			 SharedPreferences prefs = this.getSharedPreferences(
+		//Log.e("chowlb", "EndResult: " + endResult);
+		String[] separated = endResult.split(";");
+	    if(endResult != null && separated.length > 2) {
+    		 
+    		SharedPreferences prefs = this.getSharedPreferences(
 				      "com.chowlb.runforyourlife", Context.MODE_PRIVATE);
-			 prefs.edit().putInt("USER_ID", Integer.parseInt(endResult));
-			 Intent intent = new Intent(this, MapActivity.class);
-			 intent.putExtra("USER_ID", endResult);
-			 intent.putExtra("USER_NAME",  username.getText().toString());
+			 SharedPreferences.Editor editor = prefs.edit();
+			 editor.putInt("USER_ID", Integer.parseInt(separated[0]));
+			 editor.commit();
+			 
+			 Intent intent = new Intent(LoginActivity.this, GameMapActivity.class);
+			 Bundle bundle = new Bundle();
+			 Player newPlayer = new Player(Integer.parseInt(separated[0]), separated[1].toString(),
+					 Integer.parseInt(separated[4]), Integer.parseInt(separated[3]), separated[2].toString());
+			 bundle.putParcelable("PLAYER", newPlayer);
+			 intent.putExtras(bundle);
+			 
 			 this.startActivity(intent);
 			 this.finish();
 		}

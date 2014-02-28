@@ -56,9 +56,10 @@
        android:layout_height="wrap_content"
        android:layout_centerHorizontal="true"
        android:layout_below="@+id/passwordET"
-       android:textSize="15sp"
+       android:textSize="18sp"
        android:textColor="@color/Red"
        android:visibility="gone"
+       android:gravity="center"
        android:text="@string/loginfailed"
        android:layout_marginBottom="15dp"
  	/>
