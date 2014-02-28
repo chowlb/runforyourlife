@@ -30,5 +30,6 @@
     <string name="title_activity_show_inventory">ShowInventoryActivity</string>
     <string name="item">ITEM</string>
     <string name="status">STATUS</string>
+    <string name="logout">Logout</string>
 
 </resources>

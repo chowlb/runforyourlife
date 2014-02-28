@@ -1,40 +1,8 @@
-<TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ListView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/inventoryLayout"
+    android:id="@+id/inventoryListView"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingBottom="2dp"
-    android:paddingLeft="2dp"
-    android:paddingRight="2dp"
-    android:paddingTop="2dp"
     tools:context=".ShowInventoryActivity" >
-    
-    <TableRow
-        android:id="@+id/inventoryHeaderRow"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center_horizontal">
-        
-        <TextView
-            	android:id="@+id/inventoryItemName"
-            	android:layout_weight="1"
-            	android:background="@color/DarkGray"
-            	android:textColor="#FFFFFF"
-            	android:padding="10dp"
-            	android:gravity="center"
-            	android:text="@string/item"
-            	android:layout_marginRight="1dp"/>
 
-        
-        <TextView
-            	android:id="@+id/inventoryItemStatus"
-            	android:layout_marginLeft="1dp"
-            	android:layout_weight="1"
-            	android:background="@color/DarkGray"
-            	android:textColor="#FFFFFF"
-            	android:padding="10dp"
-            	android:gravity="center"
-            	android:text="@string/status"/>
-
-        </TableRow>
-</TableLayout>
+</ListView>

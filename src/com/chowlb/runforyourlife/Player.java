@@ -1,5 +1,8 @@
 package com.chowlb.runforyourlife;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import android.location.Location;
 import android.os.Parcel;
 import android.os.Parcelable;
@@ -7,7 +10,7 @@ import android.os.Parcelable;
 public class Player implements Parcelable{
 	private String playerName;
 	private int playerID;
-	private Inventory inventory;
+	private List<Item> inventory;
 	private int	health;
 	private int daysSurvived;
 	private String lastLogin;
@@ -15,6 +18,7 @@ public class Player implements Parcelable{
 	private Item rightHand;
 	private int baseAttack = 10;
 	private Location position;
+	private int inventorySize = 15;
 	
 	public Player(int playerID, String name, int health, int days, String loginDate) {
 		this.playerID = playerID;
@@ -22,12 +26,35 @@ public class Player implements Parcelable{
 		this.health = health;
 		this.daysSurvived = days;
 		this.lastLogin = loginDate;
-		
-		//inventory.loadInventory(playerID);
+		this.inventory = new ArrayList<Item>();
 	}
 
+	public boolean addItem(Item item) {
+		if(inventory.size() < inventorySize) {
+			inventory.add(item);
+			return true;
+		}else {
+			return false;
+		}	
+	}
+	
+
+	public Item returnItemAtPos(int pos) {
+		return inventory.get(pos);
+	}
+	
+	
 	public String getPlayerName() {
 		return playerName;
+	}
+	
+	public boolean isInvDefined() {
+		if(this.inventory == null) {
+			return false;
+		}
+		else {
+			return true;
+		}
 	}
 
 	public void setPlayerName(String playerName) {
@@ -74,11 +101,11 @@ public class Player implements Parcelable{
 		return true;
 	}
 	
-	public Inventory getInventory() {
+	public List<Item> getInventory() {
 		return inventory;
 	}
-
-	public void setInventory(Inventory inventory) {
+	
+	public void setInventory(List<Item> inventory) {
 		this.inventory = inventory;
 	}
 
@@ -127,6 +154,7 @@ public class Player implements Parcelable{
 		out.writeInt(this.health);
 		out.writeInt(this.daysSurvived);
 		out.writeString(this.lastLogin);
+		out.writeTypedList(this.inventory);
 	}
 	
 	public static final Parcelable.Creator<Player> CREATOR = new Parcelable.Creator<Player>() {
@@ -139,12 +167,14 @@ public class Player implements Parcelable{
 		}
 	};
 	
-	private Player(Parcel in) {
+	public Player(Parcel in) {
 		this.playerID = in.readInt();
 		this.playerName = in.readString();
 		this.health = in.readInt();
 		this.daysSurvived = in.readInt();
 		this.lastLogin = in.readString();
+		this.inventory = new ArrayList<Item>();
+		in.readTypedList(this.inventory, null);
 	}
 	
 }

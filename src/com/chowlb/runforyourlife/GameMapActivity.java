@@ -1,9 +1,11 @@
 package com.chowlb.runforyourlife;
 
+
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
@@ -161,7 +163,14 @@ public class GameMapActivity extends FragmentActivity{
 			intent.putExtras(bundle);
 			startActivity(intent);
 			return true;
-		} else {
+		} else if(itemId == R.id.menu_logout){
+			SharedPreferences prefs = this.getSharedPreferences("com.chowlb.runforyourlife", Context.MODE_PRIVATE);
+			SharedPreferences.Editor editor = prefs.edit();
+			editor.clear();
+			editor.commit();
+			finish();
+			return true;
+		}else {
 			return super.onOptionsItemSelected(item);
 		}
 	}

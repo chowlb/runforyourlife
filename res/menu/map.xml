@@ -6,10 +6,11 @@
         android:title="@string/inventory"
         android:icon="@drawable/ic_action_military_backpack_radio_256"
         />
-    <!-- <item
-        android:id="@+id/menu_suicide"
-        android:title="@string/suicide"
+    <item
+        android:id="@+id/menu_logout"
         android:showAsAction="ifRoom"
-        />-->
+        android:title="@string/logout"
+        />
+ 
 
 </menu>

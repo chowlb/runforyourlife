@@ -16,13 +16,15 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-public class LoginActivity extends Activity{
+public class LoginActivity extends Activity implements AsyncInterface{
 
 	private EditText username;
 	private EditText password;
 	private TextView loginFailed;
 	private TextView logo;
 	int userID;
+	private Player player;
+	LoadInventoryActivity loadInvAct = new LoadInventoryActivity();
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -36,14 +38,14 @@ public class LoginActivity extends Activity{
 			startActivity(new Intent(Settings.ACTION_WIFI_SETTINGS));
 		} 
 		
+		loadInvAct.delegate = this;
 		
 		SharedPreferences prefs = this.getSharedPreferences("com.chowlb.runforyourlife", Context.MODE_PRIVATE);
 		userID = prefs.getInt("USER_ID", -1);
 		Log.e("chowlb", "Checking preferences got id: " + userID);
 		if(userID >= 0) {
 			SigninActivity sa = new SigninActivity(this, this);
-	    	sa.execute("2", String.valueOf(userID));
-	    	
+			sa.execute("2", String.valueOf(userID));
 		}else {
 		
 			setContentView(R.layout.activity_login);
@@ -91,16 +93,12 @@ public class LoginActivity extends Activity{
 			 SharedPreferences.Editor editor = prefs.edit();
 			 editor.putInt("USER_ID", Integer.parseInt(separated[0]));
 			 editor.commit();
-			 
-			 Intent intent = new Intent(LoginActivity.this, GameMapActivity.class);
-			 Bundle bundle = new Bundle();
-			 Player newPlayer = new Player(Integer.parseInt(separated[0]), separated[1].toString(),
+			 player = new Player(Integer.parseInt(separated[0]), separated[1].toString(),
 					 Integer.parseInt(separated[4]), Integer.parseInt(separated[3]), separated[2].toString());
-			 bundle.putParcelable("PLAYER", newPlayer);
-			 intent.putExtras(bundle);
 			 
-			 this.startActivity(intent);
-			 this.finish();
+			 
+			 loadInvAct.execute("1", player.getPlayerName());
+			 
 		}
     	else {
     		loginFailed.setVisibility(View.VISIBLE);
@@ -120,8 +118,45 @@ public class LoginActivity extends Activity{
 	    
 	  }
 	
+	public void handleInventory(String invResult) {
+		String[] separated = invResult.split("<br>");
+		Log.e("chowlb", "Inventory list size: " + separated.length);
+	    if(invResult != null && separated.length > 0) {
+	    	Item item = new Item();
+	    	for(int i = 0; i < separated.length; i++) {
+	    		String[] items = separated[i].split(";");
+	    		if(items.length>0) {
+	    			item.setItemId(Integer.parseInt(items[0].toString()));
+	    			item.setName(items[1]);
+	    			item.setDescription(items[2]);
+	    			item.setItemType(items[3]);
+	    			item.setStatus(items[4]);
+	    			item.setAttribute(Integer.parseInt(items[5].toString()));
+	    			 			
+	    			
+	    			if(!player.addItem(item)) {
+	    				Toast.makeText(this, "Inventory is full!", Toast.LENGTH_LONG).show();
+	    			}
+	    			Log.e("chowlb", "Inv size after add: " + player.getInventory().size());
+	    		}
+	    	}
+	    }else {
+	    	Toast.makeText(this,  "There was an error getting inventory. Check your network settings.", Toast.LENGTH_LONG).show();
+	    }
+	    
+	    startGameMap();
+	    
+	}
 	
-	
+	public void startGameMap() {
+		Intent intent = new Intent(LoginActivity.this, GameMapActivity.class);
+		Bundle bundle = new Bundle();
+		Log.e("chowlb", "Before parcel inv size: " + player.getInventory().size());
+		bundle.putParcelable("PLAYER", player);
+		intent.putExtras(bundle);
+		this.startActivity(intent);
+		this.finish();
+	}
 
 	//@Override
 	//public boolean onCreateOptionsMenu(Menu menu) {

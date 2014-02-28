@@ -13,7 +13,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-public class RegisterActivity extends Activity {
+public class RegisterActivity extends Activity implements AsyncInterface {
 	EditText username;
 	EditText email;
 	EditText emailVerify;
@@ -24,11 +24,15 @@ public class RegisterActivity extends Activity {
 	TextView passwordStrength;
 	TextView register;
 	Typeface typeFace;
+	private Player player;
+	LoadInventoryActivity loadInvAct = new LoadInventoryActivity();
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_register);
+		
+		loadInvAct.delegate = this;
 		
 		register = (TextView) findViewById(R.id.registerTitle);
 		emailFail = (TextView) findViewById(R.id.emailVerifyFailTV);
@@ -107,9 +111,12 @@ public class RegisterActivity extends Activity {
 			 
 			 Intent intent = new Intent(RegisterActivity.this, GameMapActivity.class);
 			 Bundle bundle = new Bundle();
-			 Player newPlayer = new Player(Integer.parseInt(separated[0]), separated[1].toString(),
+			 player = new Player(Integer.parseInt(separated[0]), separated[1].toString(),
 					 Integer.parseInt(separated[4]), Integer.parseInt(separated[3]), separated[2].toString());
-			 bundle.putParcelable("PLAYER", newPlayer);
+			 
+			 loadInvAct.execute("1", player.getPlayerName());
+			 
+			 bundle.putParcelable("PLAYER", player);
 			 intent.putExtras(bundle);
 			 
 			 
@@ -124,6 +131,35 @@ public class RegisterActivity extends Activity {
     	else {
     		Toast.makeText(this, "Something happened with registration, check your data connection", Toast.LENGTH_LONG).show();
     	}
+	}
+	
+	public void handleInventory(String invResult) {
+		String[] separated = invResult.split("<br>");
+		Log.e("chowlb", "Inventory list size: " + separated.length);
+	    if(invResult != null && separated.length > 0) {
+	    	Item item = new Item();
+	    	for(int i = 0; i < separated.length; i++) {
+	    		String[] items = separated[i].split(";");
+	    		if(items.length>0) {
+	    			item.setItemId(Integer.parseInt(items[0].toString()));
+	    			item.setName(items[1]);
+	    			item.setDescription(items[2]);
+	    			item.setItemType(items[3]);
+	    			item.setStatus(items[4]);
+	    			item.setAttribute(Integer.parseInt(items[5].toString()));
+	    			 			
+	    			
+	    			if(!player.addItem(item)) {
+	    				Toast.makeText(this, "Inventory is full!", Toast.LENGTH_LONG).show();
+	    			}
+	    		}
+	    	}
+	    }else {
+	    	Toast.makeText(this,  "There was an error getting inventory. Check your network settings.", Toast.LENGTH_LONG).show();
+	    }
+	    
+	    
+	    
 	}
 
 //	@Override
