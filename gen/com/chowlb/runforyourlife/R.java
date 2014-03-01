@@ -381,30 +381,32 @@ containing a value of this type.
          */
         public static final int common_signin_button_text_long=0x7f060013;
         public static final int hello_world=0x7f06001c;
-        public static final int inventory=0x7f060030;
-        public static final int item=0x7f060033;
+        public static final int inventory=0x7f060032;
+        public static final int item=0x7f060035;
         public static final int login=0x7f06001f;
         public static final int loginPassword=0x7f06001e;
         public static final int loginPasswordVerify=0x7f06002d;
         public static final int loginUsername=0x7f06001d;
-        public static final int loginfailed=0x7f06002e;
+        public static final int loginfailed=0x7f060030;
         public static final int logo=0x7f060027;
-        public static final int logout=0x7f060035;
+        public static final int logout=0x7f060037;
         public static final int newemail=0x7f060021;
         public static final int newpassword=0x7f060023;
         public static final int newusername=0x7f060022;
-        public static final int passwordStrengthFailed=0x7f06002f;
+        public static final int passwordStrengthFailed=0x7f060031;
         public static final int register=0x7f060026;
         public static final int registerEmail=0x7f06002a;
         public static final int registerEmailVerify=0x7f06002c;
-        public static final int status=0x7f060034;
-        public static final int suicide=0x7f060031;
+        public static final int status=0x7f060036;
+        public static final int suicide=0x7f060033;
         public static final int title_activity_map=0x7f060028;
         public static final int title_activity_register=0x7f060029;
-        public static final int title_activity_show_inventory=0x7f060032;
+        public static final int title_activity_show_inventory=0x7f060034;
         public static final int usernameTaken=0x7f06002b;
         public static final int verifyemail=0x7f060025;
+        public static final int verifyemailFail=0x7f06002e;
         public static final int verifypassword=0x7f060024;
+        public static final int verifypasswordFail=0x7f06002f;
         public static final int webaddress=0x7f060020;
     }
     public static final class style {

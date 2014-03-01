@@ -20,7 +20,7 @@ public class ShowInventoryActivity extends Activity {
 		
 		Bundle extras = getIntent().getExtras();
 		if(extras != null) {
-			player = (Player) extras.getParcelable("PLAYER");
+			player = extras.getParcelable("PLAYER");
 			Log.e("chowlb", "Player name passed: " + player.getPlayerName());
 			ActionBar ab = getActionBar();
 			ab.setIcon(R.drawable.ic_action_military_backpack_radio_256);
@@ -32,6 +32,9 @@ public class ShowInventoryActivity extends Activity {
 			ListView inventoryLayout = (ListView) findViewById(R.id.inventoryListView);
 			adapter = new ItemListAdapter(this, player.getInventory());
 			inventoryLayout.setAdapter(adapter);
+		}
+		else{
+			Toast.makeText(this, "Error retrieving inventory.",  Toast.LENGTH_LONG).show();
 		}
 		
 	}

@@ -14,8 +14,6 @@ public class Player implements Parcelable{
 	private int	health;
 	private int daysSurvived;
 	private String lastLogin;
-	private Item leftHand;
-	private Item rightHand;
 	private int baseAttack = 10;
 	private Location position;
 	private int inventorySize = 15;
@@ -109,21 +107,21 @@ public class Player implements Parcelable{
 		this.inventory = inventory;
 	}
 
-	public Item getLeftHand() {
-		return leftHand;
-	}
-
-	public void setLeftHand(Item leftHand) {
-		this.leftHand = leftHand;
-	}
-	
-	public Item getRightHand() {
-		return rightHand;
-	}
-
-	public void setRightHand(Item rightHand) {
-		this.rightHand = rightHand;
-	}
+//	public Item getLeftHand() {
+//		return leftHand;
+//	}
+//
+//	public void setLeftHand(Item leftHand) {
+//		this.leftHand = leftHand;
+//	}
+//	
+//	public Item getRightHand() {
+//		return rightHand;
+//	}
+//
+//	public void setRightHand(Item rightHand) {
+//		this.rightHand = rightHand;
+//	}
 
 	public int getDaysSurvived() {
 		return daysSurvived;
@@ -167,14 +165,20 @@ public class Player implements Parcelable{
 		}
 	};
 	
-	public Player(Parcel in) {
+	public Player(Parcel in){
+		readFromParcel(in);
+	}
+	
+	public void readFromParcel(Parcel in) {
 		this.playerID = in.readInt();
 		this.playerName = in.readString();
 		this.health = in.readInt();
 		this.daysSurvived = in.readInt();
 		this.lastLogin = in.readString();
-		this.inventory = new ArrayList<Item>();
-		in.readTypedList(this.inventory, null);
+		if(this.inventory == null){
+			this.inventory = new ArrayList<Item>();
+		}
+		in.readTypedList(this.inventory, Item.CREATOR);
 	}
 	
 }

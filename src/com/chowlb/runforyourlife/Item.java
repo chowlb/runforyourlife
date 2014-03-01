@@ -4,6 +4,7 @@ import android.os.Parcel;
 import android.os.Parcelable;
 
 public class Item implements Parcelable{
+//public class Item{
 	private int itemId;
 	private String itemType;
 	private String status;
@@ -80,10 +81,12 @@ public class Item implements Parcelable{
 	public void writeToParcel(Parcel out, int flags) {
 		out.writeInt(this.itemId);
 		out.writeString(this.itemType);
-		out.writeInt(this.attribute);
 		out.writeString(this.status);
 		out.writeString(this.name);
 		out.writeString(this.description);
+		out.writeInt(this.attribute);
+
+
 	}
 	
 	public static final Parcelable.Creator<Item> CREATOR = new Parcelable.Creator<Item>() {
@@ -99,10 +102,11 @@ public class Item implements Parcelable{
 	private Item(Parcel in) {
 		this.itemId = in.readInt();
 		this.itemType = in.readString();
-		this.attribute = in.readInt();
 		this.status = in.readString();
 		this.name = in.readString();
 		this.description = in.readString();
+		this.attribute = in.readInt();
+
 		
 	}
 }

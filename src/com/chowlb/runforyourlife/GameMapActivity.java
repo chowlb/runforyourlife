@@ -37,10 +37,14 @@ public class GameMapActivity extends FragmentActivity{
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_map);
 		local = this;
+		Intent i = getIntent();
+		
 		Bundle extras = getIntent().getExtras();
 		if(extras != null) {
-			player = (Player) extras.getParcelable("PLAYER");
-						
+			Log.e("chowlb", "extras");
+			
+			player = i.getParcelableExtra("PLAYER");
+			
 			setTitle("");
 			setTitle(player.getPlayerName());
 			
