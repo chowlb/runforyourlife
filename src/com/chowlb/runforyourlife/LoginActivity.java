@@ -33,39 +33,41 @@ public class LoginActivity extends Activity implements AsyncInterface{
 		final ConnectivityManager conMgr =  (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
 		final NetworkInfo activeNetwork = conMgr.getActiveNetworkInfo();
 		if (activeNetwork != null && activeNetwork.isConnected()) {
-		} else {
+			
+			loadInvAct.delegate = this;
+			
+			SharedPreferences prefs = this.getSharedPreferences("com.chowlb.runforyourlife", Context.MODE_PRIVATE);
+			userID = prefs.getInt("USER_ID", -1);
+			Log.e("chowlb", "Checking preferences got id: " + userID);
+			if(userID >= 0) {
+				SigninActivity sa = new SigninActivity(this, this);
+				sa.execute("2", String.valueOf(userID));
+			}else {
+			
+				setContentView(R.layout.activity_login);
+				logo = (TextView) findViewById(R.id.logoTV);
+				username = (EditText) findViewById(R.id.usernameET);
+				password = (EditText) findViewById(R.id.passwordET);
+				loginFailed = (TextView) findViewById(R.id.loginFailed);
+				Button loginButton = (Button) findViewById(R.id.loginButton);
+				Button registerButton = (Button) findViewById(R.id.registerButton);
+				
+				Typeface typeFace = Typeface.createFromAsset(getAssets(), "fonts/28daysfont.ttf");
+				
+				logo.setTypeface(typeFace);
+				loginFailed.setTypeface(typeFace);
+				loginButton.setTypeface(typeFace);
+				registerButton.setTypeface(typeFace);
+				
+				loginFailed.setVisibility(View.GONE);
+			}
+		} 
+		else {
 			Toast.makeText(this, "No Network Access Found" , Toast.LENGTH_LONG).show();
 			startActivity(new Intent(Settings.ACTION_WIFI_SETTINGS));
+			
 		} 
 		
-		loadInvAct.delegate = this;
-		
-		SharedPreferences prefs = this.getSharedPreferences("com.chowlb.runforyourlife", Context.MODE_PRIVATE);
-		userID = prefs.getInt("USER_ID", -1);
-		Log.e("chowlb", "Checking preferences got id: " + userID);
-		if(userID >= 0) {
-			SigninActivity sa = new SigninActivity(this, this);
-			sa.execute("2", String.valueOf(userID));
-		}else {
-		
-			setContentView(R.layout.activity_login);
-			logo = (TextView) findViewById(R.id.logoTV);
-			username = (EditText) findViewById(R.id.usernameET);
-			password = (EditText) findViewById(R.id.passwordET);
-			loginFailed = (TextView) findViewById(R.id.loginFailed);
-			Button loginButton = (Button) findViewById(R.id.loginButton);
-			Button registerButton = (Button) findViewById(R.id.registerButton);
-			
-			Typeface typeFace = Typeface.createFromAsset(getAssets(), "fonts/28daysfont.ttf");
-			
-			logo.setTypeface(typeFace);
-			loginFailed.setTypeface(typeFace);
-			loginButton.setTypeface(typeFace);
-			registerButton.setTypeface(typeFace);
-			
-			loginFailed.setVisibility(View.GONE);
-		}
-
 	}
 	
 	public void login(View v) {

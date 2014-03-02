@@ -51,10 +51,7 @@ public class GameMapActivity extends FragmentActivity{
 			locManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
 			
 			
-			 if ( !locManager.isProviderEnabled( LocationManager.GPS_PROVIDER ) ) {
-			        buildAlertMessageNoGps();
-			    }
-			
+			 
 			try {
 				if(googleMap == null) {
 					googleMap = ((MapFragment) getFragmentManager().findFragmentById(R.id.main_map)).getMap();
@@ -129,6 +126,7 @@ public class GameMapActivity extends FragmentActivity{
 	                   
 		       			 Bundle bundle = new Bundle();
 		       			 bundle.putParcelable("PLAYER", player);
+		       			 bundle.putBoolean("GPSENABLED", false);
 		       			 intent.putExtras(bundle);
 	                    
 		       			 startActivity(intent);
@@ -147,8 +145,13 @@ public class GameMapActivity extends FragmentActivity{
 	@Override
 	public void onResume() {
 		super.onResume();
-		locManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 5000, 0, locListener);
-	 }
+		if ( !locManager.isProviderEnabled( LocationManager.GPS_PROVIDER ) ) {
+	        buildAlertMessageNoGps();
+	    }
+		else{
+			locManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 5000, 0, locListener);
+		}
+	}
 	
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
@@ -164,6 +167,7 @@ public class GameMapActivity extends FragmentActivity{
 			Intent intent = new Intent(local, ShowInventoryActivity.class);
 			Bundle bundle = new Bundle();
 			bundle.putParcelable("PLAYER", player);
+			bundle.putBoolean("GPSENABLED", true);
 			intent.putExtras(bundle);
 			startActivity(intent);
 			return true;

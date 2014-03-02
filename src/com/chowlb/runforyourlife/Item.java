@@ -1,5 +1,6 @@
 package com.chowlb.runforyourlife;
 
+import android.content.Context;
 import android.os.Parcel;
 import android.os.Parcelable;
 
@@ -71,6 +72,21 @@ public class Item implements Parcelable{
 
 	public void setItemType(String itemType) {
 		this.itemType = itemType;
+	}
+	
+	public int getStatusColor(Context context){
+		if(this.status.equals("Mint")){
+			return context.getResources().getColor(R.color.MINT);
+		}else if(this.status.equals("Good")){
+			return context.getResources().getColor(R.color.GOOD);
+		}else if(this.status.equals("Fair")){
+			return context.getResources().getColor(R.color.FAIR);
+		}else if(this.status.equals("Poor")){
+			return context.getResources().getColor(R.color.POOR);
+		}else if(this.status.equals("Broken")){
+			return context.getResources().getColor(R.color.BROKEN);
+		}else
+			return context.getResources().getColor(R.color.BROKEN);
 	}
 
 	//EVERYTHING BELOW HERE IS FOR THE PARCEL

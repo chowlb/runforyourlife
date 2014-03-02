@@ -20,7 +20,7 @@
             android:id="@+id/list_image"
             android:layout_width="50dip"
             android:layout_height="50dip"
-            android:src="@drawable/driedbeef_item_img"/>
+            android:src="@drawable/no_item_img"/>
  
     </LinearLayout>
  
@@ -31,7 +31,7 @@
         android:layout_height="wrap_content"
         android:layout_alignTop="@+id/thumbnail"
         android:layout_toRightOf="@+id/thumbnail"
-        android:textColor="#BBBBBB"
+        android:textColor="#DDDDDD"
         android:typeface="sans"
         android:textSize="16sp"
         android:textStyle="bold"/>
@@ -45,7 +45,8 @@
         android:textColor="#999999"
         android:textSize="12sp"
         android:layout_marginTop="1dip"
-        android:layout_toRightOf="@+id/thumbnail" />
+        android:layout_toRightOf="@+id/thumbnail"
+        android:textStyle="bold" />
  
     <!-- Rightend Duration 
     <TextView

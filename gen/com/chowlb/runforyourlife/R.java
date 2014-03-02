@@ -164,7 +164,13 @@ containing a value of this type.
         public static final int zOrderOnTop=0x7f010010;
     }
     public static final class color {
+        public static final int BROKEN=0x7f040013;
         public static final int DarkGray=0x7f04000b;
+        public static final int FAIR=0x7f040011;
+        public static final int GOOD=0x7f040010;
+        public static final int Green=0x7f04000e;
+        public static final int MINT=0x7f04000f;
+        public static final int POOR=0x7f040012;
         public static final int Red=0x7f04000c;
         public static final int White=0x7f04000d;
         public static final int common_action_bar_splitter=0x7f040009;
@@ -179,8 +185,8 @@ containing a value of this type.
         public static final int common_signin_btn_light_text_disabled=0x7f040006;
         public static final int common_signin_btn_light_text_focused=0x7f040007;
         public static final int common_signin_btn_light_text_pressed=0x7f040005;
-        public static final int common_signin_btn_text_dark=0x7f04000e;
-        public static final int common_signin_btn_text_light=0x7f04000f;
+        public static final int common_signin_btn_text_dark=0x7f040014;
+        public static final int common_signin_btn_text_light=0x7f040015;
         public static final int lightGray=0x7f04000a;
     }
     public static final class dimen {
@@ -230,7 +236,7 @@ containing a value of this type.
         public static final int ic_plusone_tall_off_client=0x7f020021;
         public static final int image_bg=0x7f020022;
         public static final int list_selector=0x7f020023;
-        public static final int no_img_dwbl=0x7f020024;
+        public static final int no_item_img=0x7f020024;
     }
     public static final class id {
         public static final int RelativeLayout1=0x7f050005;

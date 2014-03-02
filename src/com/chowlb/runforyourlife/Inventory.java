@@ -1,10 +1,9 @@
 package com.chowlb.runforyourlife;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
-public class Inventory implements Iterable<Item> {
+public class Inventory  {
 	private int inventorySize = 15;
 	private List<Item> items;
 	
@@ -19,11 +18,6 @@ public class Inventory implements Iterable<Item> {
 	public void loadInventory(int playerID) {
 		
 	}
-	
-	@Override
-	public Iterator<Item> iterator() {
-	       return items.iterator();
-	   }
 	
 	public Item returnItemAtPos(int pos) {
 		return items.get(pos);

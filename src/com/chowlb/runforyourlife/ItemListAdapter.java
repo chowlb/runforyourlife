@@ -62,15 +62,15 @@ public class ItemListAdapter extends BaseAdapter {
 			rowView = inflater.inflate(R.layout.item_list_row, null);
 			holder.item=(TextView) rowView.findViewById(R.id.itemName);
 			holder.status=(TextView) rowView.findViewById(R.id.item_Status);
+			holder.img=(ImageView) rowView.findViewById(R.id.list_image);
 			
-			//holder.img=(ImageView) rowView.findViewById(R.id.list_image);
 			Item item = result.get(position);
-			//if(hlPositions.contains(rssitem.getGuid())) {
-			//	rowView.setBackgroundResource(R.color.DarkGrey);
-			//}
+			
 		holder.item.setText(item.getName());
 		holder.status.setText(item.getStatus());
-		//holder.img.setImageBitmap(rssitem.getImage());	
+		holder.status.setTextColor(item.getStatusColor(this.context));
+		holder.img.setImageResource(R.drawable.driedbeef_item_img);	
+		
 		return rowView;
 	}
 	

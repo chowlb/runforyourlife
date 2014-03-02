@@ -20,5 +20,12 @@
     <color name="DarkGray">#323232</color>
     <color name="Red">#E31E19</color>
     <color name="White">#FFFFFF</color>
+    <color name="Green">#428000</color>
+    
+    <color name="MINT">#FFFFFF</color>
+    <color name="GOOD">#5FB404</color>
+    <color name="FAIR">#D7DF01</color>
+    <color name="POOR">#DF7401</color>
+    <color name="BROKEN">#FF0000</color>
 
 </resources>
