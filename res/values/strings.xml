@@ -31,5 +31,6 @@
     <string name="item">ITEM</string>
     <string name="status">STATUS</string>
     <string name="logout">Logout</string>
+    <string name="title_activity_single_item">SingleItemActivity</string>
 
 </resources>

@@ -4,13 +4,15 @@ import java.util.List;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.os.Bundle;
 import android.view.View;
+import android.view.View.OnLongClickListener;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 
 
 
-public class InventoryItemListListener implements OnItemClickListener{
+public class InventoryItemListListener implements OnItemClickListener, OnLongClickListener{
 	List<Item> listItems;
 	
 	Activity activity;
@@ -21,16 +23,21 @@ public class InventoryItemListListener implements OnItemClickListener{
 	}
 	
 	public void onItemClick(AdapterView parent, View view, int pos, long id) {
-		
-		Intent i = new Intent(Intent.ACTION_VIEW);
+		Intent i = new Intent(activity, SingleItemActivity.class);
 		Item item = (Item) parent.getAdapter().getItem(pos);
 		ItemListAdapter la = (ItemListAdapter) parent.getAdapter();
-		//la.addHighlight(etGuid());
-		
-		//i.setData(Uri.parse(rss.getLink()));
-		//activity.startActivity(i);
-		//la.notifyDataSetChanged();
+		Bundle bundle = new Bundle();
+		bundle.putParcelable("ITEM", item);
+		i.putExtras(bundle);
+        activity.startActivity(i);
 	}
+
+	@Override
+	public boolean onLongClick(View arg0) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+	
 }
 	
 	

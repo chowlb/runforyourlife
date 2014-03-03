@@ -38,6 +38,7 @@ public class ShowInventoryActivity extends Activity {
 			ListView inventoryLayout = (ListView) findViewById(R.id.inventoryListView);
 			adapter = new ItemListAdapter(this, player.getInventory());
 			inventoryLayout.setAdapter(adapter);
+			inventoryLayout.setOnItemClickListener(new InventoryItemListListener(player.getInventory(),this ));
 		}
 		else{
 			Toast.makeText(this, "Error retrieving inventory.",  Toast.LENGTH_LONG).show();

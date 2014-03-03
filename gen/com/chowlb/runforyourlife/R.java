@@ -240,22 +240,23 @@ containing a value of this type.
     }
     public static final class id {
         public static final int RelativeLayout1=0x7f050005;
-        public static final int action_settings=0x7f05001d;
-        public static final int chowlbLogoTV=0x7f050018;
+        public static final int action_settings=0x7f050020;
+        public static final int chowlbLogoTV=0x7f05001b;
         public static final int emailRegisterET=0x7f05000f;
         public static final int emailRegisterVerifyET=0x7f050010;
         public static final int emailVerifyFailTV=0x7f050011;
         public static final int hybrid=0x7f050004;
         public static final int inventoryListView=0x7f050017;
-        public static final int itemName=0x7f05001b;
-        public static final int item_Status=0x7f05001c;
-        public static final int list_image=0x7f05001a;
+        public static final int itemBigImage=0x7f050018;
+        public static final int itemName=0x7f05001e;
+        public static final int item_Status=0x7f05001f;
+        public static final int list_image=0x7f05001d;
         public static final int loginButton=0x7f05000a;
         public static final int loginFailed=0x7f050009;
         public static final int logoTV=0x7f050006;
         public static final int main_map=0x7f05000c;
-        public static final int menu_logout=0x7f05001f;
-        public static final int menu_showInventory=0x7f05001e;
+        public static final int menu_logout=0x7f050022;
+        public static final int menu_showInventory=0x7f050021;
         public static final int none=0x7f050000;
         public static final int normal=0x7f050001;
         public static final int passwordET=0x7f050008;
@@ -267,8 +268,10 @@ containing a value of this type.
         public static final int registerButtonRegister=0x7f050016;
         public static final int registerTitle=0x7f05000d;
         public static final int satellite=0x7f050002;
+        public static final int singleItemName=0x7f050019;
+        public static final int singleItemStatus=0x7f05001a;
         public static final int terrain=0x7f050003;
-        public static final int thumbnail=0x7f050019;
+        public static final int thumbnail=0x7f05001c;
         public static final int usernameET=0x7f050007;
         public static final int usernameRegisterET=0x7f05000e;
     }
@@ -280,14 +283,16 @@ containing a value of this type.
         public static final int activity_map=0x7f030001;
         public static final int activity_register=0x7f030002;
         public static final int activity_show_inventory=0x7f030003;
-        public static final int activity_splash=0x7f030004;
-        public static final int item_list_row=0x7f030005;
+        public static final int activity_single_item=0x7f030004;
+        public static final int activity_splash=0x7f030005;
+        public static final int item_list_row=0x7f030006;
     }
     public static final class menu {
         public static final int main=0x7f0a0000;
         public static final int map=0x7f0a0001;
         public static final int register=0x7f0a0002;
         public static final int show_inventory=0x7f0a0003;
+        public static final int single_item=0x7f0a0004;
     }
     public static final class string {
         public static final int action_settings=0x7f06001b;
@@ -408,6 +413,7 @@ containing a value of this type.
         public static final int title_activity_map=0x7f060028;
         public static final int title_activity_register=0x7f060029;
         public static final int title_activity_show_inventory=0x7f060034;
+        public static final int title_activity_single_item=0x7f060038;
         public static final int usernameTaken=0x7f06002b;
         public static final int verifyemail=0x7f060025;
         public static final int verifyemailFail=0x7f06002e;

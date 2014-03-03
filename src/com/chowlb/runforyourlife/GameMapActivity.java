@@ -84,7 +84,7 @@ public class GameMapActivity extends FragmentActivity{
 		        @Override
 		        public void onProviderDisabled(String provider) {
 		            // TODO Auto-generated method stub
-
+		        	buildAlertMessageNoGps();
 		        }
 
 		        @Override
@@ -103,7 +103,7 @@ public class GameMapActivity extends FragmentActivity{
 		                            .defaultMarker(BitmapDescriptorFactory.HUE_AZURE)));*/
 
 		            googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(
-		                    location.getLatitude(), location.getLongitude()), 20.0f));
+		                    location.getLatitude(), location.getLongitude()), 25.0f));
 
 		        }
 		    };
