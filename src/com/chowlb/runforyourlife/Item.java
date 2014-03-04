@@ -13,21 +13,19 @@ public class Item implements Parcelable{
 	private String name;
 	private String description;
 	private int attribute;
-	private String image;
 	private String owner;
 	
 	protected Item() {
 		
 	}
 	
-	protected Item(int id, int itemDBID, String name, String description, String itemType, String status, int attribute, String image, String owner) {
+	protected Item(int id, int itemDBID, String name, String description, String itemType, String status, int attribute, String owner) {
 		this.name = name;
 		this.description = description;
 		this.itemType = itemType;
 		this.itemId = id;
 		this.status = status;
 		this.attribute = attribute;
-		this.image = image;
 		this.itemDBID = itemDBID;
 		this.owner = owner;
 	}
@@ -73,14 +71,8 @@ public class Item implements Parcelable{
 	}
 
 	public String getImage() {
-		return image;
+		return name.replaceAll(" ", "_").toLowerCase() + "_item_img";
 	}
-
-	public void setImage(String image) {
-		this.image = image;
-	}
-
-
 
 	public String getName() {
 		return name;
@@ -134,7 +126,6 @@ public class Item implements Parcelable{
 		out.writeString(this.name);
 		out.writeString(this.description);
 		out.writeInt(this.attribute);
-		out.writeString(this.image);
 		out.writeString(this.owner);
 
 
@@ -158,7 +149,6 @@ public class Item implements Parcelable{
 		this.name = in.readString();
 		this.description = in.readString();
 		this.attribute = in.readInt();
-		this.image = in.readString();
 		this.owner = in.readString();
 
 		

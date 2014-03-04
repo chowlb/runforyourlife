@@ -22,7 +22,7 @@ public class SingleItemActivity extends Activity {
 		if(extras != null) {
 			item = extras.getParcelable("ITEM");
 			
-			Log.e("chowlb", "Item Passed: " + item.getItemId());
+			//Log.e("chowlb", "Item Passed: " + item.getItemId());
 			ActionBar ab = getActionBar();
 			ab.setIcon(R.drawable.ic_action_military_backpack_radio_256);
 			ab.setTitle("");
@@ -43,7 +43,7 @@ public class SingleItemActivity extends Activity {
 			
 			ImageView itemImage = (ImageView) findViewById(R.id.itemBigImage);
 			
-			itemImage.setImageResource(getResources().getIdentifier(item.getImage()+ "_item_img", "drawable", getPackageName()));
+			itemImage.setImageResource(getResources().getIdentifier(item.getImage(), "drawable", getPackageName()));
 			
 			
 		}

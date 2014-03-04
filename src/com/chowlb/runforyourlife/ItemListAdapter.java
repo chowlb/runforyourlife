@@ -69,8 +69,8 @@ public class ItemListAdapter extends BaseAdapter {
 		holder.item.setText(item.getName());
 		holder.status.setText(item.getStatus());
 		holder.status.setTextColor(item.getStatusColor(this.context));
-		Log.e("chowlb", "Item IMAGE: " + item.getImage()+ "_item_img");
-		holder.img.setImageResource(context.getResources().getIdentifier(item.getImage()+ "_item_img", "drawable", context.getPackageName()));	
+		//Log.e("chowlb", "Item IMAGE: " + item.getImage());
+		holder.img.setImageResource(context.getResources().getIdentifier(item.getImage(), "drawable", context.getPackageName()));	
 		
 		return rowView;
 	}

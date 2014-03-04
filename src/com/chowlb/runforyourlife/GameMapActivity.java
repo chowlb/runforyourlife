@@ -153,8 +153,8 @@ public class GameMapActivity extends FragmentActivity implements AsyncInterface{
 		else{
 			locManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 5000, 0, locListener);
 		}
-		Log.e("chowlb", "GAME MAP RESUME");
-		Log.e("chowlb", "Inventory: " + player.getInventory().size());
+		//Log.e("chowlb", "GAME MAP RESUME");
+		//Log.e("chowlb", "Inventory: " + player.getInventory().size());
 	}
 	
 	@Override
