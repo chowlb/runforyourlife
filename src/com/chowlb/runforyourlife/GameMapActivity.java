@@ -1,6 +1,7 @@
 package com.chowlb.runforyourlife;
 
 
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -10,6 +11,7 @@ import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
+import android.renderscript.Element.DataType;
 import android.support.v4.app.FragmentActivity;
 import android.util.Log;
 import android.view.Menu;
@@ -19,11 +21,9 @@ import android.widget.Toast;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapFragment;
-import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
-import com.google.android.gms.maps.model.MarkerOptions;
 
-public class GameMapActivity extends FragmentActivity{
+public class GameMapActivity extends FragmentActivity implements AsyncInterface{
 
 	public Player player;
 	private GoogleMap googleMap;
@@ -31,6 +31,8 @@ public class GameMapActivity extends FragmentActivity{
 	private LocationManager locManager;
 	private LocationListener locListener;
 	private FragmentActivity local;
+	SavePlayerInfo saveInfoActivity = new SavePlayerInfo();
+	boolean realExit = false;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -38,10 +40,10 @@ public class GameMapActivity extends FragmentActivity{
 		setContentView(R.layout.activity_map);
 		local = this;
 		Intent i = getIntent();
-		
+		Log.e("chowlb", "GAME MAP ONCREATE");
 		Bundle extras = getIntent().getExtras();
 		if(extras != null) {
-			Log.e("chowlb", "extras");
+			//Log.e("chowlb", "extras");
 			
 			player = i.getParcelableExtra("PLAYER");
 			
@@ -129,7 +131,7 @@ public class GameMapActivity extends FragmentActivity{
 		       			 bundle.putBoolean("GPSENABLED", false);
 		       			 intent.putExtras(bundle);
 	                    
-		       			 startActivity(intent);
+		       			startActivityForResult(intent, 1);
 	               }
 	           });
 	    final AlertDialog alert = builder.create();
@@ -151,6 +153,8 @@ public class GameMapActivity extends FragmentActivity{
 		else{
 			locManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 5000, 0, locListener);
 		}
+		Log.e("chowlb", "GAME MAP RESUME");
+		Log.e("chowlb", "Inventory: " + player.getInventory().size());
 	}
 	
 	@Override
@@ -169,15 +173,15 @@ public class GameMapActivity extends FragmentActivity{
 			bundle.putParcelable("PLAYER", player);
 			bundle.putBoolean("GPSENABLED", true);
 			intent.putExtras(bundle);
-			startActivity(intent);
+			startActivityForResult(intent, 1);
 			return true;
 		} else if(itemId == R.id.menu_logout){
-			SharedPreferences prefs = this.getSharedPreferences("com.chowlb.runforyourlife", Context.MODE_PRIVATE);
+			SharedPreferences prefs = local.getSharedPreferences("com.chowlb.runforyourlife", Context.MODE_PRIVATE);
 			SharedPreferences.Editor editor = prefs.edit();
 			editor.clear();
 			editor.commit();
-			finish();
-			return true;
+			doExit();
+			return true;		
 		}else {
 			return super.onOptionsItemSelected(item);
 		}
@@ -193,16 +197,42 @@ public class GameMapActivity extends FragmentActivity{
 		.setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
 			@Override
 			public void onClick(DialogInterface dialog, int which) {
+				saveInfoActivity.execute(player);
 				finish();
+				
 			}
 		})
-		.setNegativeButton(android.R.string.no, null).show();
+		.setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
+			
+			@Override
+			public void onClick(DialogInterface dialog, int which) {
+				realExit = false;
+				
+			}
+		}).show();
 		
 	}
 	
 	@Override
 	public void onBackPressed() {
 		doExit();
+	}
+	
+
+	@Override
+	public void handleInventory(String result) {
+		// TODO Auto-generated method stub
+		
+	}
+	
+	@Override
+	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+	    super.onActivityResult(requestCode, resultCode, data);
+
+	    if(requestCode == 1 && resultCode == Activity.RESULT_OK){
+	        player = data.getParcelableExtra("PLAYER");
+	        //Do whatever you want with yourData
+	    }
 	}
 
 }

@@ -7,16 +7,47 @@ import android.os.Parcelable;
 public class Item implements Parcelable{
 //public class Item{
 	private int itemId;
+	private int itemDBID;
 	private String itemType;
 	private String status;
 	private String name;
 	private String description;
 	private int attribute;
+	private String image;
+	private String owner;
 	
 	protected Item() {
 		
 	}
 	
+	protected Item(int id, int itemDBID, String name, String description, String itemType, String status, int attribute, String image, String owner) {
+		this.name = name;
+		this.description = description;
+		this.itemType = itemType;
+		this.itemId = id;
+		this.status = status;
+		this.attribute = attribute;
+		this.image = image;
+		this.itemDBID = itemDBID;
+		this.owner = owner;
+	}
+	
+	public String getOwner() {
+		return owner;
+	}
+
+	public void setOwner(String owner) {
+		this.owner = owner;
+	}
+
+	public int getItemDBID() {
+		return itemDBID;
+	}
+
+	public void setItemDBID(int itemDBID) {
+		this.itemDBID = itemDBID;
+	}
+
 	public int getItemId() {
 		return itemId;
 	}
@@ -41,14 +72,15 @@ public class Item implements Parcelable{
 		this.attribute = attribute;
 	}
 
-	protected Item(int id, String name, String description, String itemType, String status, int attribute) {
-		this.name = name;
-		this.description = description;
-		this.itemType = itemType;
-		this.itemId = id;
-		this.status = status;
-		this.attribute = attribute;
+	public String getImage() {
+		return image;
 	}
+
+	public void setImage(String image) {
+		this.image = image;
+	}
+
+
 
 	public String getName() {
 		return name;
@@ -96,11 +128,14 @@ public class Item implements Parcelable{
 	
 	public void writeToParcel(Parcel out, int flags) {
 		out.writeInt(this.itemId);
+		out.writeInt(this.itemDBID);
 		out.writeString(this.itemType);
 		out.writeString(this.status);
 		out.writeString(this.name);
 		out.writeString(this.description);
 		out.writeInt(this.attribute);
+		out.writeString(this.image);
+		out.writeString(this.owner);
 
 
 	}
@@ -117,11 +152,14 @@ public class Item implements Parcelable{
 	
 	private Item(Parcel in) {
 		this.itemId = in.readInt();
+		this.itemDBID = in.readInt();
 		this.itemType = in.readString();
 		this.status = in.readString();
 		this.name = in.readString();
 		this.description = in.readString();
 		this.attribute = in.readInt();
+		this.image = in.readString();
+		this.owner = in.readString();
 
 		
 	}

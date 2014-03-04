@@ -2,10 +2,8 @@ package com.chowlb.runforyourlife;
 
 import android.app.ActionBar;
 import android.app.Activity;
-import android.app.AlertDialog;
-import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.widget.ListView;
 import android.widget.Toast;
@@ -13,7 +11,7 @@ import android.widget.Toast;
 public class ShowInventoryActivity extends Activity {
 	private Player player;
 	private ItemListAdapter adapter;
-	
+	private ListView inventoryLayout; 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -27,18 +25,19 @@ public class ShowInventoryActivity extends Activity {
 			if(!gpsEnabled){
 				Toast.makeText(this, "Without GPS enabled you can only view your inventory.",  Toast.LENGTH_LONG).show();
 			}
-			Log.e("chowlb", "Player name passed: " + player.getPlayerName());
+			//Log.e("chowlb", "Player name passed: " + player.getPlayerName());
 			ActionBar ab = getActionBar();
 			ab.setIcon(R.drawable.ic_action_military_backpack_radio_256);
 			ab.setTitle("");
 			ab.setTitle(player.getPlayerName() + " - Inventory" );
 			
-			Log.e("chowlb", "Inventory count: " + player.getInventory().size());
 			
-			ListView inventoryLayout = (ListView) findViewById(R.id.inventoryListView);
+			
+			inventoryLayout = (ListView) findViewById(R.id.inventoryListView);
 			adapter = new ItemListAdapter(this, player.getInventory());
 			inventoryLayout.setAdapter(adapter);
-			inventoryLayout.setOnItemClickListener(new InventoryItemListListener(player.getInventory(),this ));
+			inventoryLayout.setOnItemClickListener(new InventoryItemListListener(player.getInventory(),this, adapter, player ));
+			inventoryLayout.setOnItemLongClickListener(new InventoryItemListListener(player.getInventory(), this, adapter, player));
 		}
 		else{
 			Toast.makeText(this, "Error retrieving inventory.",  Toast.LENGTH_LONG).show();
@@ -52,6 +51,22 @@ public class ShowInventoryActivity extends Activity {
 		getMenuInflater().inflate(R.menu.show_inventory, menu);
 		return true;
 	}
+
+	@Override
+	protected void onResume() {
+		// TODO Auto-generated method stub
+		super.onResume();
+		
+	}
+	
+	@Override
+	public void onBackPressed() {
+	    Intent data = new Intent();
+	    data.putExtra("PLAYER", player);
+	    setResult(Activity.RESULT_OK, data);
+	    super.onBackPressed();
+	}
+	
 	
 	
 	

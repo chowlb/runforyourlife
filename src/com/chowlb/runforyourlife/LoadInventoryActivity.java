@@ -21,16 +21,11 @@ import android.util.Log;
 public class LoadInventoryActivity extends AsyncTask<String, Void, String>{
 
     public AsyncInterface delegate = null;
-   public LoadInventoryActivity() {
+  
+    public LoadInventoryActivity() {
       
    }
    
- 
-   
-    protected void onPreExecute(){
-    	
-    }
-	
 	
 	@Override
 	protected String doInBackground(String... arg0) {

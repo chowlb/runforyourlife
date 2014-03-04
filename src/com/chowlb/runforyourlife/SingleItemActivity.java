@@ -35,9 +35,16 @@ public class SingleItemActivity extends Activity {
 			TextView itemStatus = (TextView) findViewById(R.id.singleItemStatus);
 			itemStatus.setText("");
 			itemStatus.setText(item.getStatus());
+			itemStatus.setTextColor(item.getStatusColor(this));
+			
+			TextView itemDesc = (TextView) findViewById(R.id.singleItemDescription);
+			itemDesc.setText("");
+			itemDesc.setText(item.getDescription());
 			
 			ImageView itemImage = (ImageView) findViewById(R.id.itemBigImage);
-			itemImage.setImageDrawable(getResources().getDrawable(R.drawable.driedbeef_item_img));
+			
+			itemImage.setImageResource(getResources().getIdentifier(item.getImage()+ "_item_img", "drawable", getPackageName()));
+			
 			
 		}
 		else{
@@ -46,11 +53,11 @@ public class SingleItemActivity extends Activity {
 		
 	}
 
-	@Override
-	public boolean onCreateOptionsMenu(Menu menu) {
+	//@Override
+	//public boolean onCreateOptionsMenu(Menu menu) {
 		// Inflate the menu; this adds items to the action bar if it is present.
-		getMenuInflater().inflate(R.menu.single_item, menu);
-		return true;
-	}
+	//	getMenuInflater().inflate(R.menu.single_item, menu);
+	//	return true;
+	//}
 
 }

@@ -122,26 +122,30 @@ public class LoginActivity extends Activity implements AsyncInterface{
 	
 	public void handleInventory(String invResult) {
 		String[] separated = invResult.split("<br>");
-		Log.e("chowlb", "Inventory list size: " + separated.length);
+		//Log.e("chowlb", "Inventory list size: " + separated.length);
 	    if(invResult != null && separated.length > 0) {
-	    	Item item = new Item();
+	    	
 	    	for(int i = 0; i < separated.length; i++) {
 	    		String[] items = separated[i].split(";");
 	    		if(items.length>0) {
+	    			Item item = new Item();
 	    			item.setItemId(Integer.parseInt(items[0].toString()));
 	    			item.setName(items[1]);
 	    			item.setDescription(items[2]);
 	    			item.setItemType(items[3]);
 	    			item.setStatus(items[4]);
 	    			item.setAttribute(Integer.parseInt(items[5].toString()));
-	    			 			
-	    			
+	    			item.setImage(items[6]);	
+	    			item.setItemDBID(Integer.parseInt(items[7].toString()));
+	    			item.setOwner(player.getPlayerName());
 	    			if(!player.addItem(item)) {
 	    				Toast.makeText(this, "Inventory is full!", Toast.LENGTH_LONG).show();
 	    			}
-	    			Log.e("chowlb", "Inv size after add: " + player.getInventory().size());
+	    			//Log.e("chowlb", "Inv size after add: " + player.getInventory().size());
 	    		}
+	    		
 	    	}
+	    	
 	    }else {
 	    	Toast.makeText(this,  "There was an error getting inventory. Check your network settings.", Toast.LENGTH_LONG).show();
 	    }
@@ -153,12 +157,13 @@ public class LoginActivity extends Activity implements AsyncInterface{
 	public void startGameMap() {
 		Intent intent = new Intent(LoginActivity.this, GameMapActivity.class);
 		Bundle bundle = new Bundle();
-		Log.e("chowlb", "Before parcel inv size: " + player.getInventory().size());
+		//Log.e("chowlb", "Before parcel inv size: " + player.getInventory().size());
 		bundle.putParcelable("PLAYER", player);
 		intent.putExtras(bundle);
 		this.startActivity(intent);
 		this.finish();
 	}
+
 
 	//@Override
 	//public boolean onCreateOptionsMenu(Menu menu) {

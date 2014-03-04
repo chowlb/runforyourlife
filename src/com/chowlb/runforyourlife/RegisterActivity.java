@@ -147,8 +147,9 @@ public class RegisterActivity extends Activity implements AsyncInterface {
 	    			item.setItemType(items[3]);
 	    			item.setStatus(items[4]);
 	    			item.setAttribute(Integer.parseInt(items[5].toString()));
-	    			 			
-	    			
+	    			item.setImage(items[6]);
+	    			item.setItemDBID(Integer.parseInt(items[7].toString())); 			
+	    			item.setOwner(player.getPlayerName());
 	    			if(!player.addItem(item)) {
 	    				Toast.makeText(this, "Inventory is full!", Toast.LENGTH_LONG).show();
 	    			}
@@ -161,6 +162,8 @@ public class RegisterActivity extends Activity implements AsyncInterface {
 	    
 	    
 	}
+
+
 
 //	@Override
 //	public boolean onCreateOptionsMenu(Menu menu) {

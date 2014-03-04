@@ -37,10 +37,13 @@ public class Player implements Parcelable{
 	}
 	
 
-	public Item returnItemAtPos(int pos) {
+	public Item getItemAtPos(int pos) {
 		return inventory.get(pos);
 	}
 	
+	public void removeItemAtPos(int pos) {
+		inventory.remove(pos);
+	}
 	
 	public String getPlayerName() {
 		return playerName;
