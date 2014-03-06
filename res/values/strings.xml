@@ -32,5 +32,7 @@
     <string name="status">STATUS</string>
     <string name="logout">Logout</string>
     <string name="title_activity_single_item">SingleItemActivity</string>
+    <string name="quit">Quit</string>
+    <string name="addDrop">Add Drop</string>
 
 </resources>

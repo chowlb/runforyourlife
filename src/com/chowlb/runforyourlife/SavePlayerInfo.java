@@ -43,7 +43,7 @@ public class SavePlayerInfo extends AsyncTask<Object, Void, String>{
 		
 		try {
 			HttpClient client = new HttpClient();
-			result = client.postJsonData(jsonObjSend.toString(), URL);
+			client.postJsonData(jsonObjSend.toString(), URL);
 		}catch(Exception e) {
 			e.printStackTrace();
 		}

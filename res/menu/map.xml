@@ -4,8 +4,15 @@
         android:id="@+id/menu_showInventory"
         android:showAsAction="ifRoom"
         android:title="@string/inventory"
-        android:icon="@drawable/ic_action_military_backpack_radio_256"
+        android:icon="@drawable/ic_action_ic_action_military_backpack_radio"
         />
+    <item
+        android:id="@+id/menu_addDrop"
+        android:showAsAction="ifRoom"
+        android:title="@string/addDrop"
+        android:icon="@drawable/ic_action_ic_action_add_drop"
+        />
+    
     <item
         android:id="@+id/menu_logout"
         android:showAsAction="ifRoom"

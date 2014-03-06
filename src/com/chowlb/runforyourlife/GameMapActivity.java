@@ -1,6 +1,8 @@
 package com.chowlb.runforyourlife;
 
 
+import java.util.List;
+
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
@@ -11,7 +13,6 @@ import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
-import android.renderscript.Element.DataType;
 import android.support.v4.app.FragmentActivity;
 import android.util.Log;
 import android.view.Menu;
@@ -21,9 +22,12 @@ import android.widget.Toast;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapFragment;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
+import com.google.android.gms.maps.model.MarkerOptions;
 
-public class GameMapActivity extends FragmentActivity implements AsyncInterface{
+public class GameMapActivity extends FragmentActivity implements AsyncMapInterface{
 
 	public Player player;
 	private GoogleMap googleMap;
@@ -32,13 +36,17 @@ public class GameMapActivity extends FragmentActivity implements AsyncInterface{
 	private LocationListener locListener;
 	private FragmentActivity local;
 	SavePlayerInfo saveInfoActivity = new SavePlayerInfo();
-	boolean realExit = false;
+	AddCacheAsyncActivity acaa = new AddCacheAsyncActivity();
+	LoadAllCaches lac = new LoadAllCaches();
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_map);
 		local = this;
+		lac.delegate = this;
+		acaa.delegate = this;
+		
 		Intent i = getIntent();
 		Log.e("chowlb", "GAME MAP ONCREATE");
 		Bundle extras = getIntent().getExtras();
@@ -60,6 +68,7 @@ public class GameMapActivity extends FragmentActivity implements AsyncInterface{
 				}
 				googleMap.setMapType(GoogleMap.MAP_TYPE_SATELLITE);
 				googleMap.setMyLocationEnabled(true);
+				//googleMap.setOnMapLongClickListener(new GameMapListener(googleMap, player, local));
 			}catch(Exception e) {
 				e.printStackTrace();
 			}
@@ -96,20 +105,18 @@ public class GameMapActivity extends FragmentActivity implements AsyncInterface{
 		                    location.getLatitude() + " " + location.getLongitude(),
 		                    Toast.LENGTH_LONG).show();
 
-		            /*googleMap.addMarker(new MarkerOptions()
-		                    .position(
-		                            new LatLng(location.getLatitude(), location
-		                                    .getLongitude()))
-		                    .title("my position")
-		                    .icon(BitmapDescriptorFactory
-		                            .defaultMarker(BitmapDescriptorFactory.HUE_AZURE)));*/
+		    
 
 		            googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(
 		                    location.getLatitude(), location.getLongitude()), 25.0f));
 
 		        }
 		    };
-		    locManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 5000, 0, locListener);
+		    locManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, locListener);
+		    
+		   
+		    lac.execute("");
+		    
 	}
 	
 	private void buildAlertMessageNoGps() {
@@ -151,10 +158,8 @@ public class GameMapActivity extends FragmentActivity implements AsyncInterface{
 	        buildAlertMessageNoGps();
 	    }
 		else{
-			locManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 5000, 0, locListener);
+			locManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, locListener);
 		}
-		//Log.e("chowlb", "GAME MAP RESUME");
-		//Log.e("chowlb", "Inventory: " + player.getInventory().size());
 	}
 	
 	@Override
@@ -175,6 +180,19 @@ public class GameMapActivity extends FragmentActivity implements AsyncInterface{
 			intent.putExtras(bundle);
 			startActivityForResult(intent, 1);
 			return true;
+		} else if(itemId == R.id.menu_addDrop) {
+			final AlertDialog.Builder builder = new AlertDialog.Builder(local);
+		    builder.setMessage("Do you want to place a supply cache here?")
+		           .setCancelable(false)
+		           .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+		               public void onClick(@SuppressWarnings("unused") final DialogInterface dialog, @SuppressWarnings("unused") final int id) {
+		            	   acaa.execute(player, locManager.getLastKnownLocation(LocationManager.GPS_PROVIDER));
+		               }
+		           })
+		           .setNegativeButton("No", null);
+		    final AlertDialog alert = builder.create();
+		    alert.show();
+		    return true;
 		} else if(itemId == R.id.menu_logout){
 			SharedPreferences prefs = local.getSharedPreferences("com.chowlb.runforyourlife", Context.MODE_PRIVATE);
 			SharedPreferences.Editor editor = prefs.edit();
@@ -186,7 +204,6 @@ public class GameMapActivity extends FragmentActivity implements AsyncInterface{
 			return super.onOptionsItemSelected(item);
 		}
 	}
-
 	
 	public void doExit() {
 		// TODO Auto-generated method stub
@@ -202,14 +219,7 @@ public class GameMapActivity extends FragmentActivity implements AsyncInterface{
 				
 			}
 		})
-		.setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
-			
-			@Override
-			public void onClick(DialogInterface dialog, int which) {
-				realExit = false;
-				
-			}
-		}).show();
+		.setNegativeButton(android.R.string.no, null).show();
 		
 	}
 	
@@ -217,14 +227,7 @@ public class GameMapActivity extends FragmentActivity implements AsyncInterface{
 	public void onBackPressed() {
 		doExit();
 	}
-	
-
-	@Override
-	public void handleInventory(String result) {
-		// TODO Auto-generated method stub
 		
-	}
-	
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 	    super.onActivityResult(requestCode, resultCode, data);
@@ -234,5 +237,41 @@ public class GameMapActivity extends FragmentActivity implements AsyncInterface{
 	        //Do whatever you want with yourData
 	    }
 	}
+
+	@Override
+	public void createCache(Cache cache) {
+		if(cache != null) {
+			Log.e("chowlb",  "Creating Cache with cacheID: " + cache.getCacheID());
+			googleMap.addMarker(new MarkerOptions()
+		    .position(cache.getLocation())
+		    .draggable(false)
+		    .title(cache.getCacheText())
+		    .snippet(cache.getOwner())
+		    .flat(false)
+		    .icon(BitmapDescriptorFactory.fromResource(R.drawable.briefcase_drop_img)));
+		}
+		else {
+			Toast.makeText(local,  "There was an error creating the cache", Toast.LENGTH_LONG).show();
+		}
+	}
+
+	@Override
+	public void createCacheFromList(List<Cache> caches) {
+		if(caches != null && caches.size() >0) {
+			for(int i=0; i<caches.size(); i++) {
+			googleMap.addMarker(new MarkerOptions()
+		        .position(caches.get(i).getLocation())
+		        .draggable(false)
+		        .title(caches.get(i).getCacheText())
+		        .snippet(caches.get(i).getOwner())
+		        .flat(false)
+		        .icon(BitmapDescriptorFactory.fromResource(R.drawable.briefcase_drop_img)));
+			}
+		}
+		else {
+			Toast.makeText(local,  "There was an error gathering all the caches", Toast.LENGTH_LONG).show();
+		}
+	}
+
 
 }

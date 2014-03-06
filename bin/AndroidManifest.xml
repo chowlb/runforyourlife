@@ -61,7 +61,8 @@
         <activity
             android:name="com.chowlb.runforyourlife.ShowInventoryActivity"
             android:label="@string/title_activity_show_inventory"
-            android:screenOrientation="portrait" >
+            android:screenOrientation="portrait"
+            android:parentActivityName="com.chowlb.runforyourlife.GameMapActivity" >
         </activity>
 
         <meta-data

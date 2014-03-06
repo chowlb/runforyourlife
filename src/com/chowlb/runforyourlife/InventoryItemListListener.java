@@ -47,8 +47,8 @@ public class InventoryItemListListener implements OnItemClickListener, OnItemLon
 		final int position = pos;
 		
 		new AlertDialog.Builder(parent.getContext())
-		.setTitle("Delete - " + item.getName())
-		.setMessage("Do you wish to delete " + item.getName() +"?")
+		.setTitle("Drop - " + item.getName())
+		.setMessage("Do you wish to drop " + item.getName() +"?")
 		.setIcon(android.R.drawable.ic_dialog_alert)
 		.setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
 			@Override

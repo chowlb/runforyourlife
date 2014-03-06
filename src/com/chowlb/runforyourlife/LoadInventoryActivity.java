@@ -1,86 +1,70 @@
 package com.chowlb.runforyourlife;
 
-import java.io.BufferedReader;
-import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.apache.http.HttpEntity;
-import org.apache.http.HttpResponse;
-import org.apache.http.NameValuePair;
-import org.apache.http.client.HttpClient;
-import org.apache.http.client.entity.UrlEncodedFormEntity;
-import org.apache.http.client.methods.HttpPost;
-import org.apache.http.impl.client.DefaultHttpClient;
-import org.apache.http.message.BasicNameValuePair;
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import android.os.AsyncTask;
 import android.util.Log;
 
-public class LoadInventoryActivity extends AsyncTask<String, Void, String>{
+public class LoadInventoryActivity extends AsyncTask<String, Void, List<Item>>{
 
     public AsyncInterface delegate = null;
-  
+    List<Item> items= new ArrayList<Item>();
+    
     public LoadInventoryActivity() {
       
    }
    
-	
+    @Override
+    protected void onPreExecute() {
+       super.onPreExecute();
+       
+   }
+    
+    
 	@Override
-	protected String doInBackground(String... arg0) {
+	protected List<Item> doInBackground(String... arg0) {
 		
-		int interaction = Integer.parseInt((String) arg0[0].toString());
-		String username = (String) arg0[1];
-		//Log.e("chowlb", "LoadInventoryActivity username: " + username);
+		String username = (String) arg0[0];
 		String link="http://www.chowlb.com/runforyourlife/getinventory_app.php";
-		List<NameValuePair> parameters = new ArrayList<NameValuePair>();
-	    
-		
-		parameters.add(new BasicNameValuePair("username", username));
-		
-		HttpClient httpClient = new DefaultHttpClient();
-		HttpPost httpPost = new HttpPost(link);
-		
-		InputStream inputStream = null;
-		BufferedReader reader = null;
-		StringBuilder sb = new StringBuilder();
+		JSONObject jsonObjSend = new JSONObject();
 		
 		try {
-			httpPost.setEntity(new UrlEncodedFormEntity(parameters, "UTF-8"));
-			HttpResponse response = httpClient.execute(httpPost);
-			HttpEntity entity = response.getEntity();
-			
-			inputStream = entity.getContent();
-			reader = new BufferedReader((new InputStreamReader(inputStream)));
-			
-			String line;
-			while((line = reader.readLine())!=null) {
-				//Log.e("chowlb", "Line: " + line);
-				sb.append(line);
-			}
-				
-		}catch(Exception e) {
+			jsonObjSend.put("USERNAME", username);			
+		}catch(JSONException e) {
 			e.printStackTrace();
-		}finally {
-			try {
-				if(reader != null) {
-					reader.close();
-				}
-				if (inputStream != null) {
-					inputStream.close();
-				}
-			}catch(Exception e) {
-				e.printStackTrace();
-			}
 		}
 		
-		return sb.toString();		
+		try {
+			HttpClient client = new HttpClient();
+			Log.e("chowlb", "Sending json: " + jsonObjSend);
+			JSONArray jsonResponse = client.postJsonData(jsonObjSend.toString(), link);
+			if(jsonResponse.length() > 0) {
+				for(int i=0; i<jsonResponse.length(); i++) {
+					JSONObject jsonObj  = jsonResponse.getJSONObject(i);
+					Item item = new Item();
+					item = new Item(jsonObj.getInt("ITEM_ID"), jsonObj.getInt("ITEM_DB_ID"), jsonObj.getString("ITEM_NAME"),
+							 jsonObj.getString("ITEM_DESCRIPTION"), jsonObj.getString("ITEM_TYPE"),
+							 jsonObj.getString("STATUS"), jsonObj.getInt("ITEM_ATTRIBUTE"), username);
+					items.add(item);
+				}
+			}
+		}catch(Exception e) {
+			e.printStackTrace();
+		}		
+		Log.e("chowlb", "Retuning items: " + items.size());
+		return items;	
 		
 	}
 
 	 @Override
-	   protected void onPostExecute(String result){
+	  protected void onPostExecute(List<Item> result){
+		 super.onPostExecute(result);
+		 Log.e("chowlb", "Calling on postexcute with result size: " + result.size());
 		 delegate.handleInventory(result);
 	 }
 
