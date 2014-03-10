@@ -8,7 +8,7 @@ import android.os.Parcelable;
 
 import com.google.android.gms.maps.model.LatLng;
 
-public class Cache {
+public class Cache implements Parcelable {
 	private int cacheID;
 	private String cacheText = "Supply Cache";
 	private String owner;

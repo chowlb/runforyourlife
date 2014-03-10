@@ -297,17 +297,19 @@ containing a value of this type.
         public static final int activity_login=0x7f030000;
         public static final int activity_map=0x7f030001;
         public static final int activity_register=0x7f030002;
-        public static final int activity_show_inventory=0x7f030003;
-        public static final int activity_single_item=0x7f030004;
-        public static final int activity_splash=0x7f030005;
-        public static final int item_list_row=0x7f030006;
+        public static final int activity_show_cache_inventory=0x7f030003;
+        public static final int activity_show_inventory=0x7f030004;
+        public static final int activity_single_item=0x7f030005;
+        public static final int activity_splash=0x7f030006;
+        public static final int item_list_row=0x7f030007;
     }
     public static final class menu {
         public static final int main=0x7f0a0000;
         public static final int map=0x7f0a0001;
         public static final int register=0x7f0a0002;
-        public static final int show_inventory=0x7f0a0003;
-        public static final int single_item=0x7f0a0004;
+        public static final int show_cache_inventory=0x7f0a0003;
+        public static final int show_inventory=0x7f0a0004;
+        public static final int single_item=0x7f0a0005;
     }
     public static final class string {
         public static final int action_settings=0x7f06001b;
@@ -429,6 +431,7 @@ containing a value of this type.
         public static final int suicide=0x7f060033;
         public static final int title_activity_map=0x7f060028;
         public static final int title_activity_register=0x7f060029;
+        public static final int title_activity_show_cache_inventory=0x7f06003b;
         public static final int title_activity_show_inventory=0x7f060034;
         public static final int title_activity_single_item=0x7f060038;
         public static final int usernameTaken=0x7f06002b;

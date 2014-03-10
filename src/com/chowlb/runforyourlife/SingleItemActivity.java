@@ -3,10 +3,7 @@ package com.chowlb.runforyourlife;
 import android.os.Bundle;
 import android.app.ActionBar;
 import android.app.Activity;
-import android.util.Log;
-import android.view.Menu;
 import android.widget.ImageView;
-import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 

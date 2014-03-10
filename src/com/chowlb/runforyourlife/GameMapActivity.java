@@ -1,6 +1,7 @@
 package com.chowlb.runforyourlife;
 
 
+import java.util.HashMap;
 import java.util.List;
 
 import android.app.Activity;
@@ -13,6 +14,7 @@ import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
+import android.provider.Settings;
 import android.support.v4.app.FragmentActivity;
 import android.util.Log;
 import android.view.Menu;
@@ -36,8 +38,10 @@ public class GameMapActivity extends FragmentActivity implements AsyncMapInterfa
 	private LocationListener locListener;
 	private FragmentActivity local;
 	SavePlayerInfo saveInfoActivity = new SavePlayerInfo();
-	AddCacheAsyncActivity acaa = new AddCacheAsyncActivity();
+	AddCacheAsyncActivity acaa;
 	LoadAllCaches lac = new LoadAllCaches();
+	static final float COORDINATE_OFFSET = 0.00002f; // You can change this value according to your need
+	public static HashMap<String, Cache> markerHashMap = new HashMap<String, Cache>();
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -45,7 +49,7 @@ public class GameMapActivity extends FragmentActivity implements AsyncMapInterfa
 		setContentView(R.layout.activity_map);
 		local = this;
 		lac.delegate = this;
-		acaa.delegate = this;
+		
 		
 		Intent i = getIntent();
 		Log.e("chowlb", "GAME MAP ONCREATE");
@@ -68,7 +72,7 @@ public class GameMapActivity extends FragmentActivity implements AsyncMapInterfa
 				}
 				googleMap.setMapType(GoogleMap.MAP_TYPE_SATELLITE);
 				googleMap.setMyLocationEnabled(true);
-				//googleMap.setOnMapLongClickListener(new GameMapListener(googleMap, player, local));
+				googleMap.setOnMarkerClickListener(new GameMapListener(local));
 			}catch(Exception e) {
 				e.printStackTrace();
 			}
@@ -89,7 +93,7 @@ public class GameMapActivity extends FragmentActivity implements AsyncMapInterfa
 		        @Override
 		        public void onProviderEnabled(String provider) {
 		            // TODO Auto-generated method stub
-
+		        	
 		        }
 
 		        @Override
@@ -108,11 +112,11 @@ public class GameMapActivity extends FragmentActivity implements AsyncMapInterfa
 		    
 
 		            googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(
-		                    location.getLatitude(), location.getLongitude()), 25.0f));
+		                    location.getLatitude(), location.getLongitude()), 30.0f));
 
 		        }
 		    };
-		    locManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, locListener);
+		    locManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 1500, 0, locListener);
 		    
 		   
 		    lac.execute("");
@@ -124,12 +128,13 @@ public class GameMapActivity extends FragmentActivity implements AsyncMapInterfa
 	    builder.setMessage("Your GPS seems to be disabled, do you want to enable it?")
 	           .setCancelable(false)
 	           .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
-	               public void onClick(@SuppressWarnings("unused") final DialogInterface dialog, @SuppressWarnings("unused") final int id) {
-	                   startActivity(new Intent(android.provider.Settings.ACTION_LOCATION_SOURCE_SETTINGS));
+	               public void onClick(final DialogInterface dialog, final int id) {
+	            	   Intent intent = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
+	                   startActivity(intent);
 	               }
 	           })
 	           .setNegativeButton("No", new DialogInterface.OnClickListener() {
-	               public void onClick(final DialogInterface dialog, @SuppressWarnings("unused") final int id) {
+	               public void onClick(final DialogInterface dialog, final int id) {
 	                    dialog.cancel();
 	                    Intent intent = new Intent(local, ShowInventoryActivity.class);
 	                   
@@ -154,11 +159,8 @@ public class GameMapActivity extends FragmentActivity implements AsyncMapInterfa
 	@Override
 	public void onResume() {
 		super.onResume();
-		if ( !locManager.isProviderEnabled( LocationManager.GPS_PROVIDER ) ) {
-	        buildAlertMessageNoGps();
-	    }
-		else{
-			locManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, locListener);
+		if ( locManager.isProviderEnabled( LocationManager.GPS_PROVIDER ) ) {
+	       	locManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 1500, 0, locListener);
 		}
 	}
 	
@@ -185,8 +187,8 @@ public class GameMapActivity extends FragmentActivity implements AsyncMapInterfa
 		    builder.setMessage("Do you want to place a supply cache here?")
 		           .setCancelable(false)
 		           .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
-		               public void onClick(@SuppressWarnings("unused") final DialogInterface dialog, @SuppressWarnings("unused") final int id) {
-		            	   acaa.execute(player, locManager.getLastKnownLocation(LocationManager.GPS_PROVIDER));
+		               public void onClick(final DialogInterface dialog, final int id) {
+		            	   addMarkerService();
 		               }
 		           })
 		           .setNegativeButton("No", null);
@@ -203,6 +205,10 @@ public class GameMapActivity extends FragmentActivity implements AsyncMapInterfa
 		}else {
 			return super.onOptionsItemSelected(item);
 		}
+	}
+	
+	public void addMarkerService() {
+		new AddCacheAsyncActivity(this, googleMap).execute(player, locManager.getLastKnownLocation(LocationManager.GPS_PROVIDER));
 	}
 	
 	public void doExit() {
@@ -239,33 +245,18 @@ public class GameMapActivity extends FragmentActivity implements AsyncMapInterfa
 	}
 
 	@Override
-	public void createCache(Cache cache) {
-		if(cache != null) {
-			Log.e("chowlb",  "Creating Cache with cacheID: " + cache.getCacheID());
-			googleMap.addMarker(new MarkerOptions()
-		    .position(cache.getLocation())
-		    .draggable(false)
-		    .title(cache.getCacheText())
-		    .snippet(cache.getOwner())
-		    .flat(false)
-		    .icon(BitmapDescriptorFactory.fromResource(R.drawable.briefcase_drop_img)));
-		}
-		else {
-			Toast.makeText(local,  "There was an error creating the cache", Toast.LENGTH_LONG).show();
-		}
-	}
-
-	@Override
 	public void createCacheFromList(List<Cache> caches) {
 		if(caches != null && caches.size() >0) {
 			for(int i=0; i<caches.size(); i++) {
-			googleMap.addMarker(new MarkerOptions()
+			Marker newMarker = googleMap.addMarker(new MarkerOptions()
 		        .position(caches.get(i).getLocation())
 		        .draggable(false)
 		        .title(caches.get(i).getCacheText())
 		        .snippet(caches.get(i).getOwner())
 		        .flat(false)
 		        .icon(BitmapDescriptorFactory.fromResource(R.drawable.briefcase_drop_img)));
+
+				markerHashMap.put(newMarker.getId(), caches.get(i));
 			}
 		}
 		else {
@@ -273,5 +264,7 @@ public class GameMapActivity extends FragmentActivity implements AsyncMapInterfa
 		}
 	}
 
+	
+	
 
 }

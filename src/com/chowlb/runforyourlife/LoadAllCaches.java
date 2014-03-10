@@ -34,18 +34,18 @@ public class LoadAllCaches extends AsyncTask<String, Void, List<Cache>>{
 		JSONArray caches = jsonParser.getJSONFromUrl(link);			
 		
 		try{
-			Log.e("chowlb", "Cache list size: " + caches.length());
-			Log.e("chowlb", "Caches: " + caches.toString());
+			//Log.e("chowlb", "Cache list size: " + caches.length());
+			//Log.e("chowlb", "Caches: " + caches.toString());
 			for(int i=0; i<caches.length(); i++) {
 				JSONObject c = caches.getJSONObject(i);
-				Log.e("chowlb", "CacheID: " + c.getInt("CACHE_ID"));
+				//Log.e("chowlb", "CacheID: " + c.getInt("CACHE_ID"));
 				Cache cache = new Cache(c.getInt("CACHE_ID"), c.getString("OWNER_NAME"), c.getInt("OWNER_ID"), c.getDouble("LATITUDE"), c.getDouble("LONGITUDE"));
 				cacheList.add(cache);
 			}
 		}catch(JSONException e) {
 			Log.e("chowlb", "Error parsing JSON: " + e.toString());
 		}
-		Log.e("chowlb", "CacheList Size: " + cacheList.size());
+		//Log.e("chowlb", "CacheList Size: " + cacheList.size());
 		return cacheList;
 	}
 

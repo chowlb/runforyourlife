@@ -61,8 +61,8 @@
         <activity
             android:name="com.chowlb.runforyourlife.ShowInventoryActivity"
             android:label="@string/title_activity_show_inventory"
-            android:screenOrientation="portrait"
-            android:parentActivityName="com.chowlb.runforyourlife.GameMapActivity" >
+            android:parentActivityName="com.chowlb.runforyourlife.GameMapActivity"
+            android:screenOrientation="portrait" >
         </activity>
 
         <meta-data
@@ -75,6 +75,10 @@
         <activity
             android:name="com.chowlb.runforyourlife.SingleItemActivity"
             android:label="@string/title_activity_single_item" >
+        </activity>
+        <activity
+            android:name="com.chowlb.runforyourlife.ShowCacheInventoryActivity"
+            android:label="@string/title_activity_show_cache_inventory" >
         </activity>
     </application>
 

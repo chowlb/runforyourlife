@@ -30,6 +30,16 @@ public class Item implements Parcelable{
 		this.owner = owner;
 	}
 	
+	protected Item(int id, int itemDBID, String name, String description, String itemType, String status, int attribute) {
+		this.name = name;
+		this.description = description;
+		this.itemType = itemType;
+		this.itemId = id;
+		this.status = status;
+		this.attribute = attribute;
+		this.itemDBID = itemDBID;
+	}
+	
 	public String getOwner() {
 		return owner;
 	}

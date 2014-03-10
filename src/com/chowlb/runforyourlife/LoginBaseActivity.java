@@ -6,7 +6,6 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
-import android.widget.Toast;
 
 public abstract class LoginBaseActivity extends Activity implements AsyncInterface{
 
@@ -24,15 +23,16 @@ public abstract class LoginBaseActivity extends Activity implements AsyncInterfa
 		Bundle bundle = new Bundle();
 		bundle.putParcelable("PLAYER", player);
 		intent.putExtras(bundle);
-		Log.e("chowlb", "starting activity");
+		//Log.e("chowlb", "starting activity");
 		this.startActivity(intent);
 		this.finish();
 	}
 		
 	@Override
 	public void handleInventory(List<Item> invResult) {
+
 		player.setInventory(invResult);
-		Log.e("chowlb", "Set inventory: " + invResult.size());
+		//Log.e("chowlb", "Set inventory: " + invResult.size());
 	    startGameMap();
 	}
 

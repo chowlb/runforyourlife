@@ -1,76 +1,57 @@
 package com.chowlb.runforyourlife;
 
-
 import java.util.List;
 
-import android.app.AlertDialog;
-import android.content.DialogInterface;
+import android.content.Intent;
+import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
-import android.widget.Toast;
+import android.util.Log;
 
 import com.google.android.gms.maps.GoogleMap;
-import com.google.android.gms.maps.GoogleMap.OnMapLongClickListener;
-import com.google.android.gms.maps.model.BitmapDescriptorFactory;
-import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.GoogleMap.OnMarkerClickListener;
 import com.google.android.gms.maps.model.Marker;
-import com.google.android.gms.maps.model.MarkerOptions;
 
 
 
 
-public class GameMapListener implements OnMapLongClickListener{
-	private GoogleMap googleMap;
-	Player p;
+public class GameMapListener implements OnMarkerClickListener, AsyncMarkerInterface{
+	
+	private Cache cache;
 	FragmentActivity local;
-	private LatLng pnt;
-	private AddCacheAsyncActivity acaa = new AddCacheAsyncActivity();
+	LoadCacheInventoryActivity lcia = new LoadCacheInventoryActivity();
 	
 	
-	public GameMapListener(GoogleMap mMap, Player player, FragmentActivity act) {
-		//acaa.delegate=this;
-		googleMap = mMap;
-		p = player;
+	public GameMapListener(FragmentActivity act) {
+		
 		local = act;
 	}
-	
+
 	@Override
-	public void onMapLongClick(LatLng point) {
-		pnt = point;
-				
-		final AlertDialog.Builder builder = new AlertDialog.Builder(local);
-	    builder.setMessage("Do you want to place a supply cache here?")
-	           .setCancelable(false)
-	           .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
-	               public void onClick(@SuppressWarnings("unused") final DialogInterface dialog, @SuppressWarnings("unused") final int id) {
-	            	   acaa.execute(p, pnt);
-	               }
-	           })
-	           .setNegativeButton("No", null);
-	    final AlertDialog alert = builder.create();
-	    alert.show();
+	public boolean onMarkerClick(Marker marker) {
+		cache = (Cache) GameMapActivity.markerHashMap.get(marker.getId());
+		LoadCacheInventoryActivity lcia = new LoadCacheInventoryActivity();
+		lcia.delegate = this;
+		lcia.execute(String.valueOf(cache.getCacheID()));
 		
-		
-		
+		return false;
 	}
 	
-//	public void createCache(Integer cacheID) {
-//		if(cacheID != null && cacheID > 0) {
-//			Marker cache = googleMap.addMarker(new MarkerOptions()
-//		    .position(cac)
-//		    .draggable(false)
-//		    .title("Supply Cache")
-//		    .snippet(p.getPlayerName())
-//		    .flat(true)
-//		    .icon(BitmapDescriptorFactory.fromResource(R.drawable.briefcase_drop_img)));
-//		}
-//		else {
-//			Toast.makeText(local,  "There was an error creating the cache", Toast.LENGTH_LONG).show();
-//		}
-//	}
-
+	
+	@Override
+	public void handleInventory(List<Item> invResult) {
+		if(invResult == null) {
+			Log.e("chowlb", "this shit's null yo");
+		}
+		cache.setInventory(invResult);
+		
+		Intent intent = new Intent(local, ShowCacheInventoryActivity.class);
+		Bundle bundle = new Bundle();
+		bundle.putParcelable("CACHE", cache);
+		intent.putExtras(bundle);
+		local.startActivityForResult(intent, 1);
+	}
 	
 
-	
 	
 }
 	

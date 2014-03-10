@@ -34,5 +34,6 @@
     <string name="title_activity_single_item">SingleItemActivity</string>
     <string name="quit">Quit</string>
     <string name="addDrop">Add Drop</string>
+    <string name="title_activity_show_cache_inventory">ShowCacheInventoryActivity</string>
 
 </resources>
