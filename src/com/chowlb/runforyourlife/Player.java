@@ -36,6 +36,13 @@ public class Player implements Parcelable{
 		}	
 	}
 	
+	public boolean canAddItem() {
+		if(this.inventory.size() < this.inventorySize) {
+			return true;		
+		}
+		return false;
+	}
+	
 
 	public Item getItemAtPos(int pos) {
 		return inventory.get(pos);

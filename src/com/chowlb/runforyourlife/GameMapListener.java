@@ -17,12 +17,12 @@ import com.google.android.gms.maps.model.Marker;
 public class GameMapListener implements OnMarkerClickListener, AsyncMarkerInterface{
 	
 	private Cache cache;
+	private Player player;
 	FragmentActivity local;
 	LoadCacheInventoryActivity lcia = new LoadCacheInventoryActivity();
 	
-	
-	public GameMapListener(FragmentActivity act) {
-		
+	public GameMapListener(FragmentActivity act, Player p) {
+		player = p;
 		local = act;
 	}
 
@@ -39,17 +39,16 @@ public class GameMapListener implements OnMarkerClickListener, AsyncMarkerInterf
 	
 	@Override
 	public void handleInventory(List<Item> invResult) {
-		if(invResult == null) {
-			Log.e("chowlb", "this shit's null yo");
-		}
 		cache.setInventory(invResult);
 		
 		Intent intent = new Intent(local, ShowCacheInventoryActivity.class);
 		Bundle bundle = new Bundle();
 		bundle.putParcelable("CACHE", cache);
+		bundle.putParcelable("PLAYER", player);
 		intent.putExtras(bundle);
 		local.startActivityForResult(intent, 1);
 	}
+
 	
 
 	

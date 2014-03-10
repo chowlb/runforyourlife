@@ -5,6 +5,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import android.os.AsyncTask;
+import android.util.Log;
 
 public class SavePlayerInfo extends AsyncTask<Object, Void, String>{
 	public AsyncInterface delegate = null;
@@ -34,7 +35,7 @@ public class SavePlayerInfo extends AsyncTask<Object, Void, String>{
 				invArray.put(item);
 			}
 			jsonObjSend.put("ITEMS", invArray);
-			
+			Log.e("chowlb", "SAVING JSON: " + jsonObjSend.toString());
 			
 		}catch(JSONException e) {
 			e.printStackTrace();

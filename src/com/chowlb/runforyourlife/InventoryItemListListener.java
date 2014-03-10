@@ -54,7 +54,7 @@ public class InventoryItemListListener implements OnItemClickListener, OnItemLon
 			@Override
 			public void onClick(DialogInterface dialog, int which) {
 				DeleteItem deleteItemActivity = new DeleteItem();
-				deleteItemActivity.execute(item);
+				deleteItemActivity.execute(item, 2);
 				player.removeItemAtPos(position);
 				la.notifyDataSetChanged();
 			}

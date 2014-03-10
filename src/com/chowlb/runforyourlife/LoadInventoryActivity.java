@@ -10,7 +10,7 @@ import org.json.JSONObject;
 import android.os.AsyncTask;
 import android.util.Log;
 
-public class LoadInventoryActivity extends AsyncTask<String, Void, List<Item>>{
+public class LoadInventoryActivity extends AsyncTask<Player, Void, List<Item>>{
 
     public AsyncInterface delegate = null;
     List<Item> items= new ArrayList<Item>();
@@ -27,14 +27,14 @@ public class LoadInventoryActivity extends AsyncTask<String, Void, List<Item>>{
     
     
 	@Override
-	protected List<Item> doInBackground(String... arg0) {
+	protected List<Item> doInBackground(Player... arg0) {
 		
-		String username = (String) arg0[0];
+		Player player = (Player) arg0[0];
 		String link="http://www.chowlb.com/runforyourlife/getinventory_app.php";
 		JSONObject jsonObjSend = new JSONObject();
 		
 		try {
-			jsonObjSend.put("USERNAME", username);			
+			jsonObjSend.put("USERID", player.getPlayerID());			
 		}catch(JSONException e) {
 			e.printStackTrace();
 		}
@@ -47,16 +47,16 @@ public class LoadInventoryActivity extends AsyncTask<String, Void, List<Item>>{
 				for(int i=0; i<jsonResponse.length(); i++) {
 					JSONObject jsonObj  = jsonResponse.getJSONObject(i);
 					Item item = new Item();
-					item = new Item(jsonObj.getInt("ITEM_ID"), jsonObj.getInt("ITEM_DB_ID"), jsonObj.getString("ITEM_NAME"),
+					item = new Item(jsonObj.getInt("PLAYER_ITEM_ID"), jsonObj.getInt("PLAYERINV_DB_ID"), jsonObj.getString("ITEM_NAME"),
 							 jsonObj.getString("ITEM_DESCRIPTION"), jsonObj.getString("ITEM_TYPE"),
-							 jsonObj.getString("STATUS"), jsonObj.getInt("ITEM_ATTRIBUTE"), username);
+							 jsonObj.getString("STATUS"), jsonObj.getInt("ITEM_ATTRIBUTE"), player.getPlayerName());
 					items.add(item);
 				}
 			}
 		}catch(Exception e) {
 			e.printStackTrace();
 		}		
-		Log.e("chowlb", "Retuning items: " + items.size());
+		Log.e("chowlb", "Returning items: " + items.size());
 		return items;	
 		
 	}

@@ -31,7 +31,6 @@ public class AddCacheAsyncActivity extends AsyncTask<Object, Void, Cache>{
     @Override
     protected void onPreExecute() {
        super.onPreExecute();
-       
    }
 	
 	@Override

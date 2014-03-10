@@ -105,7 +105,7 @@ public class RegisterActivity extends LoginBaseActivity implements AsyncInterfac
 			 
 	    	Log.e("chowlb", "Player name on login: " + player.getPlayerName());
 			
-	    	loadInvAct.execute(player.getPlayerName());
+	    	loadInvAct.execute(player);
 		}else {
 	    		Toast.makeText(this, "Something happened with registration, the username could be taken or the email address is already registered", Toast.LENGTH_LONG).show();
 				

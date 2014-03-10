@@ -54,9 +54,7 @@ public class GameMapActivity extends FragmentActivity implements AsyncMapInterfa
 		Intent i = getIntent();
 		Log.e("chowlb", "GAME MAP ONCREATE");
 		Bundle extras = getIntent().getExtras();
-		if(extras != null) {
-			//Log.e("chowlb", "extras");
-			
+		if(extras != null) {			
 			player = i.getParcelableExtra("PLAYER");
 			
 			setTitle("");
@@ -64,15 +62,13 @@ public class GameMapActivity extends FragmentActivity implements AsyncMapInterfa
 			
 			locManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
 			
-			
-			 
 			try {
 				if(googleMap == null) {
 					googleMap = ((MapFragment) getFragmentManager().findFragmentById(R.id.main_map)).getMap();
 				}
 				googleMap.setMapType(GoogleMap.MAP_TYPE_SATELLITE);
 				googleMap.setMyLocationEnabled(true);
-				googleMap.setOnMarkerClickListener(new GameMapListener(local));
+				googleMap.setOnMarkerClickListener(new GameMapListener(local, player));
 			}catch(Exception e) {
 				e.printStackTrace();
 			}
@@ -109,14 +105,12 @@ public class GameMapActivity extends FragmentActivity implements AsyncMapInterfa
 		                    location.getLatitude() + " " + location.getLongitude(),
 		                    Toast.LENGTH_LONG).show();
 
-		    
-
 		            googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(
 		                    location.getLatitude(), location.getLongitude()), 30.0f));
 
 		        }
 		    };
-		    locManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 1500, 0, locListener);
+		    locManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 1000, 0, locListener);
 		    
 		   
 		    lac.execute("");
@@ -239,7 +233,8 @@ public class GameMapActivity extends FragmentActivity implements AsyncMapInterfa
 	    super.onActivityResult(requestCode, resultCode, data);
 
 	    if(requestCode == 1 && resultCode == Activity.RESULT_OK){
-	        player = data.getParcelableExtra("PLAYER");
+	        
+	    	player = data.getParcelableExtra("PLAYER");
 	        //Do whatever you want with yourData
 	    }
 	}

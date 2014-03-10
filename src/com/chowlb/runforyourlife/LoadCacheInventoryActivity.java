@@ -56,7 +56,7 @@ public class LoadCacheInventoryActivity extends AsyncTask<String, Void, List<Ite
 		}catch(Exception e) {
 			e.printStackTrace();
 		}		
-		Log.e("chowlb", "Retuning items: " + items.size());
+		Log.e("chowlb", "Returning cache items: " + items.size());
 		return items;	
 		
 	}
@@ -64,8 +64,6 @@ public class LoadCacheInventoryActivity extends AsyncTask<String, Void, List<Ite
 	 @Override
 	  protected void onPostExecute(List<Item> result){
 		 super.onPostExecute(result);
-		 Log.e("chowlb", "Calling on postexcute with result size: " + result.size());
-		 
 		 delegate.handleInventory(result);
 	 }
 

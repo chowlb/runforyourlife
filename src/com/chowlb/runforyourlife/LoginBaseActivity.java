@@ -5,7 +5,6 @@ import java.util.List;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 
 public abstract class LoginBaseActivity extends Activity implements AsyncInterface{
 
@@ -23,7 +22,6 @@ public abstract class LoginBaseActivity extends Activity implements AsyncInterfa
 		Bundle bundle = new Bundle();
 		bundle.putParcelable("PLAYER", player);
 		intent.putExtras(bundle);
-		//Log.e("chowlb", "starting activity");
 		this.startActivity(intent);
 		this.finish();
 	}

@@ -104,7 +104,7 @@ public class LoginActivity extends LoginBaseActivity implements AsyncInterface{
 			 
 			 Log.e("chowlb", "Player name on login: " + player.getPlayerName());
 			 
-			 loadInvAct.execute(player.getPlayerName());
+			 loadInvAct.execute(player);
 		 
 		}else{
 			
