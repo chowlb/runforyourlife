@@ -1,4 +1,4 @@
-package com.chowlb.runforyourlife;
+package com.chowlb.runforyourlife.utils;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;

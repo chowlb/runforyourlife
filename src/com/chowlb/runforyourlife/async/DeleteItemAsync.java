@@ -1,15 +1,19 @@
-package com.chowlb.runforyourlife;
+package com.chowlb.runforyourlife.async;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import com.chowlb.runforyourlife.interfaces.AsyncInterface;
+import com.chowlb.runforyourlife.objects.Item;
+import com.chowlb.runforyourlife.utils.HttpClient;
+
 import android.os.AsyncTask;
 
-public class DeleteItem extends AsyncTask<Object, Void, String>{
+public class DeleteItemAsync extends AsyncTask<Object, Void, String>{
 	public AsyncInterface delegate = null;
 	private static String URL = "http://www.chowlb.com/runforyourlife/deleteuseritem_app.php";
 	
-	public DeleteItem() { }
+	public DeleteItemAsync() { }
 	
 	@Override
 	protected String doInBackground(Object... arg0) {

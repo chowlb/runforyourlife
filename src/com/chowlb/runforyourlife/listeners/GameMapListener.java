@@ -1,4 +1,4 @@
-package com.chowlb.runforyourlife;
+package com.chowlb.runforyourlife.listeners;
 
 import java.util.List;
 
@@ -7,6 +7,13 @@ import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.util.Log;
 
+import com.chowlb.runforyourlife.GameMapActivity;
+import com.chowlb.runforyourlife.ShowCacheInventoryActivity;
+import com.chowlb.runforyourlife.async.LoadCacheInventoryAsync;
+import com.chowlb.runforyourlife.interfaces.AsyncMarkerInterface;
+import com.chowlb.runforyourlife.objects.Cache;
+import com.chowlb.runforyourlife.objects.Item;
+import com.chowlb.runforyourlife.objects.Player;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.GoogleMap.OnMarkerClickListener;
 import com.google.android.gms.maps.model.Marker;
@@ -19,7 +26,7 @@ public class GameMapListener implements OnMarkerClickListener, AsyncMarkerInterf
 	private Cache cache;
 	private Player player;
 	FragmentActivity local;
-	LoadCacheInventoryActivity lcia = new LoadCacheInventoryActivity();
+	LoadCacheInventoryAsync lcia = new LoadCacheInventoryAsync();
 	
 	public GameMapListener(FragmentActivity act, Player p) {
 		player = p;
@@ -29,7 +36,7 @@ public class GameMapListener implements OnMarkerClickListener, AsyncMarkerInterf
 	@Override
 	public boolean onMarkerClick(Marker marker) {
 		cache = (Cache) GameMapActivity.markerHashMap.get(marker.getId());
-		LoadCacheInventoryActivity lcia = new LoadCacheInventoryActivity();
+		LoadCacheInventoryAsync lcia = new LoadCacheInventoryAsync();
 		lcia.delegate = this;
 		lcia.execute(String.valueOf(cache.getCacheID()));
 		

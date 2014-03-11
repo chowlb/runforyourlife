@@ -1,4 +1,4 @@
-package com.chowlb.runforyourlife;
+package com.chowlb.runforyourlife.objects;
 
 import android.location.Location;
 

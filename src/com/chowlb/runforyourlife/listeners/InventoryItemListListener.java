@@ -1,6 +1,12 @@
-package com.chowlb.runforyourlife;
+package com.chowlb.runforyourlife.listeners;
 
 import java.util.List;
+
+import com.chowlb.runforyourlife.SingleItemActivity;
+import com.chowlb.runforyourlife.adapters.ItemListAdapter;
+import com.chowlb.runforyourlife.async.DeleteItemAsync;
+import com.chowlb.runforyourlife.objects.Item;
+import com.chowlb.runforyourlife.objects.Player;
 
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -12,26 +18,19 @@ import android.widget.Adapter;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.AdapterView.OnItemLongClickListener;
-import android.widget.Toast;
 
 
 
-public class CacheInventoryItemListListener implements OnItemClickListener, OnItemLongClickListener, AsyncInterface{
+public class InventoryItemListListener implements OnItemClickListener, OnItemLongClickListener{
 	List<Item> listItems;
 	Adapter adapter;
 	Activity activity;
-	Cache cache;
 	Player player;
-	CacheInventoryItemListListener local;
-	ItemListAdapter la;
-	
-	public CacheInventoryItemListListener(List<Item> aListItems, Activity anActivity, Adapter anAdapter, Cache ancache, Player anPlayer) {
+	public InventoryItemListListener(List<Item> aListItems, Activity anActivity, Adapter anAdapter, Player anPlayer) {
 		listItems = aListItems;
 		activity = anActivity;
 		adapter = anAdapter;
-		cache = ancache;
 		player = anPlayer;
-		local = this;
 	}
 	
 	
@@ -50,26 +49,20 @@ public class CacheInventoryItemListListener implements OnItemClickListener, OnIt
 	public boolean onItemLongClick(AdapterView<?> parent, View view, int pos, long id) {
 		
 		final Item item = (Item) parent.getAdapter().getItem(pos);
-		la = (ItemListAdapter) parent.getAdapter();
+		final ItemListAdapter la = (ItemListAdapter) parent.getAdapter();
 		final int position = pos;
 		
 		new AlertDialog.Builder(parent.getContext())
-		.setTitle("Pickup - " + item.getName())
-		.setMessage("Do you wish to pickup " + item.getName() +"?")
-		.setIcon(android.R.drawable.ic_dialog_info)
+		.setTitle("Drop - " + item.getName())
+		.setMessage("Do you wish to drop " + item.getName() +"?")
+		.setIcon(android.R.drawable.ic_dialog_alert)
 		.setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
 			@Override
 			public void onClick(DialogInterface dialog, int which) {
-				if(player.canAddItem()) {
-					DeleteItem deleteItemActivity = new DeleteItem();
-					deleteItemActivity.execute(item, 1);
-					cache.removeItemAtPos(position);
-					AddItem addItemActivity = new AddItem();
-					addItemActivity.delegate = local;
-					addItemActivity.execute(item, player, 2);
-				}else {
-					Toast.makeText(activity, "Inventory is full",  Toast.LENGTH_SHORT).show();
-				}
+				DeleteItemAsync deleteItemActivity = new DeleteItemAsync();
+				deleteItemActivity.execute(item, 2);
+				player.removeItemAtPos(position);
+				la.notifyDataSetChanged();
 			}
 		})
 		.setNegativeButton(android.R.string.no, null).show();
@@ -78,24 +71,9 @@ public class CacheInventoryItemListListener implements OnItemClickListener, OnIt
 		return false;
 	}
 
-
-
-	@Override
-	public void handleInventory(List<Item> invResult) {
-
-		player.setInventory(invResult);
-		la.notifyDataSetChanged();
-		
-	}
-
-	@Override
-	public void processLogin(Player player) {
-		// TODO Auto-generated method stub
-		
-	}
+	
 	
 }
 	
 	
-
 

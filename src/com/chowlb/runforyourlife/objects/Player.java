@@ -1,7 +1,8 @@
-package com.chowlb.runforyourlife;
+package com.chowlb.runforyourlife.objects;
 
 import java.util.ArrayList;
 import java.util.List;
+
 
 import android.location.Location;
 import android.os.Parcel;

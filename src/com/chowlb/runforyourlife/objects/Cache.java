@@ -1,4 +1,4 @@
-package com.chowlb.runforyourlife;
+package com.chowlb.runforyourlife.objects;
 
 import java.util.ArrayList;
 import java.util.List;

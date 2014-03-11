@@ -1,5 +1,10 @@
 package com.chowlb.runforyourlife;
 
+import com.chowlb.runforyourlife.adapters.ItemListAdapter;
+import com.chowlb.runforyourlife.listeners.CacheInventoryItemListListener;
+import com.chowlb.runforyourlife.objects.Cache;
+import com.chowlb.runforyourlife.objects.Player;
+
 import android.app.ActionBar;
 import android.app.Activity;
 import android.content.Intent;
@@ -11,17 +16,14 @@ import android.widget.Toast;
 public class ShowCacheInventoryActivity extends Activity{
 	private Cache cache;
 	private ItemListAdapter adapter;
-	private ListView inventoryLayout; 
-	private Activity local;
+	private ListView inventoryLayout;
 	private Player player;
-	//SavePlayerInfo saveInfoActivity = new SavePlayerInfo();
 	
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_show_inventory);
-		local = this;
 		
 		Bundle extras = getIntent().getExtras();
 		if(extras != null) {
@@ -58,7 +60,7 @@ public class ShowCacheInventoryActivity extends Activity{
 	
 	@Override
 	public void onBackPressed() {
-	    Intent data = new Intent();
+		Intent data = new Intent();
 	    data.putExtra("PLAYER", player);
 	    setResult(Activity.RESULT_OK, data);
 	    super.onBackPressed();

@@ -1,6 +1,8 @@
 package com.chowlb.runforyourlife;
 
-import java.util.List;
+import com.chowlb.runforyourlife.async.LoadPlayerInventoryAsync;
+import com.chowlb.runforyourlife.interfaces.AsyncInterface;
+import com.chowlb.runforyourlife.objects.Player;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -9,7 +11,7 @@ import android.os.Bundle;
 public abstract class LoginBaseActivity extends Activity implements AsyncInterface{
 
 	protected Player player;
-	protected LoadInventoryActivity loadInvAct = new LoadInventoryActivity();
+	protected LoadPlayerInventoryAsync loadInvAct = new LoadPlayerInventoryAsync();
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -26,12 +28,6 @@ public abstract class LoginBaseActivity extends Activity implements AsyncInterfa
 		this.finish();
 	}
 		
-	@Override
-	public void handleInventory(List<Item> invResult) {
 
-		player.setInventory(invResult);
-		//Log.e("chowlb", "Set inventory: " + invResult.size());
-	    startGameMap();
-	}
 
 }

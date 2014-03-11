@@ -1,5 +1,10 @@
 package com.chowlb.runforyourlife;
 
+import com.chowlb.runforyourlife.async.AddUserAsync;
+import com.chowlb.runforyourlife.interfaces.AsyncInterface;
+import com.chowlb.runforyourlife.objects.Player;
+import com.chowlb.runforyourlife.utils.Utils;
+
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -30,7 +35,7 @@ public class RegisterActivity extends LoginBaseActivity implements AsyncInterfac
 	String pw; 
 	String emv;
 	String pwv;
-	AddUserActivity aua = new AddUserActivity();
+	AddUserAsync aua = new AddUserAsync();
 	
 	
 	public void startRegisterActivity() {
@@ -105,10 +110,9 @@ public class RegisterActivity extends LoginBaseActivity implements AsyncInterfac
 			 
 	    	Log.e("chowlb", "Player name on login: " + player.getPlayerName());
 			
-	    	loadInvAct.execute(player);
+	    	startGameMap();
 		}else {
 	    		Toast.makeText(this, "Something happened with registration, the username could be taken or the email address is already registered", Toast.LENGTH_LONG).show();
-				
 		}
 			 
 	   
@@ -150,6 +154,6 @@ public class RegisterActivity extends LoginBaseActivity implements AsyncInterfac
 		
 		return passed;
 	}
-	
+
 	
 }

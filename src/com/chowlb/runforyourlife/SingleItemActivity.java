@@ -1,5 +1,7 @@
 package com.chowlb.runforyourlife;
 
+import com.chowlb.runforyourlife.objects.Item;
+
 import android.os.Bundle;
 import android.app.ActionBar;
 import android.app.Activity;

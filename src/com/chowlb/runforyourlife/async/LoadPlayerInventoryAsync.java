@@ -1,4 +1,4 @@
-package com.chowlb.runforyourlife;
+package com.chowlb.runforyourlife.async;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -7,15 +7,21 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import com.chowlb.runforyourlife.GameMapActivity;
+import com.chowlb.runforyourlife.interfaces.AsyncInterface;
+import com.chowlb.runforyourlife.objects.Item;
+import com.chowlb.runforyourlife.objects.Player;
+import com.chowlb.runforyourlife.utils.HttpClient;
+
 import android.os.AsyncTask;
 import android.util.Log;
 
-public class LoadCacheInventoryActivity extends AsyncTask<String, Void, List<Item>>{
+public class LoadPlayerInventoryAsync extends AsyncTask<Player, Void, List<Item>>{
 
-    public AsyncMarkerInterface delegate = null;
+    public AsyncInterface delegate = null;
     List<Item> items= new ArrayList<Item>();
     
-    public LoadCacheInventoryActivity() {
+    public LoadPlayerInventoryAsync() {
       
    }
    
@@ -27,14 +33,14 @@ public class LoadCacheInventoryActivity extends AsyncTask<String, Void, List<Ite
     
     
 	@Override
-	protected List<Item> doInBackground(String... arg0) {
+	protected List<Item> doInBackground(Player... arg0) {
 		
-		String cacheid = (String) arg0[0];
-		String link="http://www.chowlb.com/runforyourlife/getcacheinventory_app.php";
+		Player player = (Player) arg0[0];
+		String link="http://www.chowlb.com/runforyourlife/getinventory_app.php";
 		JSONObject jsonObjSend = new JSONObject();
 		
 		try {
-			jsonObjSend.put("CACHEID", cacheid);			
+			jsonObjSend.put("USERID", player.getPlayerID());			
 		}catch(JSONException e) {
 			e.printStackTrace();
 		}
@@ -47,16 +53,16 @@ public class LoadCacheInventoryActivity extends AsyncTask<String, Void, List<Ite
 				for(int i=0; i<jsonResponse.length(); i++) {
 					JSONObject jsonObj  = jsonResponse.getJSONObject(i);
 					Item item = new Item();
-					item = new Item(jsonObj.getInt("CACHE_ITEM_ID"), jsonObj.getInt("CACHEINV_DB_ID"), jsonObj.getString("ITEM_NAME"),
+					item = new Item(jsonObj.getInt("PLAYER_ITEM_ID"), jsonObj.getInt("PLAYERINV_DB_ID"), jsonObj.getString("ITEM_NAME"),
 							 jsonObj.getString("ITEM_DESCRIPTION"), jsonObj.getString("ITEM_TYPE"),
-							 jsonObj.getString("STATUS"), jsonObj.getInt("ITEM_ATTRIBUTE"));
+							 jsonObj.getString("STATUS"), jsonObj.getInt("ITEM_ATTRIBUTE"), player.getPlayerName());
 					items.add(item);
 				}
 			}
 		}catch(Exception e) {
 			e.printStackTrace();
 		}		
-		Log.e("chowlb", "Returning cache items: " + items.size());
+		Log.e("chowlb", "Returning items: " + items.size());
 		return items;	
 		
 	}
@@ -64,9 +70,12 @@ public class LoadCacheInventoryActivity extends AsyncTask<String, Void, List<Ite
 	 @Override
 	  protected void onPostExecute(List<Item> result){
 		 super.onPostExecute(result);
-		 delegate.handleInventory(result);
+		 Log.e("chowlb", "Calling on postexcute with result size: " + result.size());
+		 handleInventory(result);
 	 }
 
+	public void handleInventory(List<Item> invResult) {
+		GameMapActivity.player.setInventory(invResult);
+	}
 }
-
 

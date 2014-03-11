@@ -1,4 +1,7 @@
-package com.chowlb.runforyourlife;
+package com.chowlb.runforyourlife.objects;
+
+import com.chowlb.runforyourlife.R;
+import com.chowlb.runforyourlife.R.color;
 
 import android.content.Context;
 import android.os.Parcel;
@@ -15,11 +18,11 @@ public class Item implements Parcelable{
 	private int attribute;
 	private String owner;
 	
-	protected Item() {
+	public Item() {
 		
 	}
 	
-	protected Item(int id, int itemDBID, String name, String description, String itemType, String status, int attribute, String owner) {
+	public Item(int id, int itemDBID, String name, String description, String itemType, String status, int attribute, String owner) {
 		this.name = name;
 		this.description = description;
 		this.itemType = itemType;
@@ -30,7 +33,7 @@ public class Item implements Parcelable{
 		this.owner = owner;
 	}
 	
-	protected Item(int id, int itemDBID, String name, String description, String itemType, String status, int attribute) {
+	public Item(int id, int itemDBID, String name, String description, String itemType, String status, int attribute) {
 		this.name = name;
 		this.description = description;
 		this.itemType = itemType;

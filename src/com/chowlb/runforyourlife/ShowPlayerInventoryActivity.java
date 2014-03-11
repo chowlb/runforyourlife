@@ -1,5 +1,10 @@
 package com.chowlb.runforyourlife;
 
+import com.chowlb.runforyourlife.adapters.ItemListAdapter;
+import com.chowlb.runforyourlife.async.SavePlayerInfoAsync;
+import com.chowlb.runforyourlife.listeners.InventoryItemListListener;
+import com.chowlb.runforyourlife.objects.Player;
+
 import android.app.ActionBar;
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -13,12 +18,12 @@ import android.view.MenuItem;
 import android.widget.ListView;
 import android.widget.Toast;
 
-public class ShowInventoryActivity extends Activity {
+public class ShowPlayerInventoryActivity extends Activity {
 	private Player player;
 	private ItemListAdapter adapter;
 	private ListView inventoryLayout; 
 	private Activity local;
-	SavePlayerInfo saveInfoActivity = new SavePlayerInfo();
+	SavePlayerInfoAsync saveInfoActivity = new SavePlayerInfoAsync();
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);

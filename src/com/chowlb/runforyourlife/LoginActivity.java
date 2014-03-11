@@ -1,6 +1,9 @@
 package com.chowlb.runforyourlife;
 
-import java.util.List;
+import com.chowlb.runforyourlife.async.SigninAsync;
+import com.chowlb.runforyourlife.interfaces.AsyncInterface;
+import com.chowlb.runforyourlife.objects.Player;
+import com.chowlb.runforyourlife.utils.Utils;
 
 import android.content.Context;
 import android.content.Intent;
@@ -24,7 +27,7 @@ public class LoginActivity extends LoginBaseActivity implements AsyncInterface{
 	private TextView loginFailed;
 	private TextView logo;
 	int userID;
-	SigninActivity sa = new SigninActivity();
+	SigninAsync sa = new SigninAsync();
 	
 	public void startLoginActivity() {
 		sa.delegate = this;
@@ -104,8 +107,8 @@ public class LoginActivity extends LoginBaseActivity implements AsyncInterface{
 			 
 			 Log.e("chowlb", "Player name on login: " + player.getPlayerName());
 			 
-			 loadInvAct.execute(player);
-		 
+			 
+			 startGameMap();
 		}else{
 			
     		setContentView(R.layout.activity_login);
@@ -131,10 +134,8 @@ public class LoginActivity extends LoginBaseActivity implements AsyncInterface{
 		startActivity(intent);
 	}
 
-	@Override
-	public void handleInventory(List<Item> result) {
-		super.handleInventory(result);
-	}
+	
+
 
 
 

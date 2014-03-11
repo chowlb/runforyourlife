@@ -1,17 +1,22 @@
-package com.chowlb.runforyourlife;
+package com.chowlb.runforyourlife.async;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import com.chowlb.runforyourlife.interfaces.AsyncInterface;
+import com.chowlb.runforyourlife.objects.Player;
+import com.chowlb.runforyourlife.utils.HttpClient;
+import com.chowlb.runforyourlife.utils.Utils;
+
 import android.os.AsyncTask;
 import android.util.Log;
 
-public class AddUserActivity extends AsyncTask<String, Void, Player>{
+public class AddUserAsync extends AsyncTask<String, Void, Player>{
   public AsyncInterface delegate = null;
    private Player player;
 	//flag 0 means get and 1 means post.(By default it is get.)
-   public AddUserActivity() {   }
+   public AddUserAsync() {   }
    
    @Override
     protected void onPreExecute(){

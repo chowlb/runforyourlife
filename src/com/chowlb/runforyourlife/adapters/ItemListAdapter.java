@@ -1,7 +1,12 @@
-package com.chowlb.runforyourlife;
+package com.chowlb.runforyourlife.adapters;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import com.chowlb.runforyourlife.R;
+import com.chowlb.runforyourlife.R.id;
+import com.chowlb.runforyourlife.R.layout;
+import com.chowlb.runforyourlife.objects.Item;
 
 import android.content.Context;
 import android.view.LayoutInflater;

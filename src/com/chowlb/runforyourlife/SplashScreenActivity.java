@@ -7,7 +7,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.widget.TextView;
  
-public class SplashScreen extends Activity {
+public class SplashScreenActivity extends Activity {
  
     // Splash screen timer
     private static int SPLASH_TIME_OUT = 1000;
@@ -27,7 +27,7 @@ public class SplashScreen extends Activity {
         	
         	@Override
         	public void run() {
-        		Intent i = new Intent(SplashScreen.this, LoginActivity.class);
+        		Intent i = new Intent(SplashScreenActivity.this, LoginActivity.class);
         		startActivity(i);
         		finish();
         	}
