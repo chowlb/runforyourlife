@@ -11,7 +11,7 @@ import com.google.android.gms.maps.model.LatLng;
 public class Cache implements Parcelable {
 	private int cacheID;
 	private String cacheText = "Supply Cache";
-	private String owner;
+	private String owner = "";
 	private int ownerID;
 	private LatLng location;
 	private double longitude;

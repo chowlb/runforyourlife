@@ -43,7 +43,7 @@ public class AddUserAsync extends AsyncTask<String, Void, Player>{
 				
 		try {
 			HttpClient client = new HttpClient();
-			Log.e("chowlb", "Sending json: " + jsonObjSend);
+			//Log.e("chowlb", "Sending json: " + jsonObjSend);
 			JSONArray jsonResponse = client.postJsonData(jsonObjSend.toString(), link);
 			if(jsonResponse.length() > 0) {
 				JSONObject jsonObj  = jsonResponse.getJSONObject(0);

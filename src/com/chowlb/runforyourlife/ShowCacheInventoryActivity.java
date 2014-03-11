@@ -4,6 +4,7 @@ import com.chowlb.runforyourlife.adapters.ItemListAdapter;
 import com.chowlb.runforyourlife.listeners.CacheInventoryItemListListener;
 import com.chowlb.runforyourlife.objects.Cache;
 import com.chowlb.runforyourlife.objects.Player;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 
 import android.app.ActionBar;
 import android.app.Activity;
@@ -17,7 +18,7 @@ public class ShowCacheInventoryActivity extends Activity{
 	private Cache cache;
 	private ItemListAdapter adapter;
 	private ListView inventoryLayout;
-	private Player player;
+	public static Player player;
 	
 	
 	@Override
@@ -31,9 +32,20 @@ public class ShowCacheInventoryActivity extends Activity{
 			player = extras.getParcelable("PLAYER");
 			
 			ActionBar ab = getActionBar();
-			ab.setIcon(R.drawable.briefcase_drop_img);
+			if(cache.getOwnerID() == 0) {
+				ab.setIcon(R.drawable.ic_crate);
+			}else if(cache.getOwnerID() == GameMapActivity.player.getPlayerID()){
+				ab.setIcon(R.drawable.briefcase_drop_personal_img);
+			}else {
+				ab.setIcon(R.drawable.briefcase_drop_img);
+			}
 			ab.setTitle("");
-			ab.setTitle(cache.getCacheText() + ":" + cache.getCacheID() + " - " + cache.getOwner());
+			if(cache.getOwner().equals("")) {
+				ab.setTitle(cache.getCacheText() + ":" + cache.getCacheID());
+			}else {
+				ab.setTitle(cache.getCacheText() + ":" + cache.getCacheID() + " - " + cache.getOwner());
+			}
+			
 			
 			
 			

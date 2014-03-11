@@ -32,7 +32,7 @@ public class LoadCacheInventoryAsync extends AsyncTask<String, Void, List<Item>>
     
 	@Override
 	protected List<Item> doInBackground(String... arg0) {
-		
+		//Log.e("chowlb", "LOADING CACHE INVENTORY");
 		String cacheid = (String) arg0[0];
 		String link="http://www.chowlb.com/runforyourlife/getcacheinventory_app.php";
 		JSONObject jsonObjSend = new JSONObject();
@@ -60,7 +60,7 @@ public class LoadCacheInventoryAsync extends AsyncTask<String, Void, List<Item>>
 		}catch(Exception e) {
 			e.printStackTrace();
 		}		
-		Log.e("chowlb", "Returning cache items: " + items.size());
+		//Log.e("chowlb", "Returning cache items: " + items.size());
 		return items;	
 		
 	}

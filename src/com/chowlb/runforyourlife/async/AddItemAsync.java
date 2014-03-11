@@ -15,7 +15,7 @@ public class AddItemAsync extends AsyncTask<Object, Void, String>{
 	private static String URL = "http://www.chowlb.com/runforyourlife/insertuseritem_app.php";
 	private Player player;
 	private Cache cache;
-	private int deleteType = 1;
+	private int addType = 1;
 	
 	public AddItemAsync() { }
 	
@@ -23,14 +23,11 @@ public class AddItemAsync extends AsyncTask<Object, Void, String>{
 	protected String doInBackground(Object... arg0) {
 		Item item = (Item) arg0[0];
 		HttpClient client = new HttpClient();
-		deleteType = (Integer) arg0[2];
+		addType = (Integer) arg0[2];
 		JSONObject jsonObjSend = new JSONObject();
 		try {
-
-			Log.e("chowlb", "Putting item status and id");
 			jsonObjSend.put("ITEM_ID", item.getItemId());
 			jsonObjSend.put("STATUS",  item.getStatus());
-			Log.e("chowlb", "END Putting item status and id");
 		}catch(JSONException e) {
 			e.printStackTrace();
 		}
@@ -39,7 +36,7 @@ public class AddItemAsync extends AsyncTask<Object, Void, String>{
 			//CHECK ADD TYPE:
 			//  1 - CACHE 
 			//  2 - PLAYER
-			if(deleteType == 1) {
+			if(addType == 1) {
 				cache = (Cache) arg0[1];
 				URL = "http://www.chowlb.com/runforyourlife/insertcacheitem_app.php";
 				try {
@@ -53,15 +50,10 @@ public class AddItemAsync extends AsyncTask<Object, Void, String>{
 			else {
 				player = (Player) arg0[1];
 				try {
-					Log.e("chowlb", "Putting player id");
-					jsonObjSend.put("ID", player.getPlayerID());
-
-					Log.e("chowlb", "END Putting player id");
-						
+					jsonObjSend.put("ID", player.getPlayerID());			
 				}catch(JSONException e) {
 					e.printStackTrace();
 				}
-				Log.e("chowlb", "Sending PLAYER Json: " + jsonObjSend.toString());
 				client.postJsonData(jsonObjSend.toString(), URL);
 			}
 

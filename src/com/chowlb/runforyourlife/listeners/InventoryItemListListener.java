@@ -41,7 +41,7 @@ public class InventoryItemListListener implements OnItemClickListener, OnItemLon
 		
 		Bundle bundle = new Bundle();
 		bundle.putParcelable("ITEM", item);
-		bundle.putInt("TYPE", 1);
+		bundle.putInt("TYPE", 0);
 		i.putExtras(bundle);
         activity.startActivity(i);
 	}

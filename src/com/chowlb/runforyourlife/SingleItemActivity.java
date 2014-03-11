@@ -24,11 +24,16 @@ public class SingleItemActivity extends Activity {
 			
 			//Log.e("chowlb", "Item Passed: " + item.getItemId());
 			ActionBar ab = getActionBar();
-			if(type == 1) {
+			if(type == 0) {
 				ab.setIcon(R.drawable.ic_action_military_backpack_radio_256);
+			}else if(type==1){
+				ab.setIcon(R.drawable.ic_crate);
+			}else if(type == 2){
+				ab.setIcon(R.drawable.briefcase_drop_personal_img);
 			}else {
-				ab.setIcon(R.drawable.ic_action_ic_action_add_drop);
+				ab.setIcon(R.drawable.briefcase_drop_img);
 			}
+				
 			
 			ab.setTitle("");
 			ab.setTitle(item.getName());

@@ -32,9 +32,9 @@ public class LoginActivity extends LoginBaseActivity implements AsyncInterface{
 		
 		SharedPreferences prefs = this.getSharedPreferences("com.chowlb.runforyourlife", Context.MODE_PRIVATE);
 		userID = prefs.getInt("USER_ID", -1);
-		Log.e("chowlb", "Checking preferences got id: " + userID);
+		//Log.e("chowlb", "Checking preferences got id: " + userID);
 		if(userID >= 0) {
-			Log.e("chowlb", "USER ID IS > 0");
+			//Log.e("chowlb", "USER ID IS > 0");
 			SigninAsync sa = new SigninAsync();
 			sa.delegate = this;
 			sa.execute("2", String.valueOf(userID));
@@ -106,7 +106,7 @@ public class LoginActivity extends LoginBaseActivity implements AsyncInterface{
 		
 		 	 player = p;
 			 
-			 Log.e("chowlb", "Player name on login: " + player.getPlayerName());
+			//Log.e("chowlb", "Player name on login: " + player.getPlayerName());
 			 			 
 			 startGameMap();
 		}else{

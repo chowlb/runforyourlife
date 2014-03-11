@@ -67,7 +67,7 @@ public class JSONParser {
         try {
             if(!json.equals("null")){
                 jsonArray = new JSONArray(json);
-                 Log.d("jsonArray:: ",  jsonArray+"");
+                 //Log.d("jsonArray:: ",  jsonArray+"");
             }else{
                 jsonArray = null;
             }

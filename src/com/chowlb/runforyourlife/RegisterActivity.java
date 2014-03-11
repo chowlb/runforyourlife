@@ -13,7 +13,6 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.provider.Settings;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -92,9 +91,9 @@ public class RegisterActivity extends LoginBaseActivity implements AsyncInterfac
 		passwordFail.setVisibility(View.GONE);
 		passwordStrength.setVisibility(View.GONE);
 		
-		if(testUserInput()) {
+		//if(testUserInput()) {
 			aua.execute(username.getText().toString(), pw, em);				
-		}		
+		//}		
 	}
 	
 	public void processLogin(Player p) {
@@ -107,7 +106,7 @@ public class RegisterActivity extends LoginBaseActivity implements AsyncInterfac
 	    	editor.commit();
 	    	player = p;
 			 
-	    	Log.e("chowlb", "Player name on login: " + player.getPlayerName());
+	    	//Log.e("chowlb", "Player name on login: " + player.getPlayerName());
 			
 	    	startGameMap();
 		}else {

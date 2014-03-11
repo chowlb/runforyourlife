@@ -14,6 +14,8 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.AdapterView.OnItemLongClickListener;
 import android.widget.Toast;
 
+import com.chowlb.runforyourlife.GameMapActivity;
+import com.chowlb.runforyourlife.R;
 import com.chowlb.runforyourlife.SingleItemActivity;
 import com.chowlb.runforyourlife.adapters.ItemListAdapter;
 import com.chowlb.runforyourlife.async.AddItemAsync;
@@ -48,7 +50,13 @@ public class CacheInventoryItemListListener implements OnItemClickListener, OnIt
 		
 		Bundle bundle = new Bundle();
 		bundle.putParcelable("ITEM", item);
-		bundle.putInt("TYPE", 0);
+		if(cache.getOwnerID() == 0) {
+			bundle.putInt("TYPE", 1);
+		}else if(cache.getOwnerID() == GameMapActivity.player.getPlayerID()){
+			bundle.putInt("TYPE", 2);
+		}else {
+			bundle.putInt("TYPE", 3);
+		}
 		i.putExtras(bundle);
         activity.startActivity(i);
 	}
@@ -73,6 +81,7 @@ public class CacheInventoryItemListListener implements OnItemClickListener, OnIt
 					cache.removeItemAtPos(position);
 					AddItemAsync addItemActivity = new AddItemAsync();
 					addItemActivity.execute(item, player, 2);
+					la.notifyDataSetChanged();
 				}else {
 					Toast.makeText(activity, "Inventory is full",  Toast.LENGTH_SHORT).show();
 				}

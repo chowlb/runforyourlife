@@ -34,7 +34,7 @@ public class LoadPlayerInventoryAsync extends AsyncTask<Player, Void, List<Item>
     
 	@Override
 	protected List<Item> doInBackground(Player... arg0) {
-		
+		//Log.e("chowlb", "LOADING PLAYER INVENTORY");
 		Player player = (Player) arg0[0];
 		String link="http://www.chowlb.com/runforyourlife/getinventory_app.php";
 		JSONObject jsonObjSend = new JSONObject();
@@ -47,7 +47,7 @@ public class LoadPlayerInventoryAsync extends AsyncTask<Player, Void, List<Item>
 		
 		try {
 			HttpClient client = new HttpClient();
-			Log.e("chowlb", "Sending json: " + jsonObjSend);
+			//Log.e("chowlb", "Sending json: " + jsonObjSend);
 			JSONArray jsonResponse = client.postJsonData(jsonObjSend.toString(), link);
 			if(jsonResponse.length() > 0) {
 				for(int i=0; i<jsonResponse.length(); i++) {
@@ -62,7 +62,7 @@ public class LoadPlayerInventoryAsync extends AsyncTask<Player, Void, List<Item>
 		}catch(Exception e) {
 			e.printStackTrace();
 		}		
-		Log.e("chowlb", "Returning items: " + items.size());
+		//Log.e("chowlb", "Returning items: " + items.size());
 		return items;	
 		
 	}
@@ -70,7 +70,7 @@ public class LoadPlayerInventoryAsync extends AsyncTask<Player, Void, List<Item>
 	 @Override
 	  protected void onPostExecute(List<Item> result){
 		 super.onPostExecute(result);
-		 Log.e("chowlb", "Calling on postexcute with result size: " + result.size());
+		 //Log.e("chowlb", "Calling on postexcute with result size: " + result.size());
 		 handleInventory(result);
 	 }
 

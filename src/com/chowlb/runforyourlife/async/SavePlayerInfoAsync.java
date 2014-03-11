@@ -26,8 +26,8 @@ public class SavePlayerInfoAsync extends AsyncTask<Object, Void, String>{
 			
 			jsonObjSend.put("USER_ID", player.getPlayerID());
 			jsonObjSend.put("USERNAME", player.getPlayerName());
-			jsonObjSend.put("HEALTH", player.getHealth()-1);
-			jsonObjSend.put("DAYS_SURVIVED", player.getDaysSurvived()+1);
+			jsonObjSend.put("HEALTH", player.getHealth());
+			jsonObjSend.put("DAYS_SURVIVED", player.getDaysSurvived());
 			
 			JSONArray invArray = new JSONArray();
 			

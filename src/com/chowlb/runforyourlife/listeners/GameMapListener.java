@@ -3,8 +3,11 @@ package com.chowlb.runforyourlife.listeners;
 import java.util.List;
 
 import android.content.Intent;
+import android.location.Location;
+import android.location.LocationManager;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
+import android.widget.Toast;
 
 import com.chowlb.runforyourlife.GameMapActivity;
 import com.chowlb.runforyourlife.ShowCacheInventoryActivity;
@@ -35,8 +38,20 @@ public class GameMapListener implements OnMarkerClickListener, AsyncMarkerInterf
 	public boolean onMarkerClick(Marker marker) {
 		cache = (Cache) GameMapActivity.markerHashMap.get(marker.getId());
 		LoadCacheInventoryAsync lcia = new LoadCacheInventoryAsync();
-		lcia.delegate = this;
-		lcia.execute(String.valueOf(cache.getCacheID()));
+		Location locMarker = new Location("marker");
+		locMarker.setLatitude(marker.getPosition().latitude);
+		locMarker.setLongitude(marker.getPosition().longitude);
+		Location last = GameMapActivity.locManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+
+		float distance = getDistanceInMiles(locMarker, last);
+		
+		
+		if(distance <= 0.10) {
+			lcia.delegate = this;
+			lcia.execute(String.valueOf(cache.getCacheID()));
+		}else {
+			Toast.makeText(local, "Too far from cache to open.", Toast.LENGTH_LONG).show();
+		}
 		
 		return false;
 	}
@@ -55,7 +70,15 @@ public class GameMapListener implements OnMarkerClickListener, AsyncMarkerInterf
 	}
 
 	
-
+	public float getDistanceInMiles(Location p1, Location p2) {
+	    double lat1 = ((double)p1.getLatitude());
+	    double lng1 = ((double)p1.getLongitude());
+	    double lat2 = ((double)p2.getLatitude());
+	    double lng2 = ((double)p2.getLongitude());
+	    float [] dist = new float[1];
+	    Location.distanceBetween(lat1, lng1, lat2, lng2, dist);
+	    return dist[0] * 0.000621371192f;
+	}
 	
 }
 	

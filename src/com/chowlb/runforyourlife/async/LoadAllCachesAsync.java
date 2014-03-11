@@ -17,6 +17,7 @@ import com.chowlb.runforyourlife.R;
 import com.chowlb.runforyourlife.objects.Cache;
 import com.chowlb.runforyourlife.utils.JSONParser;
 import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.model.BitmapDescriptor;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
@@ -77,13 +78,22 @@ public class LoadAllCachesAsync extends AsyncTask<Void, Void, List<Cache>>{
 		if(caches != null && caches.size() >0) {
 			for(int i=0; i<caches.size(); i++) {
 				LatLng position = new LatLng(caches.get(i).getLatitude(), caches.get(i).getLongitude());
+				
+				BitmapDescriptor bmpfac;
+				if(caches.get(i).getOwnerID() == 0) {
+					bmpfac = BitmapDescriptorFactory.fromResource(R.drawable.ic_crate);
+				}else if(caches.get(i).getOwnerID() == GameMapActivity.player.getPlayerID()){
+					bmpfac = BitmapDescriptorFactory.fromResource(R.drawable.briefcase_drop_personal_img);
+				}else {
+					bmpfac = BitmapDescriptorFactory.fromResource(R.drawable.briefcase_drop_img);
+				}
 				Marker newMarker = mapIn.addMarker(new MarkerOptions()
 			        .position(position)
 			        .draggable(false)
 			        .title(caches.get(i).getCacheText())
 			        .snippet(caches.get(i).getOwner())
 			        .flat(false)
-			        .icon(BitmapDescriptorFactory.fromResource(R.drawable.briefcase_drop_img)));
+			        .icon(bmpfac));
 
 				GameMapActivity.markerHashMap.put(newMarker.getId(), caches.get(i));
 			}

@@ -37,7 +37,7 @@ public class GameMapActivity extends FragmentActivity{
 	public static Player player;
 	private GoogleMap googleMap;
 	static final LatLng TutorialsPoint = new LatLng(21 , 57);
-	private LocationManager locManager;
+	public static LocationManager locManager;
 	private LocationListener locListener;
 	private FragmentActivity local;
 	
@@ -114,8 +114,7 @@ public class GameMapActivity extends FragmentActivity{
 		locManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 1000, 0, locListener);
 		    
 		   
-		new LoadAllCachesAsync(this, googleMap).execute();
-		new LoadPlayerInventoryAsync().execute(player);
+		
 		   
 		
 	}
@@ -156,6 +155,10 @@ public class GameMapActivity extends FragmentActivity{
 	@Override
 	public void onResume() {
 		super.onResume();
+		
+		new LoadAllCachesAsync(this, googleMap).execute();
+		new LoadPlayerInventoryAsync().execute(player);
+		
 		if ( locManager.isProviderEnabled( LocationManager.GPS_PROVIDER ) ) {
 	       	locManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 1500, 0, locListener);
 		}

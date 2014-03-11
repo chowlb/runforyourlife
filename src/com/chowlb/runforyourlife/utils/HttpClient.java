@@ -40,7 +40,6 @@ public class HttpClient {
 			httppost.setEntity(new UrlEncodedFormEntity(nvList));
 						
 			HttpResponse response = client.execute(httppost);
-			Log.e("chowlb", "Got HTTP response");
 			HttpEntity httpEntity = response.getEntity();
             is = httpEntity.getContent();
 			if(response != null) {
@@ -60,9 +59,9 @@ public class HttpClient {
 
 		        // try parse the string to a JSON object
 		        try {
-		            if(!json.equals("null")){
+		            if(!json.equals("null") || !json.equals("")){
 		                jsonArray = new JSONArray(json);
-		                 Log.d("jsonArray:: ",  jsonArray+"");
+		                //Log.d("jsonArray:: ",  jsonArray+"");
 		            }else{
 		                jsonArray = null;
 		            }
