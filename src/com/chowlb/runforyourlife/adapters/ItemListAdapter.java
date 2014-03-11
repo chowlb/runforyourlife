@@ -4,8 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.chowlb.runforyourlife.R;
-import com.chowlb.runforyourlife.R.id;
-import com.chowlb.runforyourlife.R.layout;
 import com.chowlb.runforyourlife.objects.Item;
 
 import android.content.Context;
@@ -71,54 +69,11 @@ public class ItemListAdapter extends BaseAdapter {
 		holder.item.setText(item.getName());
 		holder.status.setText(item.getStatus());
 		holder.status.setTextColor(item.getStatusColor(this.context));
-		//Log.e("chowlb", "Item IMAGE: " + item.getImage());
 		holder.img.setImageResource(context.getResources().getIdentifier(item.getImage(), "drawable", context.getPackageName()));	
 		
 		return rowView;
 	}
 	
-//	public Filter getFilter() {
-//		return mFilter;
-//	}
-//	
-//	private class ItemFilter extends Filter {
-//		@Override
-//		protected FilterResults performFiltering(CharSequence constraint) {
-//			
-//			String filterString = constraint.toString().toLowerCase();
-//			//Log.e("chowlb", "FilterString: '"+filterString+"'");
-//			FilterResults results = new FilterResults();
-//			
-//			final List<Item> list = result;
-// 
-//			int count = list.size();
-//			
-//			//Log.e("chowlb", "Lis Size in filter: " + count);
-//			
-//			final ArrayList<RssItem> nlist = new ArrayList<RssItem>(count);
-// 
-//			String filterableString ;
-//			
-//			for (int i = 0; i < count; i++) {
-//				filterableString = list.get(i).getDescription().toString();
-//				if (filterableString.toLowerCase().contains(filterString)) {
-//					nlist.add(list.get(i));
-//				}
-//			}
-//			
-//			results.values = nlist;
-//			results.count = nlist.size();
-// 
-//			return results;
-//		}
-// 
-//		@SuppressWarnings("unchecked")
-//		@Override
-//		protected void publishResults(CharSequence constraint, FilterResults results) {
-//			filteredData = (ArrayList<RssItem>) results.values;
-//			notifyDataSetChanged();
-//		}
-// 
-//	}
+
 
 }

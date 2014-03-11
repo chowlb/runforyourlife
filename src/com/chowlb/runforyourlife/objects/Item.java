@@ -1,5 +1,7 @@
 package com.chowlb.runforyourlife.objects;
 
+import java.util.Locale;
+
 import com.chowlb.runforyourlife.R;
 
 import android.content.Context;
@@ -83,7 +85,7 @@ public class Item implements Parcelable{
 	}
 
 	public String getImage() {
-		return name.replaceAll(" ", "_").toLowerCase() + "_item_img";
+		return name.replaceAll(" ", "_").toLowerCase(Locale.getDefault()) + "_item_img";
 	}
 
 	public String getName() {
