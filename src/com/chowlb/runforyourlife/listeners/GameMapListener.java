@@ -5,7 +5,6 @@ import java.util.List;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
-import android.util.Log;
 
 import com.chowlb.runforyourlife.GameMapActivity;
 import com.chowlb.runforyourlife.ShowCacheInventoryActivity;
@@ -14,7 +13,6 @@ import com.chowlb.runforyourlife.interfaces.AsyncMarkerInterface;
 import com.chowlb.runforyourlife.objects.Cache;
 import com.chowlb.runforyourlife.objects.Item;
 import com.chowlb.runforyourlife.objects.Player;
-import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.GoogleMap.OnMarkerClickListener;
 import com.google.android.gms.maps.model.Marker;
 

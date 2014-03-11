@@ -41,7 +41,6 @@ public class RegisterActivity extends LoginBaseActivity implements AsyncInterfac
 	public void startRegisterActivity() {
 		setContentView(R.layout.activity_register);
 		aua.delegate = this;
-		loadInvAct.delegate = this;
 		
 		register = (TextView) findViewById(R.id.registerTitle);
 		emailFail = (TextView) findViewById(R.id.emailVerifyFailTV);

@@ -27,16 +27,16 @@ public class LoginActivity extends LoginBaseActivity implements AsyncInterface{
 	private TextView loginFailed;
 	private TextView logo;
 	int userID;
-	SigninAsync sa = new SigninAsync();
 	
 	public void startLoginActivity() {
-		sa.delegate = this;
-		loadInvAct.delegate = this;
+		
 		SharedPreferences prefs = this.getSharedPreferences("com.chowlb.runforyourlife", Context.MODE_PRIVATE);
 		userID = prefs.getInt("USER_ID", -1);
 		Log.e("chowlb", "Checking preferences got id: " + userID);
 		if(userID >= 0) {
-			
+			Log.e("chowlb", "USER ID IS > 0");
+			SigninAsync sa = new SigninAsync();
+			sa.delegate = this;
 			sa.execute("2", String.valueOf(userID));
 		}else {
 		
@@ -85,6 +85,8 @@ public class LoginActivity extends LoginBaseActivity implements AsyncInterface{
 	    String pass = password.getText().toString();
 	    
 	    if(!Utils.isEmpty(user) && !Utils.isEmpty(pass)) {
+	    	SigninAsync sa = new SigninAsync();
+			sa.delegate = this;
 	    	sa.execute("1", user, pass);
 	    }
 	    else {
@@ -94,20 +96,18 @@ public class LoginActivity extends LoginBaseActivity implements AsyncInterface{
 	
 	@Override
 	public void processLogin(Player p) {
-
+		
 		if(p != null) {
 			SharedPreferences prefs = this.getSharedPreferences(
 				      "com.chowlb.runforyourlife", Context.MODE_PRIVATE);
 			 SharedPreferences.Editor editor = prefs.edit();
-		 
-			 editor.putInt("USER_ID", p.getPlayerID());
-		 
-			 editor.commit();
-			 player = p;
+		 	 editor.putInt("USER_ID", p.getPlayerID());
+		 	 editor.commit();
+		
+		 	 player = p;
 			 
 			 Log.e("chowlb", "Player name on login: " + player.getPlayerName());
-			 
-			 
+			 			 
 			 startGameMap();
 		}else{
 			

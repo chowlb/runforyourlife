@@ -40,6 +40,7 @@ public class HttpClient {
 			httppost.setEntity(new UrlEncodedFormEntity(nvList));
 						
 			HttpResponse response = client.execute(httppost);
+			Log.e("chowlb", "Got HTTP response");
 			HttpEntity httpEntity = response.getEntity();
             is = httpEntity.getContent();
 			if(response != null) {

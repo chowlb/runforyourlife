@@ -1,7 +1,6 @@
 package com.chowlb.runforyourlife.objects;
 
 import com.chowlb.runforyourlife.R;
-import com.chowlb.runforyourlife.R.color;
 
 import android.content.Context;
 import android.os.Parcel;

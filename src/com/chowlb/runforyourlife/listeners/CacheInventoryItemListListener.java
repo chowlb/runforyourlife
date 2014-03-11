@@ -7,7 +7,6 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Adapter;
 import android.widget.AdapterView;
@@ -19,7 +18,6 @@ import com.chowlb.runforyourlife.SingleItemActivity;
 import com.chowlb.runforyourlife.adapters.ItemListAdapter;
 import com.chowlb.runforyourlife.async.AddItemAsync;
 import com.chowlb.runforyourlife.async.DeleteItemAsync;
-import com.chowlb.runforyourlife.interfaces.AsyncInterface;
 import com.chowlb.runforyourlife.objects.Cache;
 import com.chowlb.runforyourlife.objects.Item;
 import com.chowlb.runforyourlife.objects.Player;
@@ -50,6 +48,7 @@ public class CacheInventoryItemListListener implements OnItemClickListener, OnIt
 		
 		Bundle bundle = new Bundle();
 		bundle.putParcelable("ITEM", item);
+		bundle.putInt("TYPE", 0);
 		i.putExtras(bundle);
         activity.startActivity(i);
 	}

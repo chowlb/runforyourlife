@@ -1,6 +1,5 @@
 package com.chowlb.runforyourlife;
 
-import com.chowlb.runforyourlife.async.LoadPlayerInventoryAsync;
 import com.chowlb.runforyourlife.interfaces.AsyncInterface;
 import com.chowlb.runforyourlife.objects.Player;
 
@@ -11,8 +10,6 @@ import android.os.Bundle;
 public abstract class LoginBaseActivity extends Activity implements AsyncInterface{
 
 	protected Player player;
-	protected LoadPlayerInventoryAsync loadInvAct = new LoadPlayerInventoryAsync();
-	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);

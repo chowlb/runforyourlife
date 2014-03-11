@@ -20,10 +20,16 @@ public class SingleItemActivity extends Activity {
 		Bundle extras = getIntent().getExtras();
 		if(extras != null) {
 			item = extras.getParcelable("ITEM");
+			int type = extras.getInt("TYPE");
 			
 			//Log.e("chowlb", "Item Passed: " + item.getItemId());
 			ActionBar ab = getActionBar();
-			ab.setIcon(R.drawable.ic_action_military_backpack_radio_256);
+			if(type == 1) {
+				ab.setIcon(R.drawable.ic_action_military_backpack_radio_256);
+			}else {
+				ab.setIcon(R.drawable.ic_action_ic_action_add_drop);
+			}
+			
 			ab.setTitle("");
 			ab.setTitle(item.getName());
 			

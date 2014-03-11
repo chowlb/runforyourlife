@@ -31,7 +31,7 @@ public class SigninAsync extends AsyncTask<String, Void, Player>{
     //2 is cached login
 	@Override
 	protected Player doInBackground(String... arg0) {
-		
+		Log.e("chowlb", "Do in background");
 		int loginType = Integer.parseInt(arg0[0]);
 		String username = (String) arg0[1];
 		String link="";
@@ -59,6 +59,7 @@ public class SigninAsync extends AsyncTask<String, Void, Player>{
 			HttpClient client = new HttpClient();
 			Log.e("chowlb", "Sending json: " + jsonObjSend);
 			JSONArray jsonResponse = client.postJsonData(jsonObjSend.toString(), link);
+			Log.e("chowlb", "Json Response length: " + jsonResponse.length());
 			if(jsonResponse.length() > 0) {
 				JSONObject jsonObj  = jsonResponse.getJSONObject(0);
 				player = new Player(jsonObj.getInt("USER_ID"), jsonObj.getString("USER_NAME"), jsonObj.getInt("HEALTH"),
@@ -74,6 +75,7 @@ public class SigninAsync extends AsyncTask<String, Void, Player>{
 
 	 @Override
 	   protected void onPostExecute(Player result){
+		 Log.e("chowlb", "On Post Execute Signin Async");
 		 delegate.processLogin(result);
 		 
 	 }

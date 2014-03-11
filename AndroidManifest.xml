@@ -31,7 +31,7 @@
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
         <activity
-            android:name="com.chowlb.runforyourlife.SplashScreen"
+            android:name="com.chowlb.runforyourlife.SplashScreenActivity"
             android:label="@string/app_name"
             android:screenOrientation="portrait"
             android:theme="@android:style/Theme.NoTitleBar.Fullscreen" >
@@ -59,7 +59,7 @@
             android:theme="@android:style/Theme.NoTitleBar.Fullscreen" >
         </activity>
         <activity
-            android:name="com.chowlb.runforyourlife.ShowInventoryActivity"
+            android:name="com.chowlb.runforyourlife.ShowPlayerInventoryActivity"
             android:label="@string/title_activity_show_inventory"
             android:parentActivityName="com.chowlb.runforyourlife.GameMapActivity"
             android:screenOrientation="portrait" >
