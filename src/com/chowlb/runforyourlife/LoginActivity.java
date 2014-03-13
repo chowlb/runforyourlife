@@ -13,7 +13,6 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.provider.Settings;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -35,7 +34,7 @@ public class LoginActivity extends LoginBaseActivity implements AsyncInterface{
 		//Log.e("chowlb", "Checking preferences got id: " + userID);
 		if(userID >= 0) {
 			//Log.e("chowlb", "USER ID IS > 0");
-			SigninAsync sa = new SigninAsync();
+			SigninAsync sa = new SigninAsync(this);
 			sa.delegate = this;
 			sa.execute("2", String.valueOf(userID));
 		}else {
@@ -85,7 +84,7 @@ public class LoginActivity extends LoginBaseActivity implements AsyncInterface{
 	    String pass = password.getText().toString();
 	    
 	    if(!Utils.isEmpty(user) && !Utils.isEmpty(pass)) {
-	    	SigninAsync sa = new SigninAsync();
+	    	SigninAsync sa = new SigninAsync(this);
 			sa.delegate = this;
 	    	sa.execute("1", user, pass);
 	    }

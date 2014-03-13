@@ -22,10 +22,9 @@ public class SingleItemActivity extends Activity {
 			item = extras.getParcelable("ITEM");
 			int type = extras.getInt("TYPE");
 			
-			//Log.e("chowlb", "Item Passed: " + item.getItemId());
 			ActionBar ab = getActionBar();
 			if(type == 0) {
-				ab.setIcon(R.drawable.ic_action_military_backpack_radio_256);
+				ab.setIcon(R.drawable.ic_action_ic_action_military_backpack_radio);
 			}else if(type==1){
 				ab.setIcon(R.drawable.ic_crate);
 			}else if(type == 2){
@@ -51,6 +50,10 @@ public class SingleItemActivity extends Activity {
 			itemDesc.setText("");
 			itemDesc.setText(item.getDescription());
 			
+			TextView itemRarity = (TextView) findViewById(R.id.singleItemRarity);
+			itemRarity.setText("");
+			itemRarity.setText(item.getRarity());
+			
 			ImageView itemImage = (ImageView) findViewById(R.id.itemBigImage);
 			
 			itemImage.setImageResource(getResources().getIdentifier(item.getImage(), "drawable", getPackageName()));
@@ -62,12 +65,4 @@ public class SingleItemActivity extends Activity {
 		}
 		
 	}
-
-	//@Override
-	//public boolean onCreateOptionsMenu(Menu menu) {
-		// Inflate the menu; this adds items to the action bar if it is present.
-	//	getMenuInflater().inflate(R.menu.single_item, menu);
-	//	return true;
-	//}
-
 }

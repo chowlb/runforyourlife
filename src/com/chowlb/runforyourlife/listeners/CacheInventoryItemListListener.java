@@ -7,6 +7,7 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Adapter;
 import android.widget.AdapterView;
@@ -15,7 +16,6 @@ import android.widget.AdapterView.OnItemLongClickListener;
 import android.widget.Toast;
 
 import com.chowlb.runforyourlife.GameMapActivity;
-import com.chowlb.runforyourlife.R;
 import com.chowlb.runforyourlife.SingleItemActivity;
 import com.chowlb.runforyourlife.adapters.ItemListAdapter;
 import com.chowlb.runforyourlife.async.AddItemAsync;
@@ -75,6 +75,7 @@ public class CacheInventoryItemListListener implements OnItemClickListener, OnIt
 		.setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
 			@Override
 			public void onClick(DialogInterface dialog, int which) {
+				Log.e("chowlb", "Trying to add item, inventory count: " + player.getInventory().size());
 				if(player.canAddItem()) {
 					DeleteItemAsync deleteItemActivity = new DeleteItemAsync();
 					deleteItemActivity.execute(item, 1);

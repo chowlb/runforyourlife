@@ -16,6 +16,15 @@ public class Cache implements Parcelable {
 	private LatLng location;
 	private double longitude;
 	private double latitude;
+	private String pin;
+	public String getPin() {
+		return pin;
+	}
+
+	public void setPin(String pin) {
+		this.pin = pin;
+	}
+
 	private List<Item> inventory;
 	private int inventorySize = 5;
 	
@@ -150,6 +159,7 @@ public class Cache implements Parcelable {
 		out.writeTypedList(this.inventory);
 		out.writeDouble(this.latitude);
 		out.writeDouble(this.longitude);
+		out.writeString(this.pin);
 		
 	}
 	
@@ -182,6 +192,7 @@ public class Cache implements Parcelable {
 		
 		this.latitude = in.readDouble();
 		this.longitude = in.readDouble();
+		this.pin = in.readString();
 	}
 	
 	

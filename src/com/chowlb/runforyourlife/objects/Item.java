@@ -18,12 +18,13 @@ public class Item implements Parcelable{
 	private String description;
 	private int attribute;
 	private String owner;
+	private String rarity;
 	
 	public Item() {
 		
 	}
 	
-	public Item(int id, int itemDBID, String name, String description, String itemType, String status, int attribute, String owner) {
+	public Item(int id, int itemDBID, String name, String description, String itemType, String status, int attribute, String r, String owner) {
 		this.name = name;
 		this.description = description;
 		this.itemType = itemType;
@@ -31,10 +32,11 @@ public class Item implements Parcelable{
 		this.status = status;
 		this.attribute = attribute;
 		this.itemDBID = itemDBID;
+		this.rarity = r;
 		this.owner = owner;
 	}
 	
-	public Item(int id, int itemDBID, String name, String description, String itemType, String status, int attribute) {
+	public Item(int id, int itemDBID, String name, String description, String itemType, String status, int attribute, String r) {
 		this.name = name;
 		this.description = description;
 		this.itemType = itemType;
@@ -42,6 +44,7 @@ public class Item implements Parcelable{
 		this.status = status;
 		this.attribute = attribute;
 		this.itemDBID = itemDBID;
+		this.rarity = r;
 	}
 	
 	public String getOwner() {
@@ -127,6 +130,14 @@ public class Item implements Parcelable{
 			return context.getResources().getColor(R.color.BROKEN);
 	}
 
+	public String getRarity() {
+		return rarity;
+	}
+
+	public void setRarity(String rarity) {
+		this.rarity = rarity;
+	}
+
 	//EVERYTHING BELOW HERE IS FOR THE PARCEL
 	public int describeContents() {
 		return 0;
@@ -141,6 +152,7 @@ public class Item implements Parcelable{
 		out.writeString(this.description);
 		out.writeInt(this.attribute);
 		out.writeString(this.owner);
+		out.writeString(this.rarity);
 
 
 	}
@@ -164,7 +176,7 @@ public class Item implements Parcelable{
 		this.description = in.readString();
 		this.attribute = in.readInt();
 		this.owner = in.readString();
-
+		this.rarity = in.readString();
 		
 	}
 }

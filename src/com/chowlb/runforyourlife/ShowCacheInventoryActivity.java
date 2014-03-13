@@ -1,18 +1,21 @@
 package com.chowlb.runforyourlife;
 
-import com.chowlb.runforyourlife.adapters.ItemListAdapter;
-import com.chowlb.runforyourlife.listeners.CacheInventoryItemListListener;
-import com.chowlb.runforyourlife.objects.Cache;
-import com.chowlb.runforyourlife.objects.Player;
-import com.google.android.gms.maps.model.BitmapDescriptorFactory;
+import java.util.HashMap;
 
 import android.app.ActionBar;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
+import android.view.MenuItem;
 import android.widget.ListView;
 import android.widget.Toast;
+
+import com.chowlb.runforyourlife.adapters.ItemListAdapter;
+import com.chowlb.runforyourlife.listeners.CacheInventoryItemListListener;
+import com.chowlb.runforyourlife.objects.Cache;
+import com.chowlb.runforyourlife.objects.Item;
+import com.chowlb.runforyourlife.objects.Player;
 
 public class ShowCacheInventoryActivity extends Activity{
 	private Cache cache;
@@ -68,7 +71,24 @@ public class ShowCacheInventoryActivity extends Activity{
 		return true;
 	}
 
-
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		int itemId = item.getItemId();
+		if(itemId == R.id.menu_cache_inventory_take_item) {
+			
+			ItemListAdapter itemListAdapter = (ItemListAdapter) inventoryLayout.getAdapter();
+			HashMap<Integer, Item> checkedItems = itemListAdapter.getCheckedItems();
+			Toast.makeText(this, "Number of checked items: " + checkedItems.size(), Toast.LENGTH_SHORT).show();
+		    return true;
+		}else if (itemId == R.id.menu_cache_inventory_add_item) {
+			//android.os.Process.killProcess(android.os.Process.myPid());
+			return true;	
+		}else {
+			return super.onOptionsItemSelected(item);
+		}
+	}
+	
+	
 	
 	@Override
 	public void onBackPressed() {

@@ -35,5 +35,8 @@
     <string name="quit">Quit</string>
     <string name="addDrop">Add Drop</string>
     <string name="title_activity_show_cache_inventory">ShowCacheInventoryActivity</string>
+    <string name="addItem">Add Item</string>
+    <string name="takeItem">Take Item</string>
+    <string name="refreshCaches">Refresh Caches</string>
 
 </resources>

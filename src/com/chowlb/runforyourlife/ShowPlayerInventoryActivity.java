@@ -8,13 +8,10 @@ import com.chowlb.runforyourlife.objects.Player;
 import android.app.ActionBar;
 import android.app.Activity;
 import android.app.AlertDialog;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.Menu;
-import android.view.MenuItem;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -22,13 +19,14 @@ public class ShowPlayerInventoryActivity extends Activity {
 	private Player player;
 	private ItemListAdapter adapter;
 	private ListView inventoryLayout; 
-	private Activity local;
+	//private Activity local;
 	SavePlayerInfoAsync saveInfoActivity = new SavePlayerInfoAsync();
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_show_inventory);
-		local = this;
+		//local = this;
 		
 		Bundle extras = getIntent().getExtras();
 		if(extras != null) {
@@ -42,7 +40,6 @@ public class ShowPlayerInventoryActivity extends Activity {
 			ab.setIcon(R.drawable.ic_action_ic_action_military_backpack_radio);
 			ab.setTitle("");
 			ab.setTitle(player.getPlayerName() + " - Inventory" );
-			
 			
 			
 			inventoryLayout = (ListView) findViewById(R.id.inventoryListView);
@@ -66,7 +63,6 @@ public class ShowPlayerInventoryActivity extends Activity {
 
 	@Override
 	protected void onResume() {
-		// TODO Auto-generated method stub
 		super.onResume();
 		
 	}
@@ -81,33 +77,32 @@ public class ShowPlayerInventoryActivity extends Activity {
 	
 	
 	
-	@Override
-	public boolean onOptionsItemSelected(MenuItem item) {
-		int itemId = item.getItemId();
-		if(itemId == android.R.id.home) {
-			Intent data = new Intent();
-		    data.putExtra("PLAYER", player);
-		    setResult(Activity.RESULT_OK, data);
-		    finish();
-		    return true;
-		}else if (itemId == R.id.menu_inventory_quit) {
-			android.os.Process.killProcess(android.os.Process.myPid());
-			return true;
-		} else if(itemId == R.id.menu_inventory_logout){
-			SharedPreferences prefs = local.getSharedPreferences("com.chowlb.runforyourlife", Context.MODE_PRIVATE);
-			SharedPreferences.Editor editor = prefs.edit();
-			editor.clear();
-			editor.commit();
-			doExit();
-			return true;		
-		}else {
-			return super.onOptionsItemSelected(item);
-		}
-	}
+//	@Override
+//	public boolean onOptionsItemSelected(MenuItem item) {
+//		int itemId = item.getItemId();
+//		if(itemId == android.R.id.home) {
+//			Intent data = new Intent();
+//		    data.putExtra("PLAYER", player);
+//		    setResult(Activity.RESULT_OK, data);
+//		    finish();
+//		    return true;
+//		}else if (itemId == R.id.menu_inventory_quit) {
+//			android.os.Process.killProcess(android.os.Process.myPid());
+//			return true;
+//		} else if(itemId == R.id.menu_inventory_logout){
+//			SharedPreferences prefs = local.getSharedPreferences("com.chowlb.runforyourlife", Context.MODE_PRIVATE);
+//			SharedPreferences.Editor editor = prefs.edit();
+//			editor.clear();
+//			editor.commit();
+//			doExit();
+//			return true;		
+//		}else {
+//			return super.onOptionsItemSelected(item);
+//		}
+//	}
 
 	
 	public void doExit() {
-		// TODO Auto-generated method stub
 		new AlertDialog.Builder(this)
 		.setTitle("Exit")
 		.setMessage("Do you wish to Exit the game? You will have to login again. Choose 'Quit' to save login info.")

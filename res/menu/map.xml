@@ -14,6 +14,13 @@
         />
     
     <item
+        android:id="@+id/menu_refresh_caches"
+        android:showAsAction="ifRoom"
+        android:title="@string/refreshCaches"
+        android:icon="@drawable/refresh_icon"
+        />
+    
+    <item
         android:id="@+id/menu_logout"
         android:showAsAction="ifRoom"
         android:title="@string/logout"

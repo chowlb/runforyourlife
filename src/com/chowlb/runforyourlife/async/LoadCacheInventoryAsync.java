@@ -53,7 +53,7 @@ public class LoadCacheInventoryAsync extends AsyncTask<String, Void, List<Item>>
 					Item item = new Item();
 					item = new Item(jsonObj.getInt("CACHE_ITEM_ID"), jsonObj.getInt("CACHEINV_DB_ID"), jsonObj.getString("ITEM_NAME"),
 							 jsonObj.getString("ITEM_DESCRIPTION"), jsonObj.getString("ITEM_TYPE"),
-							 jsonObj.getString("STATUS"), jsonObj.getInt("ITEM_ATTRIBUTE"));
+							 jsonObj.getString("STATUS"), jsonObj.getInt("ITEM_ATTRIBUTE"), jsonObj.getString("ITEM_RARITY"));
 					items.add(item);
 				}
 			}

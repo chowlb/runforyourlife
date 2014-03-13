@@ -9,19 +9,27 @@ import com.chowlb.runforyourlife.objects.Player;
 import com.chowlb.runforyourlife.utils.HttpClient;
 import com.chowlb.runforyourlife.utils.Utils;
 
+import android.app.ProgressDialog;
+import android.content.Context;
 import android.os.AsyncTask;
-import android.util.Log;
 
 public class AddUserAsync extends AsyncTask<String, Void, Player>{
   public AsyncInterface delegate = null;
    private Player player;
+   private Context context;
+   ProgressDialog mProgressDialog;
+   
 	//flag 0 means get and 1 means post.(By default it is get.)
-   public AddUserAsync() {   }
+   public AddUserAsync(Context con) {
+	   context = con;
+   }
    
    @Override
-    protected void onPreExecute(){
-    	super.onPreExecute();
-    }
+ 	protected void onPreExecute() {
+ 		  mProgressDialog = new ProgressDialog(context);
+		  mProgressDialog =ProgressDialog.show(context, "", "Creating Player and Loggin In.",true,false);
+		  super.onPreExecute();
+ }
 	
 	
 	@Override
@@ -62,6 +70,9 @@ public class AddUserAsync extends AsyncTask<String, Void, Player>{
 	 @Override
 	   protected void onPostExecute(Player result){
 		 super.onPostExecute(result);
+		 if (mProgressDialog != null || mProgressDialog.isShowing()){
+	         mProgressDialog.dismiss();
+		 }
 		 delegate.processLogin(result);
 	 }
 

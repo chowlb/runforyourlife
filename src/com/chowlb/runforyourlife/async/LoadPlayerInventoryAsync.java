@@ -7,18 +7,16 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import com.chowlb.runforyourlife.GameMapActivity;
-import com.chowlb.runforyourlife.interfaces.AsyncInterface;
+import com.chowlb.runforyourlife.interfaces.AsyncLoadInventoryInterface;
 import com.chowlb.runforyourlife.objects.Item;
 import com.chowlb.runforyourlife.objects.Player;
 import com.chowlb.runforyourlife.utils.HttpClient;
 
 import android.os.AsyncTask;
-import android.util.Log;
 
 public class LoadPlayerInventoryAsync extends AsyncTask<Player, Void, List<Item>>{
 
-    public AsyncInterface delegate = null;
+    public AsyncLoadInventoryInterface delegate = null;
     List<Item> items= new ArrayList<Item>();
     
     public LoadPlayerInventoryAsync() {
@@ -55,7 +53,7 @@ public class LoadPlayerInventoryAsync extends AsyncTask<Player, Void, List<Item>
 					Item item = new Item();
 					item = new Item(jsonObj.getInt("PLAYER_ITEM_ID"), jsonObj.getInt("PLAYERINV_DB_ID"), jsonObj.getString("ITEM_NAME"),
 							 jsonObj.getString("ITEM_DESCRIPTION"), jsonObj.getString("ITEM_TYPE"),
-							 jsonObj.getString("STATUS"), jsonObj.getInt("ITEM_ATTRIBUTE"), player.getPlayerName());
+							 jsonObj.getString("STATUS"), jsonObj.getInt("ITEM_ATTRIBUTE"), jsonObj.getString("ITEM_RARITY"), player.getPlayerName());
 					items.add(item);
 				}
 			}
@@ -70,12 +68,10 @@ public class LoadPlayerInventoryAsync extends AsyncTask<Player, Void, List<Item>
 	 @Override
 	  protected void onPostExecute(List<Item> result){
 		 super.onPostExecute(result);
-		 //Log.e("chowlb", "Calling on postexcute with result size: " + result.size());
-		 handleInventory(result);
+
+		 delegate.handleInventoryLoading(result);
 	 }
 
-	public void handleInventory(List<Item> invResult) {
-		GameMapActivity.player.setInventory(invResult);
-	}
+	
 }
 

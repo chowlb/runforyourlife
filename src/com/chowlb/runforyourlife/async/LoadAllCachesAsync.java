@@ -7,6 +7,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.os.AsyncTask;
 import android.util.Log;
@@ -28,18 +29,18 @@ public class LoadAllCachesAsync extends AsyncTask<Void, Void, List<Cache>>{
 	List<Cache> cacheList = new ArrayList<Cache>();
     GoogleMap mapIn;
     Context context;
-	
+	ProgressDialog mProgressDialog;
     public LoadAllCachesAsync(Context con, GoogleMap map) {
       context = con;
       mapIn = map;
    }
     
     @Override
-    protected void onPreExecute() {
-       super.onPreExecute();
-       
+   	protected void onPreExecute() {
+   		  mProgressDialog = new ProgressDialog(context);
+ 		  mProgressDialog =ProgressDialog.show(context, "", "Loading Caches, Please Wait",true,false);
+ 		  super.onPreExecute();
    }
-   
 	
 	@Override
 	protected List<Cache> doInBackground(Void... params) {
@@ -52,6 +53,7 @@ public class LoadAllCachesAsync extends AsyncTask<Void, Void, List<Cache>>{
 			for(int i=0; i<caches.length(); i++) {
 				JSONObject c = caches.getJSONObject(i);
 				Cache cache = new Cache(c.getInt("CACHE_ID"), c.getString("OWNER_NAME"), c.getInt("OWNER_ID"), c.getDouble("LATITUDE"), c.getDouble("LONGITUDE"));
+				cache.setPin(c.getString("PIN"));
 				cacheList.add(cache);
 			}
 		}catch(JSONException e) {
@@ -70,6 +72,10 @@ public class LoadAllCachesAsync extends AsyncTask<Void, Void, List<Cache>>{
          else{
              Log.e("chowlb", "No more data");
          }
+		 
+		 if (mProgressDialog != null || mProgressDialog.isShowing()){
+	         mProgressDialog.dismiss();
+		 }
 		 
 	 }
 	 

@@ -48,24 +48,14 @@
         android:layout_toRightOf="@+id/thumbnail"
         android:textStyle="bold" />
  
-    <!-- Rightend Duration 
-    <TextView
-        android:id="@+id/duration"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentRight="true"
-        android:layout_alignTop="@id/title"
-        android:gravity="right"
-        android:text="5:45"
-        android:layout_marginRight="5dip"
-        android:textSize="10dip"
-        android:textColor="#10bcc9"
-        android:textStyle="bold"/>
- 
-     <ImageView android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:src="@drawable/arrow"
-        android:layout_alignParentRight="true"
-        android:layout_centerVertical="true"/>-->
+     <CheckBox
+         android:id="@+id/listRowCheckBox"
+         android:layout_width="wrap_content"
+         android:layout_height="wrap_content"
+         android:layout_alignParentRight="true"
+         android:layout_centerVertical="true"
+         android:background="#ffffff"
+         android:focusable="false"
+		 android:focusableInTouchMode="false" />
  
 </RelativeLayout>

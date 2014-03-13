@@ -34,12 +34,12 @@ public class RegisterActivity extends LoginBaseActivity implements AsyncInterfac
 	String pw; 
 	String emv;
 	String pwv;
-	AddUserAsync aua = new AddUserAsync();
+	
 	
 	
 	public void startRegisterActivity() {
 		setContentView(R.layout.activity_register);
-		aua.delegate = this;
+		
 		
 		register = (TextView) findViewById(R.id.registerTitle);
 		emailFail = (TextView) findViewById(R.id.emailVerifyFailTV);
@@ -91,9 +91,9 @@ public class RegisterActivity extends LoginBaseActivity implements AsyncInterfac
 		passwordFail.setVisibility(View.GONE);
 		passwordStrength.setVisibility(View.GONE);
 		
-		//if(testUserInput()) {
-			aua.execute(username.getText().toString(), pw, em);				
-		//}		
+		AddUserAsync aua = new AddUserAsync(this);
+		aua.delegate = this;
+		aua.execute(username.getText().toString(), pw, em);				
 	}
 	
 	public void processLogin(Player p) {

@@ -4,26 +4,34 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import android.app.ProgressDialog;
+import android.content.Context;
+import android.os.AsyncTask;
+
 import com.chowlb.runforyourlife.interfaces.AsyncInterface;
 import com.chowlb.runforyourlife.objects.Player;
 import com.chowlb.runforyourlife.utils.HttpClient;
 import com.chowlb.runforyourlife.utils.Utils;
 
-import android.os.AsyncTask;
-import android.util.Log;
-
 public class SigninAsync extends AsyncTask<String, Void, Player>{
 
    public AsyncInterface delegate = null;
    private Player player;
+   private Context context;
+   ProgressDialog mProgressDialog;
    
    //flag 0 means get and 1 means post.(By default it is get.)
-   public SigninAsync() {  }
+   public SigninAsync(Context con) {
+	   context = con;
+   }
 
   
-    protected void onPreExecute(){
-    	
-    }
+   @Override
+  	protected void onPreExecute() {
+  		  mProgressDialog = new ProgressDialog(context);
+		  mProgressDialog =ProgressDialog.show(context, "", "Logging In.",true,false);
+		  super.onPreExecute();
+  }
 	
 	//SIGN IN EXECUTE, FIRST ARGUMENT IS TYPE OF LOGIN
     //0 is new
@@ -76,7 +84,11 @@ public class SigninAsync extends AsyncTask<String, Void, Player>{
 	 @Override
 	   protected void onPostExecute(Player result){
 		 //Log.e("chowlb", "On Post Execute Signin Async");
-		 delegate.processLogin(result);
 		 
+		 if (mProgressDialog != null || mProgressDialog.isShowing()){
+	         mProgressDialog.dismiss();
+		 }
+		 
+		 delegate.processLogin(result);
 	 }
 }

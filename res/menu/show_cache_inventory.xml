@@ -1,9 +1,19 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android" >
 
     <item
-        android:id="@+id/action_settings"
+        android:id="@+id/menu_cache_inventory_add_item"
         android:orderInCategory="100"
-        android:showAsAction="never"
-        android:title="@string/action_settings"/>
+        android:showAsAction="ifRoom"
+        android:title="@string/addItem"
+        android:icon="@drawable/ic_menu_takeitems"
+        />
+    
+    <item
+        android:id="@+id/menu_cache_inventory_take_item"
+        android:orderInCategory="100"
+        android:showAsAction="ifRoom"
+        android:title="@string/takeItem"
+        android:icon="@drawable/ic_menu_putitems"
+        />
 
 </menu>
