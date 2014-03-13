@@ -69,13 +69,15 @@ public class ItemListAdapter extends BaseAdapter {
 		holder.item=(TextView) rowView.findViewById(R.id.itemName);
 		holder.status=(TextView) rowView.findViewById(R.id.item_Status);
 		holder.img=(ImageView) rowView.findViewById(R.id.list_image);
-		
+
+		holder.checkBox=(CheckBox) rowView.findViewById(R.id.listRowCheckBox);
 		Item item = result.get(position);
 		
 		holder.item.setText(item.getName());
 		holder.status.setText(item.getStatus());
 		holder.status.setTextColor(item.getStatusColor(this.context));
 		holder.img.setImageResource(context.getResources().getIdentifier(item.getImage(), "drawable", context.getPackageName()));	
+	
 		holder.checkBox.setTag(item);
 		holder.checkBox.setOnCheckedChangeListener(new OnCheckedChangeListener() {
 			
