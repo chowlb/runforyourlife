@@ -277,9 +277,8 @@ containing a value of this type.
         public static final int menu_addDrop=0x7f050025;
         public static final int menu_cache_inventory_add_item=0x7f050028;
         public static final int menu_cache_inventory_take_item=0x7f050029;
-        public static final int menu_inventory_logout=0x7f05002b;
-        public static final int menu_inventory_quit=0x7f05002a;
         public static final int menu_logout=0x7f050027;
+        public static final int menu_player_inventory_take_item=0x7f05002a;
         public static final int menu_refresh_caches=0x7f050026;
         public static final int menu_showInventory=0x7f050024;
         public static final int none=0x7f050000;
@@ -321,7 +320,8 @@ containing a value of this type.
         public static final int register=0x7f0a0002;
         public static final int show_cache_inventory=0x7f0a0003;
         public static final int show_inventory=0x7f0a0004;
-        public static final int single_item=0x7f0a0005;
+        public static final int show_inventory_from_cache=0x7f0a0005;
+        public static final int single_item=0x7f0a0006;
     }
     public static final class string {
         public static final int action_settings=0x7f06001b;

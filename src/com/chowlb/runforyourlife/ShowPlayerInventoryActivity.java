@@ -7,14 +7,21 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
+import android.util.SparseArray;
 import android.view.Menu;
 import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.widget.ListView;
 import android.widget.Toast;
 
 import com.chowlb.runforyourlife.adapters.ItemListAdapter;
+import com.chowlb.runforyourlife.async.AddItemAsync;
+import com.chowlb.runforyourlife.async.DeleteItemAsync;
 import com.chowlb.runforyourlife.async.SavePlayerInfoAsync;
 import com.chowlb.runforyourlife.listeners.InventoryItemListListener;
+import com.chowlb.runforyourlife.objects.Cache;
+import com.chowlb.runforyourlife.objects.Item;
 import com.chowlb.runforyourlife.objects.Player;
 
 public class ShowPlayerInventoryActivity extends Activity {
@@ -23,21 +30,21 @@ public class ShowPlayerInventoryActivity extends Activity {
 	private ListView inventoryLayout; 
 	public static ActionBar ab;
 	SavePlayerInfoAsync saveInfoActivity = new SavePlayerInfoAsync();
+	Cache cache;
 	boolean cacheEntry = false;
+	Activity activity;
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_show_inventory);
-		//local = this;
+		activity = this;
 		
 		Bundle extras = getIntent().getExtras();
 		if(extras != null) {
 			player = extras.getParcelable("PLAYER");
-			boolean gpsEnabled = extras.getBoolean("GPSENABLED");
-			if(!gpsEnabled){
-				Toast.makeText(this, "Without GPS enabled you can only view your inventory.",  Toast.LENGTH_LONG).show();
-			}
-			if(extras.containsKey("FROMCACHE")) {
+			if(extras.containsKey("CACHE")) {
+				cache = extras.getParcelable("CACHE");
 				cacheEntry = true;
 			}
 			
@@ -96,55 +103,71 @@ public class ShowPlayerInventoryActivity extends Activity {
 	public void onBackPressed() {
 	    Intent data = new Intent();
 	    data.putExtra("PLAYER", player);
+	    if(cacheEntry) {
+	    	Log.e("chowlb", "Adding parcelable cache");
+	    	ShowCacheInventoryActivity.adapter.notifyDataSetChanged();
+	    	data.putExtra("CACHE", cache);
+	    }
 	    setResult(Activity.RESULT_OK, data);
 	    super.onBackPressed();
 	}
 	
 	
 	
-//	@Override
-//	public boolean onOptionsItemSelected(MenuItem item) {
-//		int itemId = item.getItemId();
-//		if(itemId == android.R.id.home) {
-//			Intent data = new Intent();
-//		    data.putExtra("PLAYER", player);
-//		    setResult(Activity.RESULT_OK, data);
-//		    finish();
-//		    return true;
-//		}else if (itemId == R.id.menu_inventory_quit) {
-//			android.os.Process.killProcess(android.os.Process.myPid());
-//			return true;
-//		} else if(itemId == R.id.menu_inventory_logout){
-//			SharedPreferences prefs = local.getSharedPreferences("com.chowlb.runforyourlife", Context.MODE_PRIVATE);
-//			SharedPreferences.Editor editor = prefs.edit();
-//			editor.clear();
-//			editor.commit();
-//			doExit();
-//			return true;		
-//		}else {
-//			return super.onOptionsItemSelected(item);
-//		}
-//	}
-
-	
-	public void doExit() {
-		new AlertDialog.Builder(this)
-		.setTitle("Exit")
-		.setMessage("Do you wish to Exit the game? You will have to login again. Choose 'Quit' to save login info.")
-		.setIcon(android.R.drawable.ic_dialog_alert)
-		.setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
-			@Override
-			public void onClick(DialogInterface dialog, int which) {
-				saveInfoActivity.execute(player);
-				android.os.Process.killProcess(android.os.Process.myPid());
-				
-			}
-		})
-		.setNegativeButton(android.R.string.no, null).show();
-		
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		int itemId = item.getItemId();
+		if(itemId == R.id.menu_player_inventory_take_item) {
+			
+			final SparseArray<Item> checkedItems = adapter.getCheckedItems();
+			
+			new AlertDialog.Builder(this)
+			.setTitle("Store Items")
+			.setMessage("Do you wish to store the selected items in Cache:" + String.valueOf(cache.getCacheID()) + "?")
+			.setIcon(android.R.drawable.ic_dialog_info)
+			.setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+				@Override
+				public void onClick(DialogInterface dialog, int which) {
+					
+					int key = 0;
+					for(int i = 0; i < checkedItems.size(); i++) {
+					   key = checkedItems.keyAt(i);
+					   
+					   Item item = checkedItems.get(key);
+					   
+					   Log.e("chowlb", "Cache inv before: " + cache.getInventory().size());
+					   if(cache.getInventory().size()+checkedItems.size() <= cache.getInventorySize()) {
+							DeleteItemAsync deleteItemActivity = new DeleteItemAsync();
+							deleteItemActivity.execute(item, 2);
+							player.removeItem(item);
+							AddItemAsync addItemActivity = new AddItemAsync();
+							addItemActivity.execute(item, cache, 1);
+							cache.addItem(item);
+							Log.e("chowlb", "Cache inv after: " + cache.getInventory().size());
+							adapter.notifyDataSetChanged();
+						}else {
+							Toast.makeText(activity, "Cache is full. Try selecting less items.",  Toast.LENGTH_SHORT).show();
+						}
+					}
+					ab.setTitle("");
+					ab.setTitle(player.getPlayerName() + " - Inventory " + player.getInventory().size() + "/" + player.getInventorySize() );
+				}
+			})
+			.setNegativeButton(android.R.string.no, null).show();
+		    return true;
+		}else if (itemId == R.id.menu_cache_inventory_add_item) {
+			Intent intent = new Intent(this, ShowPlayerInventoryActivity.class);
+			Bundle bundle = new Bundle();
+			bundle.putParcelable("PLAYER", player);
+			Log.e("chowlb", "Returning result cache!");
+			bundle.putBoolean("CACHE", true);
+			intent.putExtras(bundle);
+			startActivityForResult(intent, 1);
+			return true;	
+		}else {
+			return super.onOptionsItemSelected(item);
+		}
 	}
-	
-	
 	
 
 }

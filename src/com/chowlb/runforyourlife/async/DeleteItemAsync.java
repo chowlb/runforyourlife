@@ -4,6 +4,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import android.os.AsyncTask;
+import android.util.Log;
 
 import com.chowlb.runforyourlife.interfaces.AsyncInterface;
 import com.chowlb.runforyourlife.objects.Item;
@@ -12,6 +13,7 @@ import com.chowlb.runforyourlife.utils.HttpClient;
 public class DeleteItemAsync extends AsyncTask<Object, Void, String>{
 	public AsyncInterface delegate = null;
 	private static String URL = "http://www.chowlb.com/runforyourlife/deleteuseritem_app.php";
+	private int deleteType = 1;
 	
 	public DeleteItemAsync() { }
 	
@@ -19,7 +21,8 @@ public class DeleteItemAsync extends AsyncTask<Object, Void, String>{
 	protected String doInBackground(Object... arg0) {
 		String result = null;
 		Item item = (Item) arg0[0];
-		int deleteType = (Integer) arg0[1];
+		deleteType = (Integer) arg0[1];
+		Log.e("chowlb", "Delete TYpe raw: " + deleteType);
 		JSONObject jsonObjSend = new JSONObject();
 		try {
 			jsonObjSend.put("ITEM_DB_ID", item.getItemDBID());
@@ -33,7 +36,11 @@ public class DeleteItemAsync extends AsyncTask<Object, Void, String>{
 			//  1 - CACHE 
 			//  2 - PLAYER
 			if(deleteType == 1) {
+				Log.e("chowlb", "Delete TYpe is CACHE");
 				URL = "http://www.chowlb.com/runforyourlife/deletecacheitem_app.php";
+			}
+			else {
+				Log.e("chowlb", "DELETE TYPE IS PLAYER");
 			}
 			client.postJsonData(jsonObjSend.toString(), URL);
 		}catch(Exception e) {

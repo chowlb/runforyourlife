@@ -161,6 +161,14 @@ public class Player implements Parcelable{
 		this.inventorySize = inventorySize;
 	}
 
+	public void removeItem(Item item) {
+		for(int i=0; i<inventory.size(); i++) {
+			if(inventory.get(i).getItemDBID() == item.getItemDBID()) {
+				inventory.remove(i);
+			}
+		}
+	}
+	
 	public int describeContents() {
 		return 0;
 	}

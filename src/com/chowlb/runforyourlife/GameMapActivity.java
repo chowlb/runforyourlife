@@ -114,7 +114,10 @@ public class GameMapActivity extends FragmentActivity
         mLocationClient.connect();
 		LoadPlayerInventoryAsync lpia = new LoadPlayerInventoryAsync();
 		lpia.delegate = this;
-		lpia.execute(player);		
+		lpia.execute(player);	
+		//if(mLocationClient.getLastLocation() == null){
+		//	Toast.makeText(this, "Can't find your location. Your activity will be serverly limited. Try turning on your GPS dingus.", Toast.LENGTH_SHORT).show();
+		//}
 	}
 	
 	 private void setUpMapIfNeeded() {
@@ -218,7 +221,6 @@ public class GameMapActivity extends FragmentActivity
 			Intent intent = new Intent(local, ShowPlayerInventoryActivity.class);
 			Bundle bundle = new Bundle();
 			bundle.putParcelable("PLAYER", player);
-			bundle.putBoolean("GPSENABLED", true);
 			intent.putExtras(bundle);
 			startActivityForResult(intent, 1);
 			return true;

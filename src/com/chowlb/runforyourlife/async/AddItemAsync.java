@@ -25,6 +25,7 @@ public class AddItemAsync extends AsyncTask<Object, Void, String>{
 		HttpClient client = new HttpClient();
 		addType = (Integer) arg0[2];
 		JSONObject jsonObjSend = new JSONObject();
+		Log.e("chowlb", "Add TYPE: " + addType);
 		try {
 			jsonObjSend.put("ITEM_ID", item.getItemId());
 			jsonObjSend.put("STATUS",  item.getStatus());
@@ -37,6 +38,7 @@ public class AddItemAsync extends AsyncTask<Object, Void, String>{
 			//  1 - CACHE 
 			//  2 - PLAYER
 			if(addType == 1) {
+				Log.e("chowlb", "ADD TYPE: CACHE with ItemID: " + item.getItemId());
 				cache = (Cache) arg0[1];
 				URL = "http://www.chowlb.com/runforyourlife/insertcacheitem_app.php";
 				try {

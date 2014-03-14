@@ -56,6 +56,8 @@ public class HttpClient {
 		            }
 		            is.close();
 		            json = sb.toString();
+		            if(json.equals(""))
+		            	Log.e("chowlb", "JSON PARSER: " + sb.toString());
 		            
 		        } catch (Exception e) {
 		            Log.e("Buffer Error", "Error converting result " + e.toString());
@@ -63,7 +65,7 @@ public class HttpClient {
 
 		        // try parse the string to a JSON object
 		        try {
-		            if(!json.equals("null") || !json.equals("")){
+		            if(!json.equals("null") && !json.equals("")){
 		                jsonArray = new JSONArray(json);
 		                //Log.d("jsonArray:: ",  jsonArray+"");
 		            }else{

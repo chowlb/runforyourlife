@@ -114,9 +114,8 @@ int id main_map 0x7f05000c
 int id menu_addDrop 0x7f050025
 int id menu_cache_inventory_add_item 0x7f050028
 int id menu_cache_inventory_take_item 0x7f050029
-int id menu_inventory_logout 0x7f05002b
-int id menu_inventory_quit 0x7f05002a
 int id menu_logout 0x7f050027
+int id menu_player_inventory_take_item 0x7f05002a
 int id menu_refresh_caches 0x7f050026
 int id menu_showInventory 0x7f050024
 int id none 0x7f050000
@@ -152,7 +151,8 @@ int menu map 0x7f0a0001
 int menu register 0x7f0a0002
 int menu show_cache_inventory 0x7f0a0003
 int menu show_inventory 0x7f0a0004
-int menu single_item 0x7f0a0005
+int menu show_inventory_from_cache 0x7f0a0005
+int menu single_item 0x7f0a0006
 int string action_settings 0x7f06001b
 int string addDrop 0x7f06003a
 int string addItem 0x7f06003c

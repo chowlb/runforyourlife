@@ -6,6 +6,7 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.util.SparseArray;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -22,7 +23,7 @@ import com.chowlb.runforyourlife.objects.Player;
 
 public class ShowCacheInventoryActivity extends Activity{
 	private Cache cache;
-	private ItemListAdapter adapter;
+	public static ItemListAdapter adapter;
 	private ListView inventoryLayout;
 	public static Player player;
 	Activity activity;
@@ -95,8 +96,7 @@ public class ShowCacheInventoryActivity extends Activity{
 					   key = checkedItems.keyAt(i);
 					   
 					   Item item = checkedItems.get(key);
-					   
-					   
+
 					   if(player.getInventory().size()+checkedItems.size() <= player.getInventorySize()) {
 							DeleteItemAsync deleteItemActivity = new DeleteItemAsync();
 							deleteItemActivity.execute(item, 1);
@@ -117,8 +117,7 @@ public class ShowCacheInventoryActivity extends Activity{
 			Intent intent = new Intent(this, ShowPlayerInventoryActivity.class);
 			Bundle bundle = new Bundle();
 			bundle.putParcelable("PLAYER", player);
-			bundle.putBoolean("GPSENABLED", true);
-			bundle.putBoolean("FROMCACHE", true);
+			bundle.putParcelable("CACHE", cache);
 			intent.putExtras(bundle);
 			startActivityForResult(intent, 1);
 			return true;	
@@ -135,6 +134,20 @@ public class ShowCacheInventoryActivity extends Activity{
 	    data.putExtra("PLAYER", player);
 	    setResult(Activity.RESULT_OK, data);
 	    super.onBackPressed();
+	}
+	
+	@Override
+	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+	    super.onActivityResult(requestCode, resultCode, data);
+	    
+	    Log.e("chowlb", "Returning result from inventory activity");
+	    
+	    if(requestCode == 1 && resultCode == Activity.RESULT_OK){
+	    	cache = data.getParcelableExtra("CACHE");
+	    	Log.e("chowlb", "Cache size after result: " + cache.getInventory().size());
+	    	adapter = new ItemListAdapter(this, cache.getInventory());
+			inventoryLayout.setAdapter(adapter);
+	    }
 	}
 
 }
