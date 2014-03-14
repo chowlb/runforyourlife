@@ -1,27 +1,29 @@
 package com.chowlb.runforyourlife;
 
-import com.chowlb.runforyourlife.adapters.ItemListAdapter;
-import com.chowlb.runforyourlife.async.SavePlayerInfoAsync;
-import com.chowlb.runforyourlife.listeners.InventoryItemListListener;
-import com.chowlb.runforyourlife.objects.Player;
-
 import android.app.ActionBar;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.Menu;
+import android.view.MenuInflater;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import com.chowlb.runforyourlife.adapters.ItemListAdapter;
+import com.chowlb.runforyourlife.async.SavePlayerInfoAsync;
+import com.chowlb.runforyourlife.listeners.InventoryItemListListener;
+import com.chowlb.runforyourlife.objects.Player;
+
 public class ShowPlayerInventoryActivity extends Activity {
-	private Player player;
+	public static Player player;
 	private ItemListAdapter adapter;
 	private ListView inventoryLayout; 
-	//private Activity local;
+	public static ActionBar ab;
 	SavePlayerInfoAsync saveInfoActivity = new SavePlayerInfoAsync();
-	
+	boolean cacheEntry = false;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -35,18 +37,21 @@ public class ShowPlayerInventoryActivity extends Activity {
 			if(!gpsEnabled){
 				Toast.makeText(this, "Without GPS enabled you can only view your inventory.",  Toast.LENGTH_LONG).show();
 			}
-			//Log.e("chowlb", "Player name passed: " + player.getPlayerName());
-			ActionBar ab = getActionBar();
+			if(extras.containsKey("FROMCACHE")) {
+				cacheEntry = true;
+			}
+			
+			ab = getActionBar();
 			ab.setIcon(R.drawable.ic_action_ic_action_military_backpack_radio);
 			ab.setTitle("");
-			ab.setTitle(player.getPlayerName() + " - Inventory" );
+			ab.setTitle(player.getPlayerName() + " - Inventory " + player.getInventory().size() + "/" + player.getInventorySize() );
 			
 			
 			inventoryLayout = (ListView) findViewById(R.id.inventoryListView);
 			adapter = new ItemListAdapter(this, player.getInventory());
 			inventoryLayout.setAdapter(adapter);
-			inventoryLayout.setOnItemClickListener(new InventoryItemListListener(player.getInventory(),this, adapter, player ));
-			inventoryLayout.setOnItemLongClickListener(new InventoryItemListListener(player.getInventory(), this, adapter, player));
+			inventoryLayout.setOnItemClickListener(new InventoryItemListListener(this));
+			inventoryLayout.setOnItemLongClickListener(new InventoryItemListListener(this));
 		}
 		else{
 			Toast.makeText(this, "Error retrieving inventory.",  Toast.LENGTH_LONG).show();
@@ -57,14 +62,34 @@ public class ShowPlayerInventoryActivity extends Activity {
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// Inflate the menu; this adds items to the action bar if it is present.
-		getMenuInflater().inflate(R.menu.show_inventory, menu);
+		if(Build.VERSION.SDK_INT >= 11) {
+			selectMenu(menu);
+		}
 		return true;
+	}
+
+	@Override
+	public boolean onPrepareOptionsMenu(Menu menu) {
+		if(Build.VERSION.SDK_INT < 11) {
+			selectMenu(menu);
+		}
+		return true;
+	}
+
+	public void selectMenu(Menu menu) {
+		menu.clear();
+		MenuInflater inflater = getMenuInflater();
+		if(cacheEntry) {
+			inflater.inflate(R.menu.show_inventory_from_cache, menu);
+		}
+		else{
+			inflater.inflate(R.menu.show_inventory, menu);
+		}
 	}
 
 	@Override
 	protected void onResume() {
 		super.onResume();
-		
 	}
 	
 	@Override

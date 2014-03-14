@@ -33,15 +33,19 @@ public class HttpClient {
 			org.apache.http.client.HttpClient client = new DefaultHttpClient();
 			HttpPost httppost = new HttpPost(URL);
 			
-			List<NameValuePair> nvList = new ArrayList<NameValuePair>();
-			BasicNameValuePair bnvp = new BasicNameValuePair("json", jsonData);
+			if(jsonData != null) {
+				List<NameValuePair> nvList = new ArrayList<NameValuePair>();
+				BasicNameValuePair bnvp = new BasicNameValuePair("json", jsonData);
 			
-			nvList.add(bnvp);
-			httppost.setEntity(new UrlEncodedFormEntity(nvList));
-						
+				nvList.add(bnvp);
+				httppost.setEntity(new UrlEncodedFormEntity(nvList));
+			}			
 			HttpResponse response = client.execute(httppost);
 			HttpEntity httpEntity = response.getEntity();
             is = httpEntity.getContent();
+            
+            
+            
 			if(response != null) {
 				try {
 		            BufferedReader reader = new BufferedReader(new InputStreamReader(is, "iso-8859-1"), 8);

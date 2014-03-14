@@ -3,11 +3,11 @@ package com.chowlb.runforyourlife.async;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import android.os.AsyncTask;
+
 import com.chowlb.runforyourlife.interfaces.AsyncInterface;
 import com.chowlb.runforyourlife.objects.Item;
 import com.chowlb.runforyourlife.utils.HttpClient;
-
-import android.os.AsyncTask;
 
 public class DeleteItemAsync extends AsyncTask<Object, Void, String>{
 	public AsyncInterface delegate = null;
@@ -22,9 +22,7 @@ public class DeleteItemAsync extends AsyncTask<Object, Void, String>{
 		int deleteType = (Integer) arg0[1];
 		JSONObject jsonObjSend = new JSONObject();
 		try {
-			
 			jsonObjSend.put("ITEM_DB_ID", item.getItemDBID());
-				
 		}catch(JSONException e) {
 			e.printStackTrace();
 		}

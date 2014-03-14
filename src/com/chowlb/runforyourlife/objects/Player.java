@@ -17,7 +17,7 @@ public class Player implements Parcelable{
 	private String lastLogin;
 	private int baseAttack = 10;
 	private Location position;
-	private int inventorySize = 15;
+	private int inventorySize = 5;
 	
 	public Player(int playerID, String name, int health, int days, String loginDate) {
 		this.playerID = playerID;
@@ -153,6 +153,14 @@ public class Player implements Parcelable{
 	
 	//EVERYTHING BELOW HERE IS FOR THE PARCELABLE
 	
+	public int getInventorySize() {
+		return inventorySize;
+	}
+
+	public void setInventorySize(int inventorySize) {
+		this.inventorySize = inventorySize;
+	}
+
 	public int describeContents() {
 		return 0;
 	}

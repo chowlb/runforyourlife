@@ -1,10 +1,10 @@
 package com.chowlb.runforyourlife.adapters;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
 import android.content.Context;
+import android.util.SparseArray;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,7 +21,7 @@ import com.chowlb.runforyourlife.objects.Item;
 public class ItemListAdapter extends BaseAdapter {
 
 	private List<Item> result;
-	private HashMap<Integer, Item> checkedResultHashMap;
+	private SparseArray<Item> checkedResultHashMap = new SparseArray<Item>();
 	ArrayList<Integer> hlPositions = new ArrayList<Integer>();
 	Context context;
 	int[] imageId;
@@ -69,10 +69,10 @@ public class ItemListAdapter extends BaseAdapter {
 		holder.item=(TextView) rowView.findViewById(R.id.itemName);
 		holder.status=(TextView) rowView.findViewById(R.id.item_Status);
 		holder.img=(ImageView) rowView.findViewById(R.id.list_image);
-
 		holder.checkBox=(CheckBox) rowView.findViewById(R.id.listRowCheckBox);
-		Item item = result.get(position);
 		
+		Item item = result.get(position);
+		//Log.e("chowlb", "ITEM ID: " + item.getItemId());
 		holder.item.setText(item.getName());
 		holder.status.setText(item.getStatus());
 		holder.status.setTextColor(item.getStatusColor(this.context));
@@ -81,13 +81,16 @@ public class ItemListAdapter extends BaseAdapter {
 		holder.checkBox.setTag(item);
 		holder.checkBox.setOnCheckedChangeListener(new OnCheckedChangeListener() {
 			
-		@Override
-		public void onCheckedChanged(CompoundButton checkBoxView, boolean isChecked) {
+			@Override
+			public void onCheckedChanged(CompoundButton checkBoxView, boolean isChecked) {
 				Item item = (Item) checkBoxView.getTag();
+				
+				//Log.e("chowlb", "IS CHECKED: " + isChecked);
 				if(isChecked) {
+					//Log.e("chowlb", "IS CHECKED ITEMDBID: " + item.getItemDBID());
 					checkedResultHashMap.put(item.getItemDBID(), item);
 				}else {
-					if(checkedResultHashMap.containsKey(item.getItemDBID())) {
+					if(checkedResultHashMap.get(item.getItemDBID()) != null) {
 						checkedResultHashMap.remove(item.getItemDBID());
 					}
 				}
@@ -99,7 +102,7 @@ public class ItemListAdapter extends BaseAdapter {
 	}
 	
 	
-	public HashMap<Integer, Item> getCheckedItems() {
+	public SparseArray<Item> getCheckedItems() {
 		return checkedResultHashMap;
     }
 	

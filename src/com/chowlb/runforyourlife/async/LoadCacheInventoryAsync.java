@@ -60,7 +60,7 @@ public class LoadCacheInventoryAsync extends AsyncTask<String, Void, List<Item>>
 		}catch(Exception e) {
 			e.printStackTrace();
 		}		
-		//Log.e("chowlb", "Returning cache items: " + items.size());
+		Log.e("chowlb", "LOADCACHEINVENTORYASYNC - Returning cache items: " + items.size());
 		return items;	
 		
 	}

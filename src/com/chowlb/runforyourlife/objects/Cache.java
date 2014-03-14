@@ -100,9 +100,6 @@ public class Cache implements Parcelable {
 		this.location = location;
 	}
 	
-	
-	
-	
 	public double getLongitude() {
 		return longitude;
 	}
@@ -128,13 +125,20 @@ public class Cache implements Parcelable {
 		}	
 	}
 	
-
 	public Item getItemAtPos(int pos) {
 		return inventory.get(pos);
 	}
 	
 	public void removeItemAtPos(int pos) {
 		inventory.remove(pos);
+	}
+	
+	public void removeItem(Item item) {
+		for(int i=0; i<inventory.size(); i++) {
+			if(inventory.get(i).getItemDBID() == item.getItemDBID()) {
+				inventory.remove(i);
+			}
+		}
 	}
 	
 	public List<Item> getInventory() {

@@ -16,7 +16,7 @@ import android.widget.Toast;
 import com.chowlb.runforyourlife.GameMapActivity;
 import com.chowlb.runforyourlife.R;
 import com.chowlb.runforyourlife.objects.Cache;
-import com.chowlb.runforyourlife.utils.JSONParser;
+import com.chowlb.runforyourlife.utils.HttpClient;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.model.BitmapDescriptor;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
@@ -45,11 +45,11 @@ public class LoadAllCachesAsync extends AsyncTask<Void, Void, List<Cache>>{
 	@Override
 	protected List<Cache> doInBackground(Void... params) {
 		
-		String link="http://www.chowlb.com/runforyourlife/getallcaches_app.php";
-		JSONParser jsonParser = new JSONParser();
-		JSONArray caches = jsonParser.getJSONFromUrl(link);			
+		String URL="http://www.chowlb.com/runforyourlife/getallcaches_app.php";	
 		
 		try{
+			HttpClient client = new HttpClient();
+			JSONArray caches = client.postJsonData(null, URL);
 			for(int i=0; i<caches.length(); i++) {
 				JSONObject c = caches.getJSONObject(i);
 				Cache cache = new Cache(c.getInt("CACHE_ID"), c.getString("OWNER_NAME"), c.getInt("OWNER_ID"), c.getDouble("LATITUDE"), c.getDouble("LONGITUDE"));
